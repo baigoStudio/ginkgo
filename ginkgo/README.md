@@ -59,7 +59,7 @@ ginkgo 采用 MVC（Model-View-Controller）模式开发，各个模块相对独
     │  ├─boot.php           框架引导文件
     │  ├─const.php          常量定义文件
     │  ├─convention.php     默认配置文件
-    │  ├─CHANGELOG.txt      更新日志
+    │  ├─CHANGELOG.md       更新日志
     │  ├─LICENSE.txt        授权说明文件
     │  └─README.md          README 文件    
     ├─extend                扩展目录（可定义）
