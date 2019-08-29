@@ -1,0 +1,17 @@
+{
+    "name": "baigoStudio/ginkgo",
+    "type": "project",
+    "keywords": [
+        "framework"
+    ],
+    "homepage": "http://www.baigo.net/ginkgo/",
+    "license": "APACHE-2",
+    "authors": [
+        {
+            "name": "fone",
+            "email": "fone@baigo.net"
+        }
+    ],
+    "require": {
+    }
+}
