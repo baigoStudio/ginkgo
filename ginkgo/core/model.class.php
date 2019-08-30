@@ -17,8 +17,7 @@ abstract class Model {
     protected $obj_builder;
     protected $dbconfig;
     protected $table;
-    protected $isUpdate = false;
-    protected $updateWhere;
+    protected $className;
 
     private $obj_db;
 
@@ -69,8 +68,7 @@ abstract class Model {
 
     protected function validate($data, $validate = '', $scene = false, $only = array(), $remove = array(), $append = array()) {
         if (Func::isEmpty($validate)) {
-            $_class     = get_class($this);
-            $validate   = $this->nameProcess($_class);
+            $validate   = $this->realClassProcess();
             $_vld       = Loader::validate($validate);
 
             if (!Func::isEmpty($scene)) {
@@ -113,10 +111,9 @@ abstract class Model {
 
     public function __call($method, $params) {
         if (method_exists($this->obj_db, $method)) {
-            $_class = get_class($this);
-            $_table = $this->nameProcess($_class);
+            $_table = $this->realClassProcess();
 
-            $this->obj_db->setModel($_class);
+            $this->obj_db->setModel($this->className);
 
             if (Func::isEmpty($this->table)) {
                 $this->obj_db->setTable($_table);
@@ -134,9 +131,13 @@ abstract class Model {
     }
 
 
-    private function nameProcess($class) {
-        $_arr_class = explode('\\', $class);
+    private function realClassProcess() {
+        $_class     = get_class($this);
+        //print_r($_class);
+        $_arr_class = explode('\\', $_class);
         $_table     = end($_arr_class);
+
+        $this->className = $_class;
 
         return strtolower($_table);
     }
