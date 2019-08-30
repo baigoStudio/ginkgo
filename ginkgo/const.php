@@ -9,6 +9,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 define('DS', DIRECTORY_SEPARATOR); //目录分离符
 define('GK_VERSION', '1.0'); //框架版本
+define('GK_PUBLISH', 20190830); //框架发布时间
 define('GK_NOW', $_SERVER['REQUEST_TIME']); //当前时间
 define('GK_START_TIME', microtime(true));
 define('GK_START_MEM', memory_get_usage());

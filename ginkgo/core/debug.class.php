@@ -100,7 +100,7 @@ class Debug {
                 }
 
                 $_runtime   = Func::numFormat(microtime(true) - GK_START_TIME, 6) . ' sec';
-                $_memory    = Func::sizeFormat((memory_get_usage() - GK_START_MEM) / 1024);
+                $_memory    = Func::sizeFormat((memory_get_usage() - GK_START_MEM));
 
                 $_arr_data['trace'] = array(
                     'base'  => array(
