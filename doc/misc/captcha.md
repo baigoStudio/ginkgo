@@ -26,12 +26,12 @@ class Index {
 
 访问下如下地址就可以显示验证码
 
-> http://server/index/index/verify
+> http://server/index.php/index/index/verify
 
 在模板中可以使用如下代码显示验证码
 
 ``` markup
-<div><img src="http://server/index/index/verify" alt="captcha"></div>
+<div><img src="http://server/index.php/index/index/verify" alt="captcha"></div>
 ```
 
 如果要在一个页面中生成多个验证码，`create` 方法可以传入标识信息（数字或字符串），例如：

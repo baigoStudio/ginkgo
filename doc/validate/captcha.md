@@ -4,7 +4,7 @@
 
 ``` php
 <input type="text" name="captcha">
-<img src="http://server/index/index/verify" alt="captcha">
+<img src="http://server/index.php/index/index/verify" alt="captcha">
 ```
 
 然后在验证规则中，添加 captcha 验证规则即可，例如：

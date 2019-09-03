@@ -3,7 +3,7 @@
 ginkgo 默认采用的 URL 规则是：
 
 ``` markup
-http://server/mod/ctrl/act/param/value/...
+http://server/index.php/mod/ctrl/act/param/value/...
 ```
 
 路由的作用是简化 URL 访问地址，并根据定义的路由类型做出正确的解析。
