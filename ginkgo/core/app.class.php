@@ -18,13 +18,9 @@ class App {
     private static $config;
     private static $init;
 
-    private function __construct() {
-    }
+    private function __construct() { }
 
-    private function __clone() {
-
-    }
-
+    private function __clone() { }
 
     public static function init() {
         self::$obj_request  = Request::instance();
@@ -35,15 +31,9 @@ class App {
 
         Plugin::listen('action_fw_init'); //框架初始化时触发
 
-        self::$init     = true;
+        self::$init = true;
     }
 
-    /**
-     * run function.
-     * 运行
-     * @access public
-     * @return void
-     */
     public static function run() {
         $_arr_route     = Route::check();
         self::$route    = $_arr_route['route'];

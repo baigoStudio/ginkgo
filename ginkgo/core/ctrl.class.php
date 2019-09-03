@@ -21,7 +21,6 @@ abstract class Ctrl {
         $this->obj_request  = Request::instance();
         $this->obj_lang     = Lang::instance();
         $this->obj_view     = View::instance();
-
         $this->route        = $this->obj_request->route();
         $this->param        = $param;
 
@@ -29,9 +28,7 @@ abstract class Ctrl {
         $this->c_init($param);
     }
 
-    protected function c_init($param = array()) {
-
-    }
+    protected function c_init($param = array()) { }
 
     protected function assign($assign, $value = '') {
         $this->obj_view->assign($assign, $value);

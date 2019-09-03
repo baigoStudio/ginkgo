@@ -109,7 +109,6 @@ return array(
         'upload'    => true,
         'ftp'       => true,
         'smtp'      => true,
-        'plugin'    => true,
     ),
     'var_extra' => array(
         'upload' => array(

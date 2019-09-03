@@ -607,14 +607,16 @@ class Request {
 
         $_script_name = basename($this->server('SCRIPT_FILENAME'));
 
+        $_str_pos = strpos($this->server('PHP_SELF'), '/' . $_script_name);
+
         if (basename($this->server('SCRIPT_NAME')) === $_script_name) {
             $_str_url = $this->server('SCRIPT_NAME');
         } else if (basename($this->server('PHP_SELF')) === $_script_name) {
             $_str_url = $this->server('PHP_SELF');
         } else if (!Func::isEmpty($this->server('ORIG_SCRIPT_NAME')) && basename($this->server('ORIG_SCRIPT_NAME')) === $_script_name) {
             $_str_url = $this->server('ORIG_SCRIPT_NAME');
-        } else if (($pos = strpos($this->server('PHP_SELF'), '/' . $_script_name)) !== false) {
-            $_str_url = substr($this->server('SCRIPT_NAME'), 0, $pos) . '/' . $_script_name;
+        } else if ($_str_pos !== false) {
+            $_str_url = substr($this->server('SCRIPT_NAME'), 0, $_str_pos) . '/' . $_script_name;
         } else if (!Func::isEmpty($this->server('DOCUMENT_ROOT')) && strpos($this->server('SCRIPT_FILENAME'), $this->server('DOCUMENT_ROOT')) === 0) {
             $_str_url = str_replace('\\', '/', str_ireplace($this->server('DOCUMENT_ROOT'), '', $this->server('SCRIPT_FILENAME')));
         }
@@ -642,7 +644,7 @@ class Request {
             $_str_baseRoute = $this->domain() . $_str_baseRoute;
         }
 
-        return strtolower($_str_baseRoute);
+        return rtrim(strtolower($_str_baseRoute), '/');
     }
 
     function fillParam($data, $param) {
