@@ -51,7 +51,11 @@ class Redirect extends Response {
     function exclude($exclude = array()) {
         if (!Func::isEmpty($exclude)) {
             if (is_array($exclude)) {
-                $this->exclude = array_merge($this->exclude, $exclude);
+                if (Func::isEmpty($this->exclude)) {
+                    $this->exclude = $exclude;
+                } else {
+                    $this->exclude = array_merge($this->exclude, $exclude);
+                }
             } else if (is_string($exclude)) {
                 array_push($this->exclude, $exclude);
             }

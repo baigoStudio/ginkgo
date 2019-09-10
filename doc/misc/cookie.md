@@ -9,7 +9,7 @@ Cookie 功能由 `ginkgo\Cookie` 完成。
 无需手动初始化，系统会自动在调用之前进行 Cookie 初始化工作。
 
 ``` php
-'cookie' => array(    
+'cookie' => array(
     'prefix'    => '', // cookie 名称前缀
     'expire'    => 0, // cookie 保存时间
     'path'      => '/', // cookie 保存路径
@@ -25,7 +25,7 @@ Cookie 功能由 `ginkgo\Cookie` 完成。
 #### 初始化
 
 ``` php
-$config = array(    
+$config = array(
     'prefix'    => '', // cookie 名称前缀
     'expire'    => 0, // cookie 保存时间
     'path'      => '/', // cookie 保存路径
@@ -50,14 +50,14 @@ Cookie::prefix('baigo_');
     ``` php
     Cookie::set('name', $value);
 
-    $config = array(    
+    $config = array(
         'prefix'    => '', // cookie 名称前缀
         'expire'    => 0, // cookie 保存时间
     );
 
     Cookie::set('name', $value, $config);
     ```
-    
+
 * 取值
 
     ``` php
@@ -65,7 +65,7 @@ Cookie::prefix('baigo_');
     // 获取指定前缀的cookie值
     Cookie::get('name', 'baigo_');
     ```
-    
+
     如果 name 值不存在，则默认返回空。
 
 * 删除

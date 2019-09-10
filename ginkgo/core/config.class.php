@@ -11,16 +11,16 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Config {
 
-    private static $instance;
+    protected static $instance;
     private static $range  = '';
     private static $config = array();
     private static $init;
     private static $count  = 1;
 
-    private function __construct() {
+    protected function __construct() {
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
@@ -42,6 +42,38 @@ class Config {
         }
     }
 
+
+    public static function add($name, $value = '', $range = '') {
+        $name = (string)$name;
+
+        if (Func::isEmpty(self::$init)) {
+            self::init();
+        }
+
+        $_mix_range = self::rangeProcess($range);
+
+        if (Func::isEmpty($_mix_range)) {
+            if (!isset(self::$config[$name])) {
+                self::$config[$name] = $value;
+            }
+        } else if (is_array($_mix_range)) {
+            if (isset($_mix_range[1])) {
+                if (!isset(self::$config[$_mix_range[0]][$_mix_range[1]][$name])) {
+                    self::$config[$_mix_range[0]][$_mix_range[1]][$name] = $value;
+                }
+            } else if (isset($_mix_range[0])) {
+                if (!isset(self::$config[$_mix_range[0]][$name])) {
+                    self::$config[$_mix_range[0]][$name] = $value;
+                }
+            }
+        } else if (is_string($_mix_range)) {
+            if (!isset(self::$config[$_mix_range][$name])) {
+                self::$config[$_mix_range][$name] = $value;
+            }
+        }
+    }
+
+
     public static function set($name, $value = '', $range = '') {
         if (Func::isEmpty(self::$init)) {
             self::init();
@@ -53,7 +85,7 @@ class Config {
             if (is_array($name)) {
                 self::$config = array_replace_recursive(self::$config, $name);
             } else if (is_string($name)) {
-                if (isset(self::$config[$name]) && is_array($value)) {
+                if (isset(self::$config[$name]) && is_array(self::$config[$name]) && is_array($value)) {
                     self::$config[$name] = array_replace_recursive(self::$config[$name], $value);
                 } else {
                     self::$config[$name] = $value;
@@ -62,13 +94,13 @@ class Config {
         } else if (is_array($_mix_range)) {
             if (is_array($name)) {
                 if (isset($_mix_range[1])) {
-                    if (isset(self::$config[$_mix_range[0]][$_mix_range[1]])) {
+                    if (isset(self::$config[$_mix_range[0]][$_mix_range[1]]) && is_array(self::$config[$_mix_range[0]][$_mix_range[1]])) {
                         self::$config[$_mix_range[0]][$_mix_range[1]] = array_replace_recursive(self::$config[$_mix_range[0]][$_mix_range[1]], $name);
                     } else {
                         self::$config[$_mix_range[0]][$_mix_range[1]] = $name;
                     }
                 } else if (isset($_mix_range[0])) {
-                    if (isset(self::$config[$_mix_range[0]])) {
+                    if (isset(self::$config[$_mix_range[0]]) && is_array(self::$config[$_mix_range[0]])) {
                         self::$config[$_mix_range[0]] = array_replace_recursive(self::$config[$_mix_range[0]], $name);
                     } else {
                         self::$config[$_mix_range[0]] = $name;
@@ -76,13 +108,13 @@ class Config {
                 }
             } else if (is_string($name)) {
                 if (isset($_mix_range[1])) {
-                    if (isset(self::$config[$_mix_range[0]][$_mix_range[1]][$name]) && is_array($value)) {
+                    if (isset(self::$config[$_mix_range[0]][$_mix_range[1]][$name]) && is_array(self::$config[$_mix_range[0]][$_mix_range[1]][$name]) && is_array($value)) {
                         self::$config[$_mix_range[0]][$_mix_range[1]][$name] = array_replace_recursive(self::$config[$_mix_range[0]][$_mix_range[1]][$name], $value);
                     } else {
                         self::$config[$_mix_range[0]][$_mix_range[1]][$name] = $value;
                     }
                 } else if (isset($_mix_range[0])) {
-                    if (isset(self::$config[$_mix_range[0]][$name]) && is_array($value)) {
+                    if (isset(self::$config[$_mix_range[0]][$name]) && is_array(self::$config[$_mix_range[0]][$name]) && is_array($value)) {
                         self::$config[$_mix_range[0]][$name] = array_replace_recursive(self::$config[$_mix_range[0]][$name], $value);
                     } else {
                         self::$config[$_mix_range[0]][$name] = $value;
@@ -91,13 +123,13 @@ class Config {
             }
         } else if (is_string($_mix_range)) {
             if (is_array($name)) {
-                if (isset(self::$config[$_mix_range])) {
+                if (isset(self::$config[$_mix_range]) && is_array(self::$config[$_mix_range])) {
                     self::$config[$_mix_range] = array_replace_recursive(self::$config[$_mix_range], $name);
                 } else {
                     self::$config[$_mix_range] = $name;
                 }
             } else {
-                if (isset(self::$config[$_mix_range][$name]) && is_array($value)) {
+                if (isset(self::$config[$_mix_range][$name]) && is_array(self::$config[$_mix_range][$name]) && is_array($value)) {
                     self::$config[$_mix_range][$name] = array_replace_recursive(self::$config[$_mix_range][$name], $value);
                 } else {
                     self::$config[$_mix_range][$name] = $value;

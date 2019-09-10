@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 /*-------------验证码类-------------*/
 class Captcha {
-    private static $instance;
+    protected static $instance;
     private $chars     = 'abdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     private $secKey    = 'ginkgo';
     private $secCode; //验证码
@@ -30,21 +30,21 @@ class Captcha {
 
     private $image; //图形资源
 
-    private function __construct($config = array()) {
+    protected function __construct($config = array()) {
         if (!Func::isEmpty($config)) {
             $this->config = array_replace_recursive($this->config, $config);
         }
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($config);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     //设置验证码

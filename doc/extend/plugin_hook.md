@@ -20,13 +20,15 @@
 
 ginkgo 框架本身也提供了一些钩子以供使用：
 
-| 标签位 | 类型 | 描述 |
+| 名称 | 类型 | 描述 |
 | - | - | - |
 | action_fw_init | action | 框架初始化时触发 |
-| filter_fw_view | filter | 视图渲染时过滤 |
 | action_fw_response_send | action | 响应发送时触发 |
 | action_fw_response_end | action | 响应输出后触发 |
 | action_fw_end | action | 框架运行结束时触发 |
+| filter_fw_view | filter | 视图渲染时过滤 |
+
+`filter_fw_view` 返回参数为渲染后的 HTML，回传参数也必须是 HTML。
 
 ----------
 

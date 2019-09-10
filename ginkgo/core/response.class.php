@@ -79,13 +79,13 @@ class Response {
         $this->obj_request  = Request::instance();
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function create($data = '', $type = '', $code = 200, $header = array()) {
         if (Func::isEmpty($type)) {
-            return new self($data, $code, $header);
+            return new static($data, $code, $header);
         } else {
             if (strpos($type, '\\')) {
                 $_class = $type;
@@ -97,7 +97,7 @@ class Response {
         if (class_exists($_class)) {
             return new $_class($data, $code, $header);
         } else {
-            return new self($data, $code, $header);
+            return new static($data, $code, $header);
         }
     }
 

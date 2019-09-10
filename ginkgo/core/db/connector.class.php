@@ -21,6 +21,7 @@ abstract class Connector {
     public $dbconfig;
     public $obj_builder;
 
+    protected static $instance;
     protected $obj_pdo;
     protected $obj_result;
     protected $isConnect;
@@ -55,10 +56,16 @@ abstract class Connector {
         $this->config($dbconfig);
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
+    public static function instance($dbconfig = array()) {
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($dbconfig);
+        }
+        return static::$instance;
+    }
 
     function config($dbconfig = array()) {
         $this->dbconfig = $dbconfig;

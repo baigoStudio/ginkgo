@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Route {
 
-    private static $instance;
+    protected static $instance;
 
     private static $route = array(
         'mod'   => 'index',
@@ -35,11 +35,11 @@ class Route {
     private static $init;
     private static $routeExclude = array('page');
 
-    private function __construct() {
+    protected function __construct() {
 
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
@@ -122,7 +122,11 @@ class Route {
         $_arr_routeExclude  = self::$routeExclude;
 
         if (!Func::isEmpty($exclude)) {
-            $_arr_routeExclude = array_merge($_arr_routeExclude, $exclude);
+            if (Func::isEmpty($_arr_routeExclude)) {
+                $_arr_routeExclude = $exclude;
+            } else {
+                $_arr_routeExclude = array_merge($_arr_routeExclude, $exclude);
+            }
         }
 
         $_str_param = '';
@@ -152,7 +156,11 @@ class Route {
     public static function setExclude($exclude = '') {
         if (!Func::isEmpty($exclude)) {
             if (is_array($exclude)) {
-                self::$routeExclude = array_merge(self::$routeExclude, $exclude);
+                if (Func::isEmpty($this->_bind)) {
+                    self::$routeExclude = $exclude;
+                } else {
+                    self::$routeExclude = array_merge(self::$routeExclude, $exclude);
+                }
             } else if (is_string($exclude)) {
                 array_push(self::$routeExclude, $exclude);
             }

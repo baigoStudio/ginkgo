@@ -17,11 +17,11 @@ class Plugin {
     private static $listeners   = array(); //监听已注册的插件
     private static $init;
 
-    private function __construct() {
+    protected function __construct() {
 
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
@@ -159,17 +159,17 @@ class Plugin {
                 if (class_exists($_str_plugin)) {
                     //初始化所有插件
                     $_pid = md5($_str_plugin);
-                    self::$instance[$_pid] = new $_str_plugin(); //实例化
+                    static::$instance[$_pid] = new $_str_plugin(); //实例化
 
                     if (!Func::isEmpty($_arr_config)) {
-                        self::$instance[$_pid]->config = $_arr_config;
+                        static::$instance[$_pid]->config = $_arr_config;
                     }
 
                     $_str_optsPath   = GK_PATH_PLUGIN . $_str_dir . DS . 'opts.json';
 
                     if (Func::isFile($_str_optsPath)) {
                         $_str_pluginOpts  = $_obj_file->fileRead($_str_optsPath);
-                        self::$instance[$_pid]->opts = Json::decode($_str_pluginOpts); //定义选项
+                        static::$instance[$_pid]->opts = Json::decode($_str_pluginOpts); //定义选项
                     }
                 }
             }

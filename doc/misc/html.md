@@ -77,7 +77,7 @@ use ginkgo\Html;
 $html = Html::instance();
 
 $tagAllow = array('h1', 'p');
-    
+
 $html->setTagAllow($tagAllow);
 
 $str = '<div><p>test</p></div>'
@@ -119,7 +119,7 @@ use ginkgo\Html;
 $html = Html::instance();
 
 $attrAllow = array('id', 'class');
-    
+
 $html->setAttrAllow($attrAllow);
 
 $str = '<div id="test" title="test">test</div>'
@@ -143,7 +143,7 @@ $attrExcept = array(
     'a'    => array('href', 'class'), //保留 a 标签的 href、class 属性
     'span' => array('class')          //保留 span 标签的 class 属性
 );
-    
+
 $html->setAttrExcept($attrExcept);
 
 $str = '<div id="test" title="test"><a href="#" id="test_href">test</a></div>'
@@ -164,7 +164,7 @@ use ginkgo\Html;
 $html = Html::instance();
 
 $attrIgnore = array('a', 'span'); // 不对这些标签进行过滤
-    
+
 $html->setAttrIgnore($attrIgnore);
 
 $str = '<div id="test" title="test"><a href="#" id="test_href">test</a></div>'

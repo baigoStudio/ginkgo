@@ -56,7 +56,7 @@ function strtotime( $datetime )
 返回
 
 * Unix 时间戳
-    
+
 ----------
 
 #### `ucwords` 将字符串中每个单词的首字母转换为大写
@@ -73,7 +73,7 @@ function ucwords( $str [, $delimiter = ''] )
 返回
 
 *  转换后的字符串，如：User_Name
-    
+
 ----------
 
 #### `toHump` 以指定的分隔符将字符串转换为驼峰写法
@@ -91,7 +91,7 @@ function toHump( $str [, $delimiter = '' [, $lcfirst = false]] )
 返回
 
 * 转换后的字符串，如：user_name 转换为 UserName
-    
+
 ----------
 
 #### `toLine` 将驼峰写法的字符串转换为小写加分隔符
@@ -108,7 +108,7 @@ function toLine( $str [, $delimiter = ''] )
 返回
 
 * 转换后的字符串，如：UserName 转换为 user_name
-    
+
 ----------
 
 #### `safe` 安全过滤字符串
@@ -124,7 +124,7 @@ function safe( $str )
 返回
 
 * 过滤后的字符串
-    
+
 ----------
 
 #### `sizeFormat` 文件大小格式化
@@ -141,7 +141,7 @@ function sizeFormat( $size [, $float = 2] )
 返回
 
 * 格式化后的文件大小，如：1,024.32 KB
-    
+
 ----------
 
 #### `numFormat` 格式化数字
@@ -158,7 +158,7 @@ function numFormat( $num [, $float = 2] )
 返回
 
 * 格式化后的数字，如：1,024.32
-    
+
 ----------
 
 #### `fixDs` 规范化路径分隔符，并在最后添加分隔符
@@ -175,7 +175,7 @@ function fixDs( $path [, $ds = DS] )
 返回
 
 * 格式化后的路径，如：/web/wwwroot//test/abc 转换为 /web/wwwroot/test/abc/
-    
+
 ----------
 
 #### `fillUrl` 将 URL 补充完整
@@ -191,11 +191,11 @@ function fillUrl( $url, $baseUrl )
 
 返回
 
-* 完整的 URL，如：  
+* 完整的 URL，如：
     URL 为 ./image/logo.png，
     基本 URL 为 http://www.baigo.net，
     补充完整后为 http://www.baigo.net/image/logo.png
-    
+
 ----------
 
 #### `fillImg` 将 HTML 内的图片 URL 补充完整
@@ -211,11 +211,11 @@ function fillImg( $content, $baseUrl )
 
 返回
 
-* 图片具备完整的 URL 的 HTML 内容，如：  
+* 图片具备完整的 URL 的 HTML 内容，如：
     HTML 为 &lt;div&gt;&lt;img src=&quot;./image/logo.png&quot;&gt;&lt;/div&gt;
     基本 URL 为 http://www.baigo.net，
     补充完整后为 &lt;div&gt;&lt;img src=&quot;http://www.baigo.net/image/logo.png&quot;&gt;&lt;/div&gt;
-    
+
 ----------
 
 #### `checkRegex` 用正则表达式匹配字符串
@@ -233,7 +233,7 @@ function checkRegex( $string, $regex [, $wild = false] )
 返回
 
 * 匹配结果
-    
+
 ----------
 
 #### `rand` 生成随机字符串
@@ -280,7 +280,7 @@ function arrayEach( $arr [, $encode = ''] )
 * `encode` 编码方式
 
     可能的值
-    
+
     | 值 | 描述 |
     | - | - |
     | 空（默认值） | 不进行编码 |
@@ -292,8 +292,8 @@ function arrayEach( $arr [, $encode = ''] )
 
 * 处理后的数组
 
-----------    
-    
+----------
+
 #### `ubbcode` UBBCODE 转换字符串（部分支持）
 
 ``` php

@@ -56,7 +56,7 @@ License: http://www.opensource.org/licenses/mit-license.php
                         '<div class="modal-content">' +
                             '<div class="modal-body d-flex justify-content-between align-items-end">' +
                                 '<p class="lead bg-content">' +
-                                    '<span class="bg-icon"></span>' +
+                                    '<span class="bg-icon mr-2"></span>' +
                                     '<span class="bg-msg"></span>' +
                                 '</p>' +
                                 '<p class="bg-jump">' +

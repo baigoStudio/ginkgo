@@ -12,20 +12,20 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------数据库类-------------*/
 class Db {
 
-    private static $instance;
+    protected static $instance;
     private static $isConfig;
 
     public static $dbconfig;
 
-    private function __construct($dbconfig = array()) {
+    protected function __construct($dbconfig = array()) {
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function connect($dbconfig = array()) {
-        if (Func::isEmpty(self::$instance)) {
+        if (Func::isEmpty(static::$instance)) {
             if (Func::isEmpty(self::$isConfig)) {
                 self::config($dbconfig);
             }
@@ -43,7 +43,7 @@ class Db {
             //print_r($_class);
 
             if (class_exists($_class)) {
-                self::$instance = $_class::instance(self::$dbconfig);
+                static::$instance = $_class::instance(self::$dbconfig);
             } else {
                 $_obj_excpt = new Exception('Unsupported database type', 500);
 
@@ -53,7 +53,7 @@ class Db {
             }
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
 

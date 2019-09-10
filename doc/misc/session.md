@@ -9,7 +9,7 @@ Session 功能由 `ginkgo\Session` 类配合 Session 驱动类一起完成，内
 Session 会在第一次调用 `Session` 类的时候按照配置参数自动初始化：
 
 ``` php
-'session' => array(    
+'session' => array(
     'autostart'     => true, //自动开始
     'name'          => '', //Session ID 名称
     'type'          => 'file', //类型 (可选 db,file)
@@ -30,7 +30,7 @@ Session::get('name');
 或者调用 `init` 方法进行初始化：
 
 ``` php
-$config = array(    
+$config = array(
     'autostart'     => true, //自动开始
     'name'          => '', //Session ID 名称
     'type'          => 'file', //类型 (可选 db,file)
@@ -83,14 +83,14 @@ Session::init($config);
     Session::set('name', $value);
     Session::set('name', $value, 'prefix'); // 前缀为 prefix
     ```
-    
+
 * 取值
 
     ``` php
     Session::get('name');
     Session::get('name', 'prefix'); // 取得前缀为 prefix 的值
     ```
-    
+
     如果 name 值不存在，则默认返回空。
 
 * 删除
@@ -111,7 +111,7 @@ Session::init($config);
 #### 二级数组
 
 支持 Session 的二维数组操作，例如：
-    
+
 ``` php
 // 赋值（当前作用域）
 Session::set('name','baigo.item');

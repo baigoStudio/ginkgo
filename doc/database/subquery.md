@@ -20,7 +20,7 @@ $subQuery = Db::table('user')
 生成的 subQuery 结果为：
 
 ``` php
-SELECT `id`,`name` FROM `user` WHERE `id` > 10 
+SELECT `id`,`name` FROM `user` WHERE `id` > 10
 ```
 
 使用上述方法获得 subQuery 语句以后，可以进行如下操作

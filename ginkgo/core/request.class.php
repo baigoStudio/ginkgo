@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Request {
 
-    private static $instance;
+    protected static $instance;
     private static $param = array();
 
     private static $route = array(
@@ -81,19 +81,19 @@ class Request {
         ),
     );
 
-    private function __construct() {
+    protected function __construct() {
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance() {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self();
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     function setRoute($name, $value = '') {
@@ -736,19 +736,19 @@ class Request {
         }
 
         $_num_p     = intval(($_num_this - 1) / $_num_pergroup); //是否存在上十页、下十页参数
-        $_num_begin = $_num_p * $_num_pergroup + 1; //列表起始页
-        $_num_end   = $_num_p * $_num_pergroup + $_num_pergroup; //列表结束页
+        $_num_groupBegin = $_num_p * $_num_pergroup + 1; //列表起始页
+        $_num_groupEnd   = $_num_p * $_num_pergroup + $_num_pergroup; //列表结束页
 
-        if ($_num_end >= $_num_total) {
-            $_num_end = $_num_total;
+        if ($_num_groupEnd >= $_num_total) {
+            $_num_groupEnd = $_num_total;
         }
 
-        $_num_first         = false;
-        $_num_final         = false;
-        $_num_prev          = false;
-        $_num_next          = false;
-        $_num_prev_group    = false;
-        $_num_next_group    = false;
+        $_num_first     = false;
+        $_num_final     = false;
+        $_num_prev      = false;
+        $_num_next      = false;
+        $_num_groupPrev = false;
+        $_num_groupNext = false;
 
         if ($_num_this > 1) {
             $_num_first = 1;
@@ -761,25 +761,25 @@ class Request {
         }
 
         if ($_num_p * $_num_pergroup > 0) {
-            $_num_prev_group = $_num_p * $_num_pergroup;
+            $_num_groupPrev = $_num_p * $_num_pergroup;
         }
 
-        if ($_num_end < $_num_final) {
-            $_num_next_group = $_num_end + 1;
+        if ($_num_groupEnd < $_num_final) {
+            $_num_groupNext = $_num_groupEnd + 1;
         }
 
         return array(
             'page'          => $_num_this,
-            'begin'         => $_num_begin,
-            'end'           => $_num_end,
             'total'         => $_num_total,
             'except'        => $_num_except,
             'first'         => $_num_first,
             'final'         => $_num_final,
-            'next'          => $_num_next,
             'prev'          => $_num_prev,
-            'next_group'    => $_num_next_group,
-            'prev_group'    => $_num_prev_group,
+            'next'          => $_num_next,
+            'group_begin'   => $_num_groupBegin,
+            'group_end'     => $_num_groupEnd,
+            'group_prev'    => $_num_groupPrev,
+            'group_next'    => $_num_groupNext,
         );
     }
 

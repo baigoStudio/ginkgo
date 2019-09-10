@@ -19,7 +19,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Php {
 
-    private static $instance;
+    protected static $instance;
     private $suffix = GK_EXT_TPL; // 默认模板文件后缀
     private $config;
     private $route;
@@ -47,10 +47,10 @@ class Php {
     }
 
     public static function instance($config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($config);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
 

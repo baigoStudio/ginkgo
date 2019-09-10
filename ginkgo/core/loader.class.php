@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Loader {
 
-    private static $instance; //用静态属性保存实例
+    protected static $instance; //用静态属性保存实例
 
     static function load($path, $type = 'require') {
         /*print_r($path);
@@ -122,14 +122,14 @@ class Loader {
 
         if (class_exists($_str_ctrl)) {
             $_cid = md5($_str_ctrl);
-            self::$instance[$_cid] = new $_str_ctrl($option); //实例化控制器
+            static::$instance[$_cid] = new $_str_ctrl($option); //实例化控制器
 
-            return self::$instance[$_cid];
+            return static::$instance[$_cid];
         } else if (class_exists($_str_ctrlError)) {
             $_cid = md5($_str_ctrlError);
-            self::$instance[$_cid] = new $_str_ctrlError($option); //实例化空控制器
+            static::$instance[$_cid] = new $_str_ctrlError($option); //实例化空控制器
 
-            return self::$instance[$_cid];
+            return static::$instance[$_cid];
         } else {
             $_obj_excpt = new Exception('Controller not found', 404);
 
@@ -170,8 +170,8 @@ class Loader {
 
         if (class_exists($_str_mdl)) {
             $_mid = md5($_str_mdl);
-            self::$instance[$_mid] = new $_str_mdl($option); //实例化模型
-            return self::$instance[$_mid];
+            static::$instance[$_mid] = new $_str_mdl($option); //实例化模型
+            return static::$instance[$_mid];
         } else {
             $_obj_excpt = new Exception('Model not found', 500);
             $_obj_excpt->setData('err_detail', $_str_mdl);
@@ -203,8 +203,8 @@ class Loader {
 
         if (class_exists($_str_vld)) {
             $_vid = md5($_str_vld);
-            self::$instance[$_vid] = new $_str_vld($option); //实例化模型
-            return self::$instance[$_vid];
+            static::$instance[$_vid] = new $_str_vld($option); //实例化模型
+            return static::$instance[$_vid];
         } else {
             $_obj_excpt = new Exception('Validator not found', 500);
             $_obj_excpt->setData('err_detail', $_str_vld);
@@ -235,8 +235,8 @@ class Loader {
 
         if (class_exists($_str_class)) {
             $_oid = md5($_str_class);
-            self::$instance[$_oid] = new $_str_class($option); //实例化类
-            return self::$instance[$_oid];
+            static::$instance[$_oid] = new $_str_class($option); //实例化类
+            return static::$instance[$_oid];
         } else {
             $_obj_excpt = new Exception('Class not found', 500);
             $_obj_excpt->setData('err_detail', $_str_class);
@@ -334,7 +334,7 @@ class Loader {
     public static function clearInstance() {
         Plugin::listen('action_fw_end'); //运行结束时触发
 
-        self::$instance = array();
+        static::$instance = array();
     }
 
     /**

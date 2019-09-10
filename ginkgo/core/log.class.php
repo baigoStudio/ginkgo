@@ -15,10 +15,10 @@ class Log {
     private static $log;
     private static $init;
 
-    private function __construct() {
+    protected function __construct() {
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 

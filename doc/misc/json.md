@@ -26,7 +26,7 @@ function encode( $arr [, $encode = false] )
 * `encode` 编码方式，对待编码的数组用指定的方式对键值进行编码
 
     可能的值
-    
+
     | 值 | 描述 |
     | - | - |
     | 空（默认值） | 不进行编码 |
@@ -49,7 +49,7 @@ function decode( $json [, $assoc = true] )
 参数
 
 * `json` JSON 字符串
-* `assoc` JSON 字符串
+* `assoc` 是否返回 array
     当该参数为 true 时，将返回 array 否则为 object
 
 返回
@@ -67,4 +67,4 @@ function getError()
 返回
 
 * 获取 JSON 处理时产生的错误消息
-    
+

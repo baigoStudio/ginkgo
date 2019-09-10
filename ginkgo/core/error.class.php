@@ -46,11 +46,11 @@ class Error {
     private static $obj_request;
     private static $suffix = GK_EXT_TPL; // 默认模板文件后缀
 
-    private function __construct() {
+    protected function __construct() {
 
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 

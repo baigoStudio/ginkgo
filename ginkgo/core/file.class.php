@@ -12,8 +12,8 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------文件操作类-------------*/
 class File {
 
-    private static $instance;
-    private $error;
+    protected static $instance;
+    protected $error;
     protected $rule = 'md5';
     protected $mimeRows = array();
     protected $fileInfo = array(
@@ -24,20 +24,20 @@ class File {
         'size'      => 0,
     );
 
-    private function __construct() {
+    protected function __construct() {
 
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance() {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self();
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**

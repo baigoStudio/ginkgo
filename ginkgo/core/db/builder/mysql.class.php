@@ -14,7 +14,7 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------数据库类-------------*/
 class Mysql {
 
-    private static $instance;
+    protected static $instance;
     private $dbconfig;
 
     // 查询对象实例
@@ -58,19 +58,19 @@ class Mysql {
     );
 
 
-    private function __construct($dbconfig = array()) {
+    protected function __construct($dbconfig = array()) {
         $this->config($dbconfig);
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($dbconfig = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($dbconfig);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($dbconfig);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
 

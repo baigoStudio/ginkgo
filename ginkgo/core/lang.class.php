@@ -11,135 +11,160 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Lang {
 
-    private static $instance;
-    private static $lang;
-    private static $config;
-    private static $current; //默认语言
-    private static $clientLang; //客户端语言
-    private static $route;
-    private static $range = '';
+    protected static $instance;
+    private $lang;
+    private $config;
+    private $current; //默认语言
+    private $clientLang; //客户端语言
+    private $route;
+    private $range = '';
 
-    private function __construct() {
-        self::$config = Config::get('lang');
+    protected function __construct() {
+        $this->config = Config::get('lang');
 
         $this->getCurrent();
         $this->loadSys();
     }
 
-    private function __clone() {
+    protected function __clone() {
 
+    }
+
+    public static function instance() {
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
     }
 
     public function range($range = '') {
         if (Func::isEmpty($range)) {
-            return self::$range;
+            return $this->range;
         } else {
-            self::$range = $range;
+            $this->range = $range;
         }
-    }
-
-    public static function instance() {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
     //获取当前语言
     function getCurrent() {
-        if (!Func::isEmpty(self::$config['switch'])) { //语言开关为开
+        if (!Func::isEmpty($this->config['switch'])) { //语言开关为开
             if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-                self::$clientLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+                $this->clientLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
             }
         }
 
-        if (Func::isEmpty(self::$current)) {
-            self::$current = self::$config['default'];
+        if (Func::isEmpty($this->current)) {
+            $this->current = $this->config['default'];
         }
 
-        //print_r(self::$current);
+        //print_r($this->current);
 
         mb_internal_encoding('UTF-8'); //设置内部字符编码
-        setlocale(LC_ALL, self::$current . '.UTF-8'); //设置区域格式,主要针对 csv 处理
+        setlocale(LC_ALL, $this->current . '.UTF-8'); //设置区域格式,主要针对 csv 处理
 
-        return self::$current;
+        return $this->current;
     }
 
 
     function setCurrent($lang = '') {
-        self::$current = $lang;
+        $this->current = $lang;
+    }
+
+
+    function add($name, $value = '', $range = '') {
+        $_mix_range = $this->rangeProcess($range);
+
+        if (Func::isEmpty($_mix_range)) {
+            if (!isset($this->lang[$name])) {
+                $this->lang[$name] = $value;
+            }
+        } else if (is_array($_mix_range)) {
+            if (isset($_mix_range[1])) {
+                if (!isset($this->lang[$_mix_range[0]][$_mix_range[1]][$name])) {
+                    $this->lang[$_mix_range[0]][$_mix_range[1]][$name] = $value;
+                }
+            } else if (isset($_mix_range[0])) {
+                if (!isset($this->lang[$_mix_range[0]][$name])) {
+                    $this->lang[$_mix_range[0]][$name] = $value;
+                }
+            }
+        } else if (is_string($_mix_range)) {
+            if (!isset($this->lang[$_mix_range][$name])) {
+                $this->lang[$_mix_range][$name] = $value;
+            }
+        }
     }
 
 
     function set($name, $value = '', $range = '') { //设置语言字段
-        $_mix_range = self::rangeProcess($range);
+        $_mix_range = $this->rangeProcess($range);
 
         /*print_r($name);
         print_r('<br>');*/
 
         if (Func::isEmpty($_mix_range)) {
             if (is_array($name)) {
-                self::$lang = array_replace_recursive(self::$lang, $name);
+                $this->lang = array_replace_recursive($this->lang, $name);
             } else if (is_string($name)) {
-                if (isset(self::$lang[$name])) {
-                    self::$lang[$name] = array_replace_recursive(self::$lang[$name], $value);
+                if (isset($this->lang[$name]) && is_array($this->lang[$name]) && is_array($value)) {
+                    $this->lang[$name] = array_replace_recursive($this->lang[$name], $value);
                 } else {
-                    self::$lang[$name] = $value;
+                    $this->lang[$name] = $value;
                 }
             }
         } else if (is_array($_mix_range)) {
             if (is_array($name)) {
                 if (isset($_mix_range[1])) {
-                    if (isset(self::$lang[$_mix_range[0]][$_mix_range[1]])) {
-                        self::$lang[$_mix_range[0]][$_mix_range[1]] = array_replace_recursive(self::$lang[$_mix_range[0]][$_mix_range[1]], $name);
+                    if (isset($this->lang[$_mix_range[0]][$_mix_range[1]]) && is_array($this->lang[$_mix_range[0]][$_mix_range[1]])) {
+                        $this->lang[$_mix_range[0]][$_mix_range[1]] = array_replace_recursive($this->lang[$_mix_range[0]][$_mix_range[1]], $name);
                     } else {
-                        self::$lang[$_mix_range[0]][$_mix_range[1]] = $name;
+                        $this->lang[$_mix_range[0]][$_mix_range[1]] = $name;
                     }
                 } else if (isset($_mix_range[0])) {
-                    if (isset(self::$lang[$_mix_range[0]])) {
-                        self::$lang[$_mix_range[0]] = array_replace_recursive(self::$lang[$_mix_range[0]], $name);
+                    if (isset($this->lang[$_mix_range[0]]) && is_array($this->lang[$_mix_range[0]])) {
+                        $this->lang[$_mix_range[0]] = array_replace_recursive($this->lang[$_mix_range[0]], $name);
                     } else {
-                        self::$lang[$_mix_range[0]] = $name;
+                        $this->lang[$_mix_range[0]] = $name;
                     }
                 }
             } else if (is_string($name)) {
                 if (isset($_mix_range[1])) {
-                    if (isset(self::$lang[$_mix_range[0]][$_mix_range[1]][$name]) && is_array($value)) {
-                        self::$lang[$_mix_range[0]][$_mix_range[1]][$name] = array_replace_recursive(self::$lang[$_mix_range[0]][$_mix_range[1]][$name], $value);
+                    if (isset($this->lang[$_mix_range[0]][$_mix_range[1]][$name]) && is_array($this->lang[$_mix_range[0]][$_mix_range[1]][$name]) && is_array($value)) {
+                        $this->lang[$_mix_range[0]][$_mix_range[1]][$name] = array_replace_recursive($this->lang[$_mix_range[0]][$_mix_range[1]][$name], $value);
                     } else {
-                        self::$lang[$_mix_range[0]][$_mix_range[1]][$name] = $value;
+                        $this->lang[$_mix_range[0]][$_mix_range[1]][$name] = $value;
                     }
                 } else if (isset($_mix_range[0])) {
-                    if (isset(self::$lang[$_mix_range[0]][$name]) && is_array($value)) {
-                        self::$lang[$_mix_range[0]][$name] = array_replace_recursive(self::$lang[$_mix_range[0]][$name], $value);
+                    if (isset($this->lang[$_mix_range[0]][$name]) && is_array($this->lang[$_mix_range[0]][$name]) && is_array($value)) {
+                        $this->lang[$_mix_range[0]][$name] = array_replace_recursive($this->lang[$_mix_range[0]][$name], $value);
                     } else {
-                        self::$lang[$_mix_range[0]][$name] = $value;
+                        $this->lang[$_mix_range[0]][$name] = $value;
                     }
                 }
             }
         } else if (is_string($_mix_range)) {
             if (is_array($name)) {
-                if (isset(self::$lang[$_mix_range])) {
-                    self::$lang[$_mix_range] = array_replace_recursive(self::$lang[$_mix_range], $name);
+                if (isset($this->lang[$_mix_range]) && is_array($this->lang[$_mix_range])) {
+                    $this->lang[$_mix_range] = array_replace_recursive($this->lang[$_mix_range], $name);
                 } else {
-                    self::$lang[$_mix_range] = $name;
+                    $this->lang[$_mix_range] = $name;
                 }
             } else {
-                if (isset(self::$lang[$_mix_range][$name]) && is_array($value)) {
-                    self::$lang[$_mix_range][$name] = array_replace_recursive(self::$lang[$_mix_range][$name], $value);
+                if (isset($this->lang[$_mix_range][$name]) && is_array($this->lang[$_mix_range][$name]) && is_array($value)) {
+                    $this->lang[$_mix_range][$name] = array_replace_recursive($this->lang[$_mix_range][$name], $value);
                 } else {
-                    self::$lang[$_mix_range][$name] = $value;
+                    $this->lang[$_mix_range][$name] = $value;
                 }
             }
         }
 
-        //print_r(self::$lang);
+        //print_r($this->lang);
     }
 
     function get($name, $range = '', $replace = array(), $show_key = true) { //获取语言字段
         $name = (string)$name;
 
-        $_mix_range     = self::rangeProcess($range);
+        $_mix_range     = $this->rangeProcess($range);
 
         /*print_r($name);
         print_r(' ||| ');
@@ -153,22 +178,22 @@ class Lang {
         }
 
         if (Func::isEmpty($_mix_range)) {
-            if (isset(self::$lang[$name])) {
-                $_str_return = self::$lang[$name];
+            if (isset($this->lang[$name])) {
+                $_str_return = $this->lang[$name];
             }
         } else if (is_array($_mix_range)) {
             if (isset($_mix_range[1])) {
-                if (isset(self::$lang[$_mix_range[0]][$_mix_range[1]][$name])) {
-                    $_str_return = self::$lang[$_mix_range[0]][$_mix_range[1]][$name];
+                if (isset($this->lang[$_mix_range[0]][$_mix_range[1]][$name])) {
+                    $_str_return = $this->lang[$_mix_range[0]][$_mix_range[1]][$name];
                 }
             } else if (isset($_mix_range[0])) {
-                if (isset(self::$lang[$_mix_range[0]][$name])) {
-                    $_str_return = self::$lang[$_mix_range[0]][$name];
+                if (isset($this->lang[$_mix_range[0]][$name])) {
+                    $_str_return = $this->lang[$_mix_range[0]][$name];
                 }
             }
         } else if (is_string($_mix_range)) {
-            if (isset(self::$lang[$_mix_range][$name])) {
-                $_str_return = self::$lang[$_mix_range][$name];
+            if (isset($this->lang[$_mix_range][$name])) {
+                $_str_return = $this->lang[$_mix_range][$name];
             }
         }
 
@@ -201,17 +226,17 @@ class Lang {
 
 
     private function loadSys() {
-        $_str_pathSys = GK_PATH_LANG . self::$current . GK_EXT_LANG;
+        $_str_pathSys = GK_PATH_LANG . $this->current . GK_EXT_LANG;
 
         if (Func::isFile($_str_pathSys)) {
-            self::$lang['__ginkgo__'] = Loader::load($_str_pathSys, 'include');
+            $this->lang['__ginkgo__'] = Loader::load($_str_pathSys, 'include');
         }
     }
 
 
-    private static function rangeProcess($range = '') {
+    private function rangeProcess($range = '') {
         if (Func::isEmpty($range)) {
-            $_str_range = self::$range;
+            $_str_range = $this->range;
         } else {
             $_str_range = $range;
         }

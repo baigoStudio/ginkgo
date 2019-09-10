@@ -23,7 +23,7 @@
 另外还可以通过 `app/config/plugin.inc.php` 文件来定义，系统会自动加载，此文件定义优先。
 
 ``` php
-return 'plugin' => array(    
+return array(    
     'hello',
     'example',
 );

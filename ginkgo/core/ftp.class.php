@@ -14,12 +14,12 @@ defined('IN_GINKGO') or exit('Access Denied');
 */
 class Ftp {
 
-    private static $instance;
+    protected static $instance;
     private $config;
-    private $error;
+    protected $error;
     public $obj_conn; //FTP连接
 
-    private function __construct($config = array()) {
+    protected function __construct($config = array()) {
         $this->config = Config::get('ftp', 'var_extra');
 
         if (!Func::isEmpty($config)) {
@@ -27,15 +27,15 @@ class Ftp {
         }
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($config);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
 

@@ -12,7 +12,7 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------文件操作类-------------*/
 class Cache {
 
-    private static $instance;
+    protected static $instance;
     public $obj_driver;
 
     private $config;
@@ -29,15 +29,15 @@ class Cache {
         $this->driver($type, $this->config);
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($type = 'file', $config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($type, $config);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($type, $config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     public function prefix($prefix = '') {

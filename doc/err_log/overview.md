@@ -8,11 +8,11 @@
 
 在调试模式下，系统默认展示的异常页面：
 
-![在调试模式下](http://doc.baigo.net/markdown/zh_cn/ginkgo/err_log/exception_dump.png "img-fluid")
+![在调试模式下](exception_dump.png){.img-fluid .bg-img}
 
 只有在调试模式下面才能显示详细的错误信息，如果调试模式被关闭，看到的可能是简单的提示，例如：
 
-![在部署模式下](http://doc.baigo.net/markdown/zh_cn/ginkgo/err_log/exception.png "img-fluid")
+![在部署模式下](exception.png){.img-fluid .bg-img}
 
 可以通过配置参数来自定义的异常页面模板：
 

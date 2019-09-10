@@ -79,7 +79,7 @@ $smtp->send();
 
     ``` php
     $smtp = Smtp::instance();
-    
+
     $smtp->addRcpt('baigo@baigo.net'); // 支持多个收件人
     $smtp->addRcpt('fone@baigo.net', 'fone'); // 支持定义收件人名
     ```

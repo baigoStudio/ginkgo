@@ -15,7 +15,7 @@ Trace 调试功能就是提供给开发人员的调试辅助工具。可以实�
 
 Trace 调试开启后，如果有页面输出，会显示如下情况：
 
-![Trace 调试](http://doc.baigo.net/markdown/zh_cn/ginkgo/debug/trace.png "img-fluid")
+![Trace 调试](trace.png){.img-fluid .bg-img}
 
 Trace 框有 6 个选项卡，分别是 Base、Debug backtrace、Include files、SQL 和 Error，点击不同的选项卡可以切换不同的 Trace 信息。
 

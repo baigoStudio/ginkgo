@@ -3,18 +3,18 @@
 系统默认的配置目录为 `GK_PATH_APP` 的 `config` 目录下，分为应用配置和模块配置，模块配置位于各模块目录下。
 
     +-- app 应用目录（可设置）
-    |  +-- config                    配置目录
-    |  |  +-- config.inc.php         应用配置
-    |  |  +-- dbconfig.inc.php       数据库配置
-    |  |  +-- extra_smtp.inc.php     smtp 配置
-    |  |  +-- extra_upload.inc.php   上传配置
-    |  |  +-- extra_ftp.inc.php      ftp 分发配置
-    |  |  +-- module1                模块1（示例）
-    |  |  |  +-- common.inc.php      模块1 公用配置
-    |  |  |  +--  ...                更多配置
-    |  |  |
-    |  |  +-- module2                模块2（示例）
-    |  |  +--  ...                   更多模块
+    |   +-- config                      配置目录
+    |   |   +-- config.inc.php          应用配置
+    |   |   +-- dbconfig.inc.php        数据库配置
+    |   |   +-- extra_smtp.inc.php      smtp 配置
+    |   |   +-- extra_upload.inc.php    上传配置
+    |   |   +-- extra_ftp.inc.php       ftp 分发配置
+    |   |   +-- module1                 模块1（示例）
+    |   |   |   +-- common.inc.php      模块1 公用配置
+    |   |   |   +--  ...                更多配置
+    |   |   |
+    |   |   +-- module2                 模块2（示例）
+    |   |   +--  ...                    更多模块
 
 如果希望更改配置目录的位置，可以在入口文件中定义配置目录的位置，添加 `GK_APP_CONFIG` 常量定义即可，例如：
 

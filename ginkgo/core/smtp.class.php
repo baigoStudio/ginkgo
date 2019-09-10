@@ -12,18 +12,18 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------邮件类-------------*/
 class Smtp {
 
-    private static $instance;
+    protected static $instance;
     private $config;
     private $rcpt;
     private $reply;
     private $subject;
     private $content;
     private $contentAlt;
-    private $error;
+    protected $error;
     private $crlf = "\r\n";
     private $le = "\n";
 
-    private function __construct($config = array()) {
+    protected function __construct($config = array()) {
         $this->config = Config::get('smtp', 'var_extra');
 
         if (!Func::isEmpty($config)) {
@@ -33,15 +33,15 @@ class Smtp {
         $this->obj_request = Request::instance();
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($config);
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static($config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     function connect() {

@@ -17,14 +17,14 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------文件操作类-------------*/
 class File extends File_Base {
 
-    private static $instance;
+    protected static $instance;
 
     private $this_config = array(
         'prefix'    => '',
         'life_time' => 1200,
     );
 
-    private function __construct($config = array()) {
+    protected function __construct($config = array()) {
         $_arr_config  = Config::get('cache');
 
         $this->config = array_replace_recursive($this->this_config, $_arr_config);
@@ -34,15 +34,16 @@ class File extends File_Base {
         }
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
-    public static function instance($config = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($config);
+    public static function instance() {
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
-        return self::$instance;
+
+        return static::$instance;
     }
 
     public function prefix($prefix = '') {

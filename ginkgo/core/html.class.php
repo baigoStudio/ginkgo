@@ -18,13 +18,13 @@ class Html { // class start
     private $attrExcept    = array(); // 特例 例如:array('a'=>array('href','class'),'span'=>array('class'))
     private $attrIgnore    = array(); // 忽略过滤的标记 例如:array('span','img')
 
-    private static $instance; //用静态属性保存实例
+    protected static $instance; //用静态属性保存实例
 
-    private function __construct() {
+    protected function __construct() {
 
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
@@ -37,10 +37,10 @@ class Html { // class start
      * @return void
      */
     public static function instance() {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self();
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
-        return self::$instance;
+        return static::$instance;
     }
 
 

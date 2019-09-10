@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class View {
 
-    private static $instance;
+    protected static $instance;
     private $obj_engine;
     private $data = array();
     private $replace  = array();
@@ -28,15 +28,15 @@ class View {
         $this->obj_request  = Request::instance();
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance($engine = 'php', $config = array()) {
-        if (is_null(self::$instance)) {
-            self::$instance = new self($engine, $config);
+        if (is_null(static::$instance)) {
+            static::$instance = new static($engine, $config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     public function engine($engine = 'php', $config = array()) {

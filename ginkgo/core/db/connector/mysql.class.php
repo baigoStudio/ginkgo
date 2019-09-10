@@ -16,15 +16,6 @@ defined('IN_GINKGO') or exit('Access denied');
 /*-------------数据库类-------------*/
 class Mysql extends Connector {
 
-    private static $instance;
-
-    public static function instance($dbconfig = array()) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($dbconfig);
-        }
-        return self::$instance;
-    }
-
     function insertId() {
         $_num_id        = 0;
 

@@ -13,6 +13,7 @@ class Crypt {
 
     private static $init;
     private static $keyPub;
+    private static $error;
 
     static function init() {
         $_str_pathKey = GK_PATH_DATA . 'key_pub' . GK_EXT_INC;
@@ -81,18 +82,13 @@ class Crypt {
      */
     static function encrypt($string, $key, $iv) {
         if (strlen($iv) != 16) {
-            return array(
-                'error' => 'Size of Secret code must be 16',
-            );
+            static::$error = 'Size of Secret code must be 16';
+            return false;
         }
 
-        $_str_encrypt   = openssl_encrypt($string, 'AES-128-CBC', $key, 1, $iv);
+        $_str_encrypt = openssl_encrypt($string, 'AES-128-CBC', $key, 1, $iv);
 
-        $_str_encrypt   = Base64::encode($_str_encrypt);
-
-        return array(
-            'encrypt' => $_str_encrypt,
-        );
+        return Base64::encode($_str_encrypt);
     }
 
 
@@ -107,17 +103,17 @@ class Crypt {
      */
     static function decrypt($string, $key, $iv) {
         if (strlen($iv) != 16) {
-            return array(
-                'error' => 'Size of Secret code must be 16',
-            );
+            static::$error = 'Size of Secret code must be 16';
+            return false;
         }
 
-        $string         = Base64::decode($string);
+        $string = Base64::decode($string);
 
-        $_str_decrypt   = openssl_decrypt($string, 'AES-128-CBC', $key, 1, $iv);
+        return openssl_decrypt($string, 'AES-128-CBC', $key, 1, $iv);
+    }
 
-        return array(
-            'decrypt' => $_str_decrypt,
-        );
+
+    static function getError() {
+        return static::$error;
     }
 }

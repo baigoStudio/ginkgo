@@ -12,7 +12,7 @@ defined('IN_GINKGO') or exit('Access denied');
 /*------会话模型------*/
 class Session {
 
-    private static $instance;
+    protected static $instance;
     private static $init;
 
     private static $this_config = array(
@@ -23,11 +23,11 @@ class Session {
 
     private static $prefix = '';
 
-    private function __construct() {
+    protected function __construct() {
     }
 
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 

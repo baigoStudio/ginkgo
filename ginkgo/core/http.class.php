@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Http extends File {
 
-    private static $instance;
+    protected static $instance;
 
     private $header = array(
         'Content-Type'  => 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -24,26 +24,28 @@ class Http extends File {
     private $accept = 'application/json';
     private $result;
     private $customRequest;
-    private $error;
     private $errno;
     private $statusCode;
     private $sizeTemp = 0;
 
-    private function __construct($port = '') {
+    protected function __construct($port = '') {
         $this->curl  = curl_init();
         $this->port  = $port;
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
-    public static function instance($port = 80) {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self($port);
+
+    public static function instance() {
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
-        return self::$instance;
+
+        return static::$instance;
     }
+
 
     /** http 函数
      * fn_http function.

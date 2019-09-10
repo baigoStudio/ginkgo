@@ -11,7 +11,7 @@ defined('IN_GINKGO') or exit('Access denied');
 
 class Cookie {
 
-    private static $instance;
+    protected static $instance;
 
     private static $this_config = array(
         'prefix'    => '', // cookie 名称前缀
@@ -28,11 +28,11 @@ class Cookie {
 
     private static $init;
 
-    private function __construct() {
+    protected function __construct() {
     }
 
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 

@@ -9,10 +9,10 @@
 缓存在使用之前，需要进行连接操作，也就是缓存初始化操作。
 
 ``` php
-$config = array(    
-    'type'      => 'file', // 缓存类型为 file    
-    'life_time' => 0, // 缓存生命周期为永久有效    
-    'prefix'    => 'ginkgo', //缓存前缀     
+$config = array(
+    'type'      => 'file', // 缓存类型为 file
+    'life_time' => 0, // 缓存生命周期为永久有效
+    'prefix'    => 'ginkgo', //缓存前缀
 );
 $cache = Cache::instance($config);
 ```
@@ -20,10 +20,10 @@ $cache = Cache::instance($config);
 或者通过定义配置参数的方式，在配置文件中添加：
 
 ``` php
-'cache' => array(    
-    'type'      => 'file', // 缓存类型为 file    
-    'life_time' => 0, // 缓存生命周期为永久有效    
-    'prefix'    => 'ginkgo', //缓存前缀     
+'cache' => array(
+    'type'      => 'file', // 缓存类型为 file
+    'life_time' => 0, // 缓存生命周期为永久有效
+    'prefix'    => 'ginkgo', //缓存前缀
 ),
 ```
 
@@ -68,7 +68,7 @@ $cache->driver('org\cache\file')->read('name');
     $cache->write('name', $value);
     $cache->write('name', $value, 3600); // 有效期一个小时
     ```
-    
+
     返回写入字节数
 
 * 读取缓存
@@ -76,7 +76,7 @@ $cache->driver('org\cache\file')->read('name');
     ``` php
     $cache->read('name');
     ```
-    
+
     如果 name 值不存在，则默认返回空。
 
 * 删除缓存

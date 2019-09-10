@@ -25,7 +25,7 @@ echo 'url: ' . $request->url() . '<br>';
 // 获取当前 URL 地址（包含域名）
 echo 'url with domain: ' . $request->url(true) . '<br>';
 
-// 获取当前URL地址 不含 QUERY_STRING
+// 获取当前 URL 地址 不含 QUERY_STRING
 echo 'url without query: ' . $request->baseUrl() . '<br>';
 
 // 获取 URL 访问的 ROOT 地址

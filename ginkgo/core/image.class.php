@@ -12,8 +12,8 @@ defined('IN_GINKGO') or exit('Access Denied');
 /*-------------上传类-------------*/
 class Image extends File {
 
-    private static $instance;
-    private $error;
+    protected static $instance;
+
 	private $res_imgSrc;
 	private $pathSrc;
 	private $pathDst = array();
@@ -26,21 +26,22 @@ class Image extends File {
         'ext'    => '',
     );
 
-    private function __construct() {
+    protected function __construct() {
         $_arr_config        = Config::get('image');
         $this->mimeRows     = $_arr_config;
         $this->imageExts    = array_keys($_arr_config);
     }
 
-    private function __clone() {
+    protected function __clone() {
 
     }
 
     public static function instance() {
-        if (Func::isEmpty(self::$instance)) {
-            self::$instance = new self();
+        if (Func::isEmpty(static::$instance)) {
+            static::$instance = new static();
         }
-        return self::$instance;
+
+        return static::$instance;
     }
 
     public function open($path_src) {
