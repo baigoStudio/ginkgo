@@ -28,7 +28,7 @@ define('GK_PATH_APP', __DIR__ . '/../app/'); //应用目录
 require(__DIR__ . '/../ginkgo/boot.php');
 ```
     
-如果只想改变应用目录的名称，也可以添加 `GK_NAME_APP` 常量定义，例如：
+如果只想变更应用目录的名称，也可以添加 `GK_NAME_APP` 常量定义，例如：
 
 ``` php
 // 定义配置目录

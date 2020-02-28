@@ -26,7 +26,7 @@ define('GK_APP_CONFIG', __DIR__ . '/../config/');
 require(__DIR__ . '/../ginkgo/boot.php');
 ```
     
-如果只想改变配置目录的名称，也可以添加 `GK_NAME_CONFIG` 常量定义，例如：
+如果只想变更配置目录的名称，也可以添加 `GK_NAME_CONFIG` 常量定义，例如：
 
 ``` php
 // 定义配置目录

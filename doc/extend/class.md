@@ -158,7 +158,7 @@ $foo = new Foo();
 define('GK_PATH_EXTEND', __DIR__ . '/../extension/'); //应用目录
 ```
     
-如果只想改变 extend 目录的名称，也可以添加 `GK_NAME_EXTEND` 常量定义，例如：
+如果只想变更 extend 目录的名称，也可以添加 `GK_NAME_EXTEND` 常量定义，例如：
 
 ``` php
 // 定义配置目录
