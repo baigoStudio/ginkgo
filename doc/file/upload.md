@@ -1,6 +1,6 @@
 ## 上传文件
 
-上传文件功能由 `ginkgo\Upload` 完成，内置的上传是指上传到本地服务器，上传到远程或者第三方平台可以查看 `杂项 -> FTP` 章节，或者另行扩展。
+上传文件功能由 `ginkgo\Upload` 完成，内置的上传是指上传到本地服务器，上传到远程或者第三方平台请查看 [杂项 -> FTP](../misc/ftp.md)，或另行扩展。
 
 假设表单代码如下：
 
@@ -45,14 +45,13 @@ class Index {
 `create` 方法在上传失败返回 false，上传成功返回一个数组，结构如下
 
 ``` php
-Array
-(
-    'name'      => '001.jpg' // 原始文件名
-    'tmp_name'  => '/tmp/php3zU3t5' // 临时文件
-    'ext'       => 'jpg' // 扩展名
-    'mime'      => 'image/jpeg' // MIME
-    'size'      => 31059 // 文件大小
-)
+array(
+    'name'      => '001.jpg', // 原始文件名
+    'tmp_name'  => '/tmp/php3zU3t5', // 临时文件
+    'ext'       => 'jpg', // 扩展名
+    'mime'      => 'image/jpeg', // MIME
+    'size'      => 31059, // 文件大小
+);
 ```
 
 ----------

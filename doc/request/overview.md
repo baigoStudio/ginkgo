@@ -138,9 +138,8 @@ print_r($request->getParam());
     访问ip地址：127.0.0.1
     是否Ajax请求：false
     请求参数：
-    Array
-    (
-        'test' => ddd
-        'name' => ginkgo
-    )
+    array (
+        'test' => ddd,
+        'name' => ginkgo,
+    );
       

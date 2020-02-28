@@ -95,7 +95,7 @@ $image->thumb(150, 150, 'crop')->save(false, 'thumb.png');
 
 缩略图的两种生成方式说明
 
-![缩略图的两种生成方式说明](thumb_note.jpg){.img-fluid .bg-img}
+![缩略图的两种生成方式说明](thumb.jpg){.img-fluid .bg-img}
 
 支持批量生成缩略图，如：
 

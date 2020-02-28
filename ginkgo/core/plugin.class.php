@@ -136,16 +136,17 @@ class Plugin {
                 }
 
 
-                $_str_configPath = GK_PATH_PLUGIN . $_str_dir . DS . 'config' . GK_EXT_INC;
+                $_str_configPath = GK_PATH_PLUGIN . $_str_dir . DS . 'config.json';
 
                 if (Func::isFile($_str_configPath)) {
-                    $_arr_config = Loader::load($_str_configPath); //定义配置
+                    $_str_pluginConfig  = $_obj_file->fileRead($_str_configPath);
+                    $_arr_pluginConfig  = Json::decode($_str_pluginConfig);
                 } else {
-                    $_arr_config = array();
+                    $_arr_pluginConfig = array();
                 }
 
-                if (isset($_arr_config['class']) && !Func::isEmpty($_arr_config['class'])) {
-                    $_str_class = $_arr_config['class'];
+                if (isset($_arr_pluginConfig['class']) && !Func::isEmpty($_arr_pluginConfig['class'])) {
+                    $_str_class = $_arr_pluginConfig['class'];
                 } else {
                     $_str_class = $_str_dir;
                 }
@@ -161,11 +162,11 @@ class Plugin {
                     $_pid = md5($_str_plugin);
                     static::$instance[$_pid] = new $_str_plugin(); //实例化
 
-                    if (!Func::isEmpty($_arr_config)) {
-                        static::$instance[$_pid]->config = $_arr_config;
+                    if (!Func::isEmpty($_arr_pluginConfig)) {
+                        static::$instance[$_pid]->config = $_arr_pluginConfig;
                     }
 
-                    $_str_optsPath   = GK_PATH_PLUGIN . $_str_dir . DS . 'opts.json';
+                    $_str_optsPath   = GK_PATH_PLUGIN . $_str_dir . DS . 'opts_var.json';
 
                     if (Func::isFile($_str_optsPath)) {
                         $_str_pluginOpts  = $_obj_file->fileRead($_str_optsPath);

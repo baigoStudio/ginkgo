@@ -123,7 +123,7 @@ $request->request(false); // 获取所有的 request 变量（原始）
 
 ##### 获取 PARAM 变量
 
-PARAM 变量是框架提供的用于优化 URL 的变量，详情请查看 `架构 -> URL 访问` 章节
+PARAM 变量是框架提供的用于优化 URL 的变量，详情请查看 [架构 -> URL 访问](../construct/url.md)。
 
 ``` php
 $request = Request::instance();

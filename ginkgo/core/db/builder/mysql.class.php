@@ -116,7 +116,7 @@ class Mysql {
 
 
     function insert($field, $value = '', $param = '', $type = '') {
-        $_arr_result = $this->update($field, $value, $param, $type);
+        $_arr_result = $this->update($field, $value, $param, $type, 'insert');
 
         return array(
             'insert' => $_arr_result['update'],
@@ -125,7 +125,7 @@ class Mysql {
     }
 
 
-    function update($field, $value = '', $param = '', $type = '') {
+    function update($field, $value = '', $param = '', $type = '', $from = 'update') {
         $_str_update    = '';
         $_arr_bind      = array();
         $_arr_condition = array();
@@ -145,12 +145,12 @@ class Mysql {
                         $_value[2] = '';
                     }
 
-                    $_arr_condition[$_key]  = $this->buildUpdate($_key, $_value[1], $_value[0]);
-                    $_arr_bind[]            = $this->buildBind($_key, $_value[0], $_value[1], $_value[2]);
+                    $_arr_condition[$_key]  = $this->buildUpdate($_key, $_value[1], $_value[0], $from);
+                    $_arr_bind[]            = $this->buildBind($_key, $_value[0], $from, $_value[1], $_value[2]);
 
                 } else if (is_scalar($_value)) {
-                    $_arr_condition[$_key]  = $this->buildUpdate($_key, $_key, $_value);
-                    $_arr_bind[]            = $this->buildBind($_key, $_value);
+                    $_arr_condition[$_key]  = $this->buildUpdate($_key, $_key, $_value, $from);
+                    $_arr_bind[]            = $this->buildBind($_key, $_value, $from);
                 }
             }
 
@@ -159,8 +159,8 @@ class Mysql {
             if (Func::isEmpty($value)) {
                 $_str_update = $field;
             } else {
-                $_str_update = $this->buildUpdate($field, $param, $value);
-                $_arr_bind   = $this->buildBind($field, $value, $param, $type);
+                $_str_update = $this->buildUpdate($field, $param, $value, $from);
+                $_arr_bind   = $this->buildBind($field, $value, $from, $param, $type);
             }
         }
 
@@ -274,9 +274,9 @@ class Mysql {
                                     $_value[5]   = $this->inArrayProcess($_value[5], 'logic');
 
                                     if ($this->isSpecBind($_value[2], $_value[1])) {
-                                        $_arr_bind = $this->buildBind($_value[0], $_value[2], $_value[3], $_value[4], $_value[1], $_arr_bind);
+                                        $_arr_bind = $this->buildBind($_value[0], $_value[2], 'where', $_value[3], $_value[4], $_value[1], $_arr_bind);
                                     } else {
-                                        $_arr_bind[] = $this->buildBind($_value[0], $_value[2], $_value[3], $_value[4], $_value[1]);
+                                        $_arr_bind[] = $this->buildBind($_value[0], $_value[2], 'where', $_value[3], $_value[4], $_value[1]);
                                     }
 
                                     if (Func::isEmpty($_str_where)) {
@@ -311,7 +311,7 @@ class Mysql {
                         $_str_where = $this->buildWhere($where[0], $where[1], $where[3], $where[2]);
                     }
 
-                    $_arr_bind = $this->buildBind($where[0], $where[2], $where[3], $where[4], $where[1]);
+                    $_arr_bind = $this->buildBind($where[0], $where[2], 'where', $where[3], $where[4], $where[1]);
                 }
             }
         } else if (is_scalar($where)) {
@@ -324,7 +324,7 @@ class Mysql {
                     $_str_where = $this->buildWhere($where, $exp, $param, $value);
                 }
 
-                $_arr_bind = $this->buildBind($where, $value, $param, $type, $exp);
+                $_arr_bind = $this->buildBind($where, $value, 'where', $param, $type, $exp);
             }
         }
 
@@ -405,11 +405,15 @@ class Mysql {
 
 
     function fieldProcess($field) {
-        if (strpos($field, '.')) {
-            $_arr_field  = explode('.', $field);
-            $_str_field  = $this->table($_arr_field[0]) . '.' . $this->addChar($_arr_field[1]);
+        if (strpos($field, '(') !== false || strpos($field, '`') !== false) {
+            $_str_field = $field;
         } else {
-            $_str_field  = $this->addChar($field);
+            if (strpos($field, '.')) {
+                $_arr_field = explode('.', $field);
+                $_str_field = $this->table($_arr_field[0]) . '.' . $this->addChar($_arr_field[1]);
+            } else {
+                $_str_field = $this->addChar($field);
+            }
         }
 
         return $_str_field;
@@ -445,7 +449,7 @@ class Mysql {
     }
 
 
-    private function buildUpdate($field, $param = '', $value = '') {
+    private function buildUpdate($field, $param = '', $value = '', $from = 'update') {
         $_str_update = '';
 
         if (Func::isEmpty($param)) {
@@ -455,7 +459,7 @@ class Mysql {
         $field = $this->addChar($field);
 
         if (!Func::isEmpty($field)) {
-            $param = $this->paramChar($param);
+            $param = $this->paramChar($param, true, $from);
 
             if (!Func::isEmpty($value)) {
                 if (strpos($value, '(') !== false || strpos($value, '`') !== false) {
@@ -557,7 +561,7 @@ class Mysql {
                         $_arr_param = array();
 
                         foreach ($value as $_key_sub=>$_value_sub) {
-                            $_arr_param[] = $this->paramChar($_str_param . '_' . $_key_sub);
+                            $_arr_param[] = $this->paramChar($_str_param . '_' . $_key_sub, true, 'where');
                         }
 
                         $_str_param = implode(',', $_arr_param);
@@ -565,7 +569,7 @@ class Mysql {
                         $_str_where = $field . ' ' . $exp . ' (' . $_str_param . ')';
                     } else if (is_scalar($value)) {
                         if (strpos($value, '(') === false && strpos($value, '`') === false) {
-                            $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param) . ')';
+                            $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param, true, 'where') . ')';
                         } else if (strpos($value, '(')) {
                             $_str_where = $field . ' ' . $exp . $value;
                         } else {
@@ -577,10 +581,10 @@ class Mysql {
                 case 'BETWEEN':
                 case 'NOT BETWEEN':
                     if (is_array($value)) {
-                        $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param . '_0') . ' AND ' . $this->paramChar($_str_param . '_1') . ')';
+                        $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param . '_0', true, 'where') . ' AND ' . $this->paramChar($_str_param . '_1', true, 'where') . ')';
                     } else if (is_scalar($value)) {
                         if (strpos($value, '(') === false && strpos($value, '`') === false) {
-                            $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param) . ')';
+                            $_str_where = $field . ' ' . $exp . ' (' . $this->paramChar($_str_param, true, 'where') . ')';
                         } else if (strpos($value, '(')) {
                             $_str_where = $field . ' ' . $exp . $value;
                         } else {
@@ -595,7 +599,7 @@ class Mysql {
 
                 default:
                     if (is_scalar($value) && strpos($value, '(') === false && strpos($value, '`') === false) {
-                        $_str_where = $field . ' ' . $exp . ' ' . $this->paramChar($_str_param);
+                        $_str_where = $field . ' ' . $exp . ' ' . $this->paramChar($_str_param, true, 'where');
                     } else if (is_scalar($value)) {
                         $_str_where = $field . ' ' . $exp . $value;
                     }
@@ -652,7 +656,7 @@ class Mysql {
     }
 
 
-    private function buildBind($bind, $value, $param = '', $type = '', $exp = '', $arr_return = array()) {
+    private function buildBind($bind, $value, $from = '', $param = '', $type = '', $exp = '', $return = array()) {
         /*print_r('bind: ');
         print_r($bind);
         print_r(PHP_EOL);
@@ -680,7 +684,7 @@ class Mysql {
                     case 'IN':
                     case 'NOT IN':
                         foreach ($value as $_key_sub=>$_value_sub) {
-                            $arr_return[] = array($this->paramChar($_str_bind . '_' . $_key_sub, false), $_value_sub, $type);
+                            $return[] = array($this->paramChar($_str_bind . '_' . $_key_sub, false, $from), $_value_sub, $type);
                         }
                     break;
 
@@ -695,17 +699,17 @@ class Mysql {
                         }
 
                         if (is_scalar($value[0]) && is_scalar($value[1])) {
-                            $arr_return[] = array($this->paramChar($_str_bind . '_0', false), $value[0], $type);
-                            $arr_return[] = array($this->paramChar($_str_bind . '_1', false), $value[1], $type);
+                            $return[] = array($this->paramChar($_str_bind . '_0', false, $from), $value[0], $type);
+                            $return[] = array($this->paramChar($_str_bind . '_1', false, $from), $value[1], $type);
                         }
                     break;
                 }
             } else if (is_scalar($value) && strpos($value, '(') === false && strpos($value, '`') === false) {
-                $arr_return = array($this->paramChar($_str_bind, false), $value, $type);
+                $return = array($this->paramChar($_str_bind, false, $from), $value, $type);
             }
         }
 
-        return $arr_return;
+        return $return;
     }
 
 
@@ -716,16 +720,15 @@ class Mysql {
     }
 
     //绑定参数名处理
-    private function paramChar($param, $is_sql = true) {
+    private function paramChar($param, $is_sql = true, $from = '') {
         if ($is_sql) {
             $param = ':' . $param;
         }
 
-        $param .= '__';
+        $param .= '_' . $from . '__';
 
         return $param;
     }
-
 
     private function configProcess() {
         isset($this->dbconfig['host']) or $this->dbconfig['host'] = 'localhost';

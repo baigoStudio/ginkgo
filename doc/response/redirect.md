@@ -3,9 +3,11 @@
 如果控制器继承了 `ginkgo\Ctrl` 类，可以使用 `redirect` 方法进行重定向
 
 ``` php
-namespace app\index\controller;
+namespace app\index\ctrl;
 
-class Index {
+use ginkgo\Ctrl;
+
+class Index extends Ctrl {
 
     public function hello() {
         return $this->redirect('http://www.baigo.net');
@@ -47,8 +49,9 @@ $this->redirect('/index/index/hello')->param($param);
 namespace app\ctrl\index;
 
 use ginkgo\Session;
+use ginkgo\Ctrl;
 
-class Index {
+class Index extends Ctrl {
 
     public function index() {
         // 判断session完成标记是否存在
@@ -74,10 +77,7 @@ class Index {
         // 设置session标记完成
         Session::set('complete', true);
         // 跳回之前的来源地址
-        $redirect = $this->redirect('index/index/hello');
-        $redirect->restore();
-        
-        return $redirect;
+        return $this->redirect()->restore();
     }
     
 }

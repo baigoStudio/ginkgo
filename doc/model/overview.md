@@ -4,12 +4,23 @@
 
 #### 定义一个 `User` 模型类：
 
+定义模型必须继承模型基类 `ginkgo\Model`
+
 ``` php
 namespace app\model\index;
 
 use ginkgo\Model;
 
 class User extends Model {
+}
+```
+
+模型基类 `ginkgo\Model` 内置了如下类的实例：
+ 
+``` php
+class Model {
+    // ginkgo\Request 的实例
+    protected $obj_request;
 }
 ```
 

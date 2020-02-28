@@ -9,7 +9,7 @@
 <?php echo $request->cookie('name'); ?>  // 输出 $_COOKIE['name'] 变量
 ```
 
-支持输出 `$_SERVER`、`$_POST`、`$_GET`、`$_REQUEST`、`$_SESSION` 和 `$_COOKIE` 变量，详情请查看 `请求 -> 输入变量` 章节
+支持输出 `$_SERVER`、`$_POST`、`$_GET`、`$_REQUEST`、`$_SESSION` 和 `$_COOKIE` 变量，详情请查看 [请求 -> 输入变量](../request/input.md)
 
 ----------
 

@@ -29,6 +29,7 @@
 * [配置格式](./config/format.md)
 * [配置加载](./config/load.md)
 * [配置读取](./config/read.md)
+* [写配置文件](./config/write.md)
 * [动态配置](./config/dynamic.md)
 * [扩展配置](./config/extra.md)
 * [配置作用域](./config/range.md)
@@ -173,9 +174,11 @@
 杂项
 
 * [常用函数](./misc/overview.md)
+* [UBBCODE](./misc/ubbcode.md)
 * [缓存](./misc/cache.md)
 * [Session](./misc/session.md)
 * [Cookie](./misc/cookie.md)
+* [多语言](./misc/lang.md)
 * [验证码](./misc/captcha.md)
 * [签名](./misc/sign.md)
 * [加密](./misc/crypt.md)

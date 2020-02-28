@@ -65,6 +65,6 @@ Db::execute();
 Db::connect($config)->query('select * from user where id=8');
 ```
 
-$config 是一个单独的数据库配置，必须为数组，具体请查看 `数据库 -> 连接数据库` 章节。
+$config 是一个单独的数据库配置，必须为数组，具体请查看 [连接数据库](overview.md)。
 
 > 除了使用原生 SQL 以外，大多数情况下系统会忽略带有 <kbd>&#96;</kbd>、<kbd>(</kbd> 以及 <kbd>.</kbd> 符号的参数，不对这些参数进行处理，比如给表名自动添加前缀等。

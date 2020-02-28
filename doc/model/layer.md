@@ -92,7 +92,7 @@ $event = Loader::model('Blog', 'event', 'admin');
 
 以下是一个分层的例子，以用户表为例：
 
-在某个项目中，先设置基本模型，放置于 `app/model` 目录下。然后在 `app/model` 下分别建立 `console`、`api` 目录，用于建立分层模型。
+在某个项目中，先设置基本模型，放置于 `./app/model` 目录下。然后在 `./app/model` 下分别建立 `console`、`api` 目录，用于建立分层模型。
 
 把模型操作分成三层：
 

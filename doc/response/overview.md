@@ -45,7 +45,9 @@ class Index {
 ``` php
 namespace app\ctrl\index;
 
-class Index {
+use ginkgo\Ctrl;
+
+class Index extends Ctrl {
 
     public function hello() {
         $data = array(

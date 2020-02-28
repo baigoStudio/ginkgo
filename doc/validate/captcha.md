@@ -29,4 +29,4 @@ class User extends Validate {
 }
 ```
 
-> 关于如何生成验证码图片，请查看 `杂项 -> 验证码` 章节
+> 关于如何生成验证码图片，请查看 [杂项 -> 验证码](../misc/captcha.md)。

@@ -50,12 +50,11 @@ $data = Plugin::listen('filter_console_article_edit', $data);
 
 
 ``` php
-Array
-(
+array(
     // 键名为钩子名称
-    '命名空间\插件类名->插件方法1' => Array() //过滤后的数据
-    '命名空间\插件类名->插件方法2' => Array()
-)
+    '命名空间\插件类名->插件方法1' => array(), //过滤后的数据
+    '命名空间\插件类名->插件方法2' => array(),
+);
 ```
 
 钩子的位置可以随意放置

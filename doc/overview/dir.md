@@ -50,7 +50,6 @@
     |   +-- boot.php            框架引导文件
     |   +-- const.php           常量定义文件
     |   +-- convention.php      默认配置文件
-    |   +-- CHANGELOG.md        更新日志
     |   +-- LICENSE.txt         授权说明文件
     |   +-- SPECIFICATION.md    开发规范
     |   +-- README.md           README 文件    

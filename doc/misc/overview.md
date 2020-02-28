@@ -294,7 +294,9 @@ function arrayEach( $arr [, $encode = ''] )
 
 ----------
 
-#### `ubbcode` UBBCODE 转换字符串（部分支持）
+#### `ubbcode` 转换字符串
+
+0.1.1 起升级至 `ginkgo/Ubbcode` 类
 
 ``` php
 function ubbcode( $string )
@@ -310,16 +312,38 @@ function ubbcode( $string )
 
 支持的 UBBCODE
 
-| 值 | 描述 |
-| - | - |
-| [b]content[/b] | 加粗 |
-| [strong]content[/strong] | 加粗 |
-| [em]content[/em] | 斜体 |
-| [i]content[/i] | 斜体 |
-| [u]content[/u] | 下划线 |
-| [code]content[/code] | 代码 |
-| [del]content[/del] | 已被删除的文本 |
-| [kbd]content[/kbd] | 键盘文本 |
-| [hr]| 水平线 |
-| [br] | 换行符 |
-| {:br} | 换行符 |
+| 值 | 描述 | 备注 |
+| - | - | - |
+| [b]content[/b] | 加粗 | |
+| [strong]content[/strong] | 加粗 | |
+| [em]content[/em] | 斜体 | |
+| [i]content[/i] | 斜体 | |
+| [u]content[/u] | 下划线 | |
+| [code]content[/code] | 代码 | |
+| [del]content[/del] | 已被删除的文本 | |
+| [kbd]content[/kbd] | 键盘文本 | |
+| [hr]| 水平线 | |
+| [br] | 换行符 | |
+| {:br} | 换行符 | |
+
+
+----------
+
+#### `strSecret` 隐藏敏感信息，用于敏感字符的隐藏，如手机号码：`139 **** 8888`
+
+0.1.1 新增
+
+``` php
+function strSecret( $string [, $left = 5 [, $right = 5 [, $hide = '*' ]]] )
+```
+
+参数
+
+* `string` 字符串
+* `left` 保留左侧字符个数
+* `right` 保留右侧字符个数
+* `hide` 替代字符
+
+返回
+
+* 处理后的数组

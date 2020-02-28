@@ -42,7 +42,7 @@ class Index extends Model {
 }
 ```
 
-详细使用方法可参考 `数据库 -> CURD` 章节。
+详细使用方法请查看 [数据库 -> CURD](../database/curd.md)。
 
 ----------
 
@@ -66,7 +66,7 @@ class Index extends Model {
 }
 ```
 
-详细使用方法可参考 `数据库 -> CURD` 章节。
+详细使用方法请查看 [数据库 -> CURD](../database/curd.md)。
 
 ----------
 
@@ -90,7 +90,7 @@ class Index extends Model {
 }
 ```
 
-详细使用方法可参考 `数据库 -> CURD` 章节。
+详细使用方法请查看 [数据库 -> CURD](../database/curd.md)。
 
 ----------
 
@@ -110,4 +110,4 @@ class Index extends Model {
 }
 ```
 
-详细使用方法可参考 `数据库 -> CURD` 章节。
+详细使用方法请查看 [数据库 -> CURD](../database/curd.md)。

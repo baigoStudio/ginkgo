@@ -34,13 +34,13 @@ function where( $where [, $expression , $conditional [, $parameter = '' [, $type
 
     当 `where` 为字符串时为必须，当 `where` 为数组时自动忽略。
     
-    详情请查看 `查询语法` 章节
+    详情请查看 [查询语法](syntax.md)
 
 * `conditional` 条件值
 
     当 `where` 为字符串时为必须，当 `where` 为数组时自动忽略。
 
-    详情请查看 `查询语法` 章节
+    详情请查看 [查询语法](syntax.md)
 
 * `parameter` 参数名
 

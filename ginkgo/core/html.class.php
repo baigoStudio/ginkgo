@@ -57,39 +57,50 @@ class Html { // class start
         //print_r($string);
 
         if (!Func::isEmpty($string)) {
-            $string     = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
-            $_mix_src   = '';
-            $_mix_dst   = '';
+            $string         = html_entity_decode($string, ENT_COMPAT, 'UTF-8');
+            $_arr_src       = array('(', ')', '`');
+            $_arr_dst       = array('&#40;', '&#41;', '&#96;');
+            $_arr_srcSub    = array();
+            $_arr_dstSub    = array();
 
             switch ($spec) {
                 case 'json': //转换 json 特殊字符
-                    $_mix_src = array('&#58;', '&#91;', '&#93;', '&#123;', '&#125;');
-                    $_mix_dst = array(':', '[', ']', '{', '}');
+                    $_arr_srcSub = array('&#58;', '&#91;', '&#93;', '&#123;', '&#125;');
+                    $_arr_dstSub = array(':', '[', ']', '{', '}');
                 break;
                 case 'json_safe': //转换 json 特殊字符
-                    $_mix_src = array('&#58;', '&#91;', '&#93;', '&#123;', '&#125;', '{:br}');
-                    $_mix_dst = array(':', '[', ']', '{', '}', '<br>');
+                    $_arr_srcSub = array('&#58;', '&#91;', '&#93;', '&#123;', '&#125;');
+                    $_arr_dstSub = array(':', '[', ']', '{', '}');
                 break;
                 case 'url': //转换 加密 特殊字符
-                    $_mix_src = array('&#58;', '&#45;', '&#61;', '&#63;');
-                    $_mix_dst = array(':', '-', '=', '?');
+                    $_arr_srcSub = array('&#58;', '&#45;', '&#61;', '&#63;');
+                    $_arr_dstSub = array(':', '-', '=', '?');
                 break;
                 case 'selector': //转换 选择器 特殊字符
-                    $_mix_src = array('&#58;', '&#45;', '&#61;', '&#33;');
-                    $_mix_dst = array(':', '-', '=', '!');
+                    $_arr_srcSub = array('&#58;', '&#45;', '&#61;', '&#33;');
+                    $_arr_dstSub = array(':', '-', '=', '!');
                 break;
-                case 'datetime':
-                    $_mix_src = array('&#45;', '&#58;');
-                    $_mix_dst = array('-', ':');
+                case 'date_time':
+                    $_arr_srcSub = array('&#45;', '&#58;');
+                    $_arr_dstSub = array('-', ':');
+                break;
+                case 'rgb':
+                    $_arr_src   = array('`');
+                    $_arr_dst   = array('&#96;');
                 break;
             }
 
-            if (!Func::isEmpty($_mix_src) && !Func::isEmpty($_mix_dst)) {
-                $string = str_replace($_mix_src, $_mix_dst, $string);
+            if (!Func::isEmpty($_arr_srcSub)) {
+                $_arr_src = array_merge($_arr_src, $_arr_srcSub);
             }
+
+            if (!Func::isEmpty($_arr_dstSub)) {
+                $_arr_dst = array_merge($_arr_dst, $_arr_dstSub);
+            }
+
+            $string = str_replace($_arr_src, $_arr_dst, $string);
 
             $string = trim($string);
-
         }
 
         //$string = str_replace('{:br}', PHP_EOL, $string);

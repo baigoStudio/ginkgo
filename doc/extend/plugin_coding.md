@@ -4,14 +4,14 @@
 
 #### 主文件
 
-文件名必须为 `.class.php` 为后缀，文件名可以和目录同名，也由描述文件中的 class 项定义。如：
+文件名必须为 `.class.php` 为后缀，文件名可以和目录同名，也可由描述文件中的 class 项定义。如：
 
-``` php
-return array(
-    'name'          => 'Hello', //插件名称, 推荐使用英文、数字、下划线
-    'class'         => 'Hello', //类名称, 只能为英文、数字、下划线
+``` javascript
+{
+    "name": "Hello",
+    "class": "Hello",
     ...
-);
+}
 ```
 
 实际文件名为 `hello.class.php`。该文件必须包含一个类，名称与文件名相同，类名应当注意是否重名。
@@ -89,7 +89,7 @@ class Hello {
 
 #### 插件属性
 
-插件类中可以定义 config 与 opts 属性，必须声明为 public，系统在初始化插件时，会自动读取 `config.inc.php` 和 `opts.json` 文件，并将值定义为插件类的属性，如：
+插件类中可以定义 config 与 opts 属性，必须声明为 public，系统在初始化插件时，会自动读取 `config.json` 和 `opts_var.json` 文件，并将值定义为插件类的属性，如：
 
 ``` php
 namespace extend\plugin\hello;
@@ -112,26 +112,28 @@ class Hello {
 }
 ```
 
+> 0.1.1 起由 `.inc.php` 更改为 `.json`
+
 ----------
 
 #### 描述文件
 
-文件名必须为 `config.inc.php`，此文件直接返回数组，如：
+文件名必须为 `config.json`，此文件直接返回数组，如：
 
-``` php
-return array(
-    'name'          => 'Hello', //插件名称, 推荐使用英文、数字、下划线
-    'class'         => 'Hello', //类名称, 只能为英文、数字、下划线
-    'version'       => '1.0', //版本
-    'author'        => 'Baigo', //作者
-    'plugin_url'    => 'http://www.baigo.net/cms/plugin/hello', //插件地址
-    'detail'        => '本插件为一个开发示例', //说明
-    'author_url'    => 'http://www.baigo.net', //作者地址
-);
+``` javascript
+{
+    "name": "Hello",
+    "class": "Hello",
+    "version": "1.0",
+    "author": "Baigo",
+    "plugin_url": "http://www.baigo.net/cms/plugin/hello",
+    "detail": "本插件为一个开发示例",
+    "author_url": "http://www.baigo.net"
+}
 ```
+> 0.1.1 起由 `config.inc.php` 更改为 `config.json`
 
 说明如下
-
 
 | 键名 | 描述 |
 | - | - | - |

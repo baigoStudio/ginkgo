@@ -46,4 +46,4 @@ class Index extends Model {
 }
 ```
 
-> 详细使用方法可参考 `数据库 -> 聚合查询` 章节。
+> 详细使用方法请查看 [数据库 -> 聚合查询](../database/aggregate.md)。

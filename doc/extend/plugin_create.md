@@ -18,22 +18,24 @@
  
 #### 文件组成
 
-中至少应当包含一个主文件，文件名必须以 `.class.php` 为后缀，文件名可以和目录同名，也可以在描述文件中定义。
+目录中至少应当包含一个主文件，文件名必须以 `.class.php` 为后缀，文件名可以和目录同名，也可以在描述文件中定义。
 
 根据需要，也可以把主文件拆分成多个文件，自行载入。
 
-插件中可以包含一个描述文件，文件名必须为 `config.inc.php`；
+插件中可以包含一个描述文件，文件名必须为 `config.json`；
 
-还可以包含配置文件 `opts.inc.php`，同时，还可以根据开发者的要求生成 `opts.json` 文件。
+还可以包含选项文件 `opts.json`，同时，还可以根据开发者的要求生成 `opts_var.json` 文件。
 
 另外还可以增加 Javascript、CSS、图片以及语言文件等。
 
 | 名称 | 描述 |
 | - | - |
 | 类.class.php（必需） | 主文件 |
-| config.inc.php | 插件的描述 |
-| opts.inc.php | 插件的配置 |
-| opts.json | 用户对本插件的设置 |
+| config.json | 插件的描述 |
+| opts.json | 插件的选项 |
+| opts_var.json | 用户对选项的设置 |
 | readme.txt | 说明文档 |
 | license.txt | 授权说明 |
 | 其他文件 | ... |
+
+> 0.1.1 起由 `config.inc.php` 更改为 `config.json`，`opts.json` 更改为 `opts_var.json`，`opts.inc.php` 更改为 `opts.json`。
