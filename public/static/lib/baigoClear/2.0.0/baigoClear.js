@@ -18,13 +18,13 @@ License: http://www.opensource.org/licenses/mit-license.php
 
         var opts_default = {
             ajax_url: '',
-            timeout: 5000,
+            timeout: 30000,
             selector: {
                 content: '.bg-clear',
                 progress: '.bg-progress',
                 msg: '.bg-msg',
                 icon: '.bg-icon',
-                msg_content: '.bg-msg-content',
+                msg_content: '.bg-msg-content'
             },
             msg: {
                 loading: 'Loading...',

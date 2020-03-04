@@ -23,11 +23,12 @@ License: http://www.opensource.org/licenses/mit-license.php
             '=': 'eq',
             'same': 'eq',
             '!=': 'neq',
-            '<>': 'neq',
+            '<>': 'neq'
         };
 
         var opts_default = {
-            timeout: 5000,
+            timeout: 30000,
+            delimiter: ' - ',
             type_msg: {
                 require: '{:attr} require',
                 confirm: '{:attr} out of accord with {:confirm}',
@@ -82,7 +83,6 @@ License: http://www.opensource.org/licenses/mit-license.php
             },
             field_selector: {
                 prefix_msg: '#msg_',
-                prefix_label: '#label_',
                 prefix_group: '#group_'
             },
             class_name: {
@@ -538,6 +538,14 @@ License: http://www.opensource.org/licenses/mit-license.php
                         _str_different = opts.attr_names[arr_rule.rule];
                     }
 
+                    switch (arr_rule.type) {
+                        case 'length':
+                        case 'between':
+                        case 'not_between':
+                            arr_rule.rule = arr_rule.rule.replace(',', opts.delimiter);
+                        break;
+                    }
+
                     _str_msg = _str_msg.replace('{:attr}', _str_field);
                     _str_msg = _str_msg.replace('{:rule}', arr_rule.rule);
                     _str_msg = _str_msg.replace('{:confirm}', _str_confirm);
@@ -659,11 +667,25 @@ License: http://www.opensource.org/licenses/mit-license.php
             getData: function() {
                 form_data = {};
                 err_count = 0;
-                var _arr_data = obj_form.serializeArray();
-                $.each(opts.rules, function(key, value){
-                    var _selector = process.getSelector(key);
+                var _arr_data = {};
 
-                    form_data[key] = $(_selector).val();
+                var _arr_serialize = obj_form.serializeArray();
+
+                $.each(_arr_serialize, function(i, field){
+                    //console.log(field.value);
+                    _arr_data[field.name] = field.value;
+                });
+
+                //console.log(_arr_data);
+
+                $.each(opts.rules, function(key, value){
+                    if (_arr_data[key] != 'undefined') {
+                        form_data[key] = _arr_data[key];
+                    } else {
+                        var _selector  = process.getSelector(key);
+
+                        form_data[key] = $(_selector).val();
+                    }
                 });
 
                 //console.log(form_data);
