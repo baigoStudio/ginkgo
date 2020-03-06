@@ -17,7 +17,7 @@ License: http://www.opensource.org/licenses/mit-license.php
     background-color: #d1ecf1;
     border-color: #bee5eb;
 }
-.bg-tag-list .bg-tag-item [data-role="remove"] {
+.bg-tag-list .bg-tag-item [data-act="remove"] {
     display: inline-block;
     cursor: pointer;
     color: #eee;

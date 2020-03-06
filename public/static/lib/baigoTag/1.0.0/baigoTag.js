@@ -16,29 +16,51 @@ License: http://www.opensource.org/licenses/mit-license.php
 
         var opts_default = {
             maxTags: 5,
-            maxChars: 0,
+            minChar: 0,
             addOnBlur: true,
             confirmKeycodes: [13, 186, 188],
             class_name: {
-                tag_input: 'bg-tag-input',
                 tag_list: 'bg-tag-list',
                 tag_item: 'bg-tag-item'
             },
             selector: {
-                tag_input: '.bg-tag-input',
                 tag_list: '.bg-tag-list',
                 tag_item: '.bg-tag-item'
             },
             tpl: {
                 tag_list: '<div class="bg-tag-list"></div>'
             },
-            typeahead: {}
+            remote: {
+                url: '',
+                wildcard: '%KEY'
+            },
+            highlight: true
         }
 
         var opts = $.extend(true, opts_default, options);
 
+        var tagsData = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: opts.remote
+        });
+
+        tagsData.initialize();
+
+        var datasets = {
+            source: tagsData.ttAdapter()
+        };
+
+        var opts_typeahead = {
+            highlight: opts.highlight
+        };
+
         var src_input_name = obj_input.attr('name');
         var src_input_id   = obj_input.attr('id');
+
+        if (typeof src_input_id == 'undefined') {
+            src_input_id = src_input_name;
+        }
 
         var hidden_field = '<input type="hidden" name="' + src_input_name + '_hidden" id="' + src_input_id + '_hidden">'
 
@@ -50,16 +72,11 @@ License: http://www.opensource.org/licenses/mit-license.php
             obj_input.before(opts.tpl.tag_list);
         }
 
-        if (!$.isEmptyObject(opts.typeahead)) {
-            if (typeof opts.typeahead.options == 'undefined') {
-                opts.typeahead.options = {};
-            }
-            if (typeof opts.typeahead.datasets != 'undefined' && typeof opts.typeahead.datasets.source != 'undefined') {
-                var _obj_typeahead = obj_input.typeahead(opts.typeahead.options, opts.typeahead.datasets);
-                _obj_typeahead.bind('typeahead:select', function(ev, suggestion) {
-                    process.pushTag(suggestion);
-                });
-            }
+        if (typeof datasets.source != 'undefined') {
+            var _obj_typeahead = obj_input.typeahead(opts_typeahead, datasets);
+            _obj_typeahead.bind('typeahead:select', function(ev, suggestion) {
+                process.pushTag(suggestion);
+            });
         }
 
         if (opts.addOnBlur) {
@@ -71,7 +88,7 @@ License: http://www.opensource.org/licenses/mit-license.php
 
         obj_input.keyup(function(event){
             var tag = $(this).val();
-            if (opts.maxChars > 0 && tag.length >= opts.maxChars) {
+            if (opts.minChar > 0 && tag.length >= opts.minChar) {
                 process.pushTag(tag);
             }
 
@@ -112,8 +129,8 @@ License: http://www.opensource.org/licenses/mit-license.php
                     if (tag_name.length > 0 && tag_list.length < opts.maxTags && $.inArray(tag_name, tag_list) < 0) {
                         var _tag_item = '<div class="' + opts.class_name.tag_item + '" id="tag_' + tag_name.replace(/ /g, '_') + '">' +
                             tag_name +
-                            '<span data-role="remove" data-tag="' + tag_name.replace(/ /g, '_') + '">'+
-                                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"/></svg>'+
+                            '<span data-act="remove" data-tag="' + tag_name.replace(/ /g, '_') + '">' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"/></svg>' +
                             '</span>' +
                         '</div>';
 
@@ -122,7 +139,7 @@ License: http://www.opensource.org/licenses/mit-license.php
                         process.putVal();
                         process.inputEmpty();
 
-                        $('[data-role="remove"]').click(function(){
+                        $('[data-act="remove"]').click(function(){
                             var tag = $(this).data('tag');
                             //console.log(tag);
                             el.remove(tag);
