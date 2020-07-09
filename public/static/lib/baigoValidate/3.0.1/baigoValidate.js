@@ -1,5 +1,5 @@
 /*
-v3.0.0 jQuery baigoValidate plugin 表单验证插件
+v3.0.1 jQuery baigoValidate plugin 表单验证插件
 (c) 2017 baigo studio - http://www.baigo.net/jquery/baigovalidate.html
 License: http://www.opensource.org/licenses/mit-license.php
 */
@@ -676,10 +676,8 @@ License: http://www.opensource.org/licenses/mit-license.php
                     _arr_data[field.name] = field.value;
                 });
 
-                //console.log(_arr_data);
-
                 $.each(opts.rules, function(key, value){
-                    if (_arr_data[key] != 'undefined') {
+                    if (typeof _arr_data[key] != 'undefined') {
                         form_data[key] = _arr_data[key];
                     } else {
                         var _selector  = process.getSelector(key);
