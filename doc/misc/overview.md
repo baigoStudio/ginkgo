@@ -55,7 +55,7 @@ function strtotime( $datetime )
 
 返回
 
-* Unix 时间戳
+* UNIX 时间戳
 
 ----------
 
@@ -218,10 +218,12 @@ function fillImg( $content, $baseUrl )
 
 ----------
 
-#### `checkRegex` 用正则表达式匹配字符串
+#### `getRegex` 用正则表达式匹配字符串并获取搜索结果
+
+`0.1.2` 新增
 
 ``` php
-function checkRegex( $string, $regex [, $wild = false] )
+function getRegex( $string, $regex [, $wild = false] )
 ```
 
 参数
@@ -232,7 +234,29 @@ function checkRegex( $string, $regex [, $wild = false] )
 
 返回
 
-* 匹配结果
+* 数组
+
+    * result 匹配结果（布尔值）
+    * matches 搜索结果
+
+
+----------
+
+#### `checkRegex` 用正则表达式匹配字符串
+
+``` php
+function checkRegex( $string, $regex [, $wild = false] )
+```
+
+参数
+
+* `string` 字符串
+* `regex` 正则表达式
+* `wild` 是否验证全文
+
+返回
+
+* 匹配结果（布尔值）
 
 ----------
 
@@ -255,12 +279,13 @@ function rand( [$length = 32] )
 #### `arrayFilter` 过滤数组中的重复内容
 
 ``` php
-function arrayFilter( $arr )
+function arrayFilter( $arr [, $pop_false = true] )
 ```
 
 参数
 
 * `arr` 数组
+* `pop_false` 是否去除等值为 FALSE 的条目 `0.1.2` 新增
 
 返回
 
@@ -296,7 +321,7 @@ function arrayEach( $arr [, $encode = ''] )
 
 #### `ubbcode` 转换字符串
 
-0.1.1 起升级至 `ginkgo/Ubbcode` 类
+`0.1.1` 起升级至 `ginkgo/Ubbcode` 类
 
 ``` php
 function ubbcode( $string )
@@ -331,7 +356,7 @@ function ubbcode( $string )
 
 #### `strSecret` 隐藏敏感信息，用于敏感字符的隐藏，如手机号码：`139 **** 8888`
 
-0.1.1 新增
+`0.1.1` 新增
 
 ``` php
 function strSecret( $string [, $left = 5 [, $right = 5 [, $hide = '*' ]]] )

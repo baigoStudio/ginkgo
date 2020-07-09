@@ -35,9 +35,7 @@ echo $lang->getCurrent();
 ``` php
 function getCurrent( [$lower = false [, $separator = '' [, $client = false]]] )
 ```
-参数
-
-0.1.1 新增
+参数 `0.1.1` 新增
 
 * `lower` 是否小写
     

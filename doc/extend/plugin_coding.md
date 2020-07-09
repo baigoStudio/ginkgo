@@ -112,7 +112,7 @@ class Hello {
 }
 ```
 
-> 0.1.1 起由 `.inc.php` 更改为 `.json`
+`0.1.1` 起由 `.inc.php` 更改为 `.json`
 
 ----------
 
@@ -131,7 +131,8 @@ class Hello {
     "author_url": "http://www.baigo.net"
 }
 ```
-> 0.1.1 起由 `config.inc.php` 更改为 `config.json`
+
+`0.1.1` 起由 `config.inc.php` 更改为 `config.json`
 
 说明如下
 

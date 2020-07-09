@@ -345,26 +345,26 @@ $rule = array(
 
 format 参数可选如下值
 
-| 值 | 描述 |
-| - | - |
-| number | 纯数字（不包含负数和小数点） |
-| int | 整数 |
-| float | 浮点数 |
-| bool | 布尔值 |
-| email | Email |
-| array | 数组 |
-| date | 有效日期 |
-| time | 有效时间 |
-| date_time | 有效日期时间 |
-| alpha | 字母 |
-| alpha_number | 字母与纯数字 |
-| alpha_dash | 字母、数字、破折号与下划线 |
-| chs | 中文 |
-| chs_alpha | 中文与字母 |
-| chs_alpha_number | 中文、字母与纯数字 |
-| chs_dash | 中文、字母、数字、破折号与下划线 |
-| url | URL 地址 |
-| ip | IP 地址（含 IPv4 与 IPv6） |
+| 值 | 描述 | 备注 |
+| - | - | - |
+| number | 纯数字 | 不包含负数和小数点 |
+| int | 整数 | |
+| float | 浮点数 | |
+| bool | 布尔值 | |
+| email | Email | |
+| array | 数组 | |
+| date | 有效日期 | |
+| time | 有效时间 | 会对值进行 strtotime 后判断 |
+| date_time | 有效日期时间 | |
+| alpha | 字母 | |
+| alpha_number | 字母与纯数字 | |
+| alpha_dash | 字母、数字、破折号与下划线 | |
+| chs | 中文 | |
+| chs_alpha | 中文与字母 | |
+| chs_alpha_number | 中文、字母与纯数字 | |
+| chs_dash | 中文、字母、数字、破折号与下划线 | |
+| url | URL 地址 | |
+| ip | IP 地址 | 含 IPv4 与 IPv6 |
 
 
 ----------
@@ -372,6 +372,15 @@ format 参数可选如下值
 <span id="special"></span>
 
 #### 特殊格式验证
+
+以下规则为验证值是否为指定的格式，如：
+
+假设规则为 `Y-m-d`
+
+表单输入值为 `2019-05-06` 时，验证通过
+
+表单输入值为 `19-05-06` 或 `May. 6, 2019` 验证不通过
+
 
 > date_format
 

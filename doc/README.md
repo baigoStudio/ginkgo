@@ -180,6 +180,7 @@
 * [Cookie](./misc/cookie.md)
 * [多语言](./misc/lang.md)
 * [验证码](./misc/captcha.md)
+* [认证](./misc/auth.md)
 * [签名](./misc/sign.md)
 * [加密](./misc/crypt.md)
 * [SMTP](./misc/smtp.md)

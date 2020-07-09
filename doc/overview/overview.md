@@ -10,8 +10,11 @@ ginkgo 采用 MVC（Model-View-Controller）模式开发，各个模块相对独
 
 ##### ginkgo 的环境要求如下
 
-> * PHP >= 5.3.0
-> * PDO PHP Extension
+> * PHP >= `5.3.0`
+> * PDO PHP Extension (PDO Mysql)
 > * GD PHP Extension
 > * MBstring PHP Extension
 > * cURL PHP Extension
+
+* [项目主页](https://www.baigo.net/ginkgo/)
+* [下载](https://www.baigo.net/cate/ginkgo/download/)

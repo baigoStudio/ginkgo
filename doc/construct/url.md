@@ -46,9 +46,7 @@ http://server/index.php/模块/控制器/动作/参数-1/值-1/参数-2/值-2...
 
 如果当前访问的地址是
 
-> http://server/index.php/mod-index/ctrl-index/hello-world 
-
-0.1.1 新增
+> http://server/index.php/mod-index/ctrl-index/hello-world `0.1.1` 新增
 
 或
 

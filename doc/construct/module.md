@@ -103,9 +103,7 @@ define('GK_NAME_APP', 'app');
 
 如果当前访问的地址是
 
-> http://server/index.php/mod-index/ctrl-index/hello-world 
-
-0.1.1 新增
+> http://server/index.php/mod-index/ctrl-index/hello-world `0.1.1` 新增
 
 或
 

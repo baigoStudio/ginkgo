@@ -1,3 +1,25 @@
+##### v0.1.2
+
+* 改善了数据库调试与 SQL 语句日志记录功能
+* 改善了错误调试功能
+* 修复模板中无法使用 `$request` 实例的问题
+* 为 `ginkgo\Ubbcode` 类增加一些支持
+* 修复 `ginkgo\db\connect\Mysql` 类中的，与 `where` 方法相关的参数顺序错误
+* 改善 `ginkgo\Config` 类中的 `load` 方法，自行判断文件是否存在，如不存在不再抛出错误
+* 改善 `ginkgo\App` 类中加载配置文件的流程，自动加载与控制器同名的配置文件
+* 为 `ginkgo\Func` 类增加 `getRegex` 方法，对应 `checkRegex`，用于取得正则匹配结果
+* 为 `ginkgo\Func` 类的 `arrayFilter` 方法增加第二个参数，可以选择是否去除等值为 FALSE 的条目
+* 修复了 `ginkgo\response\Redirect` 类中，`remember` 方法无法定义路径的问题
+* 修复了 `ginkgo\Route` 类中，`build` 方法会忽略参数的问题
+* 修复了 `ginkgo\Validate` 类无法指定验证码 ID 的问题
+* 增加了 `ginkgo\Auth` 登录认证类，统一管理登录认证信息
+* 优化了一些类的语法和注释
+* 改善输入过滤规则
+* 改善了部分类中，因不区分大小写的替换规则而导致的偶发问题
+* `./const.php` 文件中增加用于容量计算的一些常量
+
+----------
+
 ##### v0.1.1
 
 * 将控制器动作名称由 `下划线` 分隔单词更改为 `下划线` 或 `连字符` 分割单词，例如：`hello_world` 与 `hello-world` 都是有效的

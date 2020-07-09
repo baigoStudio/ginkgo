@@ -52,7 +52,7 @@ HTTP 请求功能由 `ginkgo\Http` 类完成。
 * 获取错误号
 
     ``` php
-    $http->getErrno('这是邮件内容');
+    $http->getErrno();
     ```
 
 * 获取 HTTP 状态码

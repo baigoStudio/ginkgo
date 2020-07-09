@@ -44,7 +44,7 @@ class Index extends Ctrl {
 | - | - | - |
 | {\:URL_BASE} | 当前 URL 地址，不含 QUERY_STRING，包含域名。 | |
 | {\:URL_ROOT} | 当前 URL 根目录，包含域名。 | |
-| {\:DIR_ROOT} | 根目录 | 0.1.1 新增 |
+| {\:DIR_ROOT} | 根目录 | `0.1.1` 新增 |
 | {\:DIR_STATIC} | 静态文件目录 | |
 | {\:ROUTE_ROOT} | 根路径 | |
 | {\:ROUTE_PAGE} | 分页用的基本路径 | |

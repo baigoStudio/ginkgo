@@ -38,4 +38,4 @@
 | license.txt | 授权说明 |
 | 其他文件 | ... |
 
-> 0.1.1 起由 `config.inc.php` 更改为 `config.json`，`opts.json` 更改为 `opts_var.json`，`opts.inc.php` 更改为 `opts.json`。
+`0.1.1` 起由 `config.inc.php` 更改为 `config.json`，`opts.json` 更改为 `opts_var.json`，`opts.inc.php` 更改为 `opts.json`。

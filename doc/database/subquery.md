@@ -50,7 +50,7 @@ $where = array(
     array('title', 'LIKE', '%baigo', 'key', 'str'),
 );
 
-Db::where($where)->buildSql();
+$subQuery = Db::where($where)->buildSql();
 ```
 
 生成的 subQuery 结果为：

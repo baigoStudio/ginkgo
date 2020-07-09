@@ -1,6 +1,6 @@
 ## Ubbcode
 
-0.1.1 新增
+`0.1.1` 新增
 
 #### `convert` 转换字符串
 
@@ -27,13 +27,21 @@ Ubbcode::convert('[b]字符[/b]');
 | [u]content[/u] | 下划线 | |
 | [code]content[/code] | 代码 | |
 | [del]content[/del] | 已被删除的文本 | |
+| [s]content[/s] | 已被删除的文本 | `0.1.2` 新增 |
 | [kbd]content[/kbd] | 键盘文本 | |
 | [hr]| 水平线 | |
 | [br] | 换行符 | |
-| {:br} | 换行符 | 0.1.1 废弃 |
-| [blockquote]content[/blockquote] | 引用 | 0.1.1 新增 |
-| [url]网址[/url] | 链接 | 0.1.1 新增 |
-| [url=网址]说明[/url] | 链接 | 0.1.1 新增 |
+| {:br} | 换行符 | `0.1.1` 废弃 |
+| [blockquote]content[/blockquote] | 引用 | `0.1.1` 新增 |
+| [quote]content[/quote] | 引用 | `0.1.2` 新增 |
+| [url]网址[/url] | 链接 | `0.1.1` 新增 |
+| [url=网址]说明[/url] | 链接 | `0.1.1` 新增 |
+| [h1]content[/h1] | 标题（h1-h6） | `0.1.2` 新增 |
+| [img]图片地址[/img] | 图片 | `0.1.2` 新增 |
+| [img=图片地址]说明[/img] | 图片 | `0.1.2` 新增 |
+| [color=色值]content[/color] | 文字颜色 | `0.1.2` 新增 |
+| [bgcolor=色值]content[/bgcolor] | 背景颜色 | `0.1.2` 新增 |
+| [size=字号]content[/size] | 文字大小 | `0.1.2` 新增 |
 
 ----------
 
@@ -125,10 +133,30 @@ $rule = array(
 );
 Ubbcode::addPreg($rule);
 
-echo Ubbcode::convert('[iframe]网址[iframe][url]网址[url]');
+echo Ubbcode::convert('[iframe]网址[/iframe][url]网址[/url]');
 ```
 上述例子将输出
 
 ``` markup
-<iframe src="网址"></iframe><a href="网址"></a>
+<iframe src="网址"></iframe><a href="网址">网址</a>
 ```
+
+----------
+
+#### `stripCode` 移除所有代码
+
+本方法可以移除所有 ubbcode，如：
+
+`0.1.2` 新增
+
+``` php
+// 移除
+echo Ubbcode::stripCode('[iframe]iFrame[/iframe][url]网址[/url][img]图片[/img]');
+```
+上述例子将输出
+
+``` markup
+iFrame网址
+```
+
+> 特别注意：[img] 标签将被全部移除，包括图片地址。

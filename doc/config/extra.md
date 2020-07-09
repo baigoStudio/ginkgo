@@ -25,7 +25,7 @@ ginkgo 支持扩展配置，只需要在公共配置文件中配置 `config_extr
 ),
 ```
 
-必须使用 `参数名 => 参数值` 的形式，系统会忽略参数的值，不必关系具体的值，为了便于阅读，建议使用 true 或者 'true'。
+必须使用 `参数名 => 参数值` 的形式，参数值必须为 true 或 'true'。
 
 定义之后，ftp 配置就可以独立使用 `extra_ftp.inc.php` 文件，配置内容如下：
 
@@ -38,7 +38,7 @@ return array(
     'pass'   => '', // 密码
     'path'   => '/', // 远程路径
     'pasv'   => 'off', // 被动模式
-),
+);
 ```
 
 如果配置了 `config_extra` 参数，并同时在 `config.inc.php` 和 `extra_ftp.inc.php` 文件中配置，则 `extra_ftp.inc.php` 文件的配置会覆盖 `config.inc.php` 中的设置。

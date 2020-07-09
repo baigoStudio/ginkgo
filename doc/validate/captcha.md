@@ -22,7 +22,28 @@ class User extends Validate {
         ),
         'captcha' => array(
             'require' => true,
-            'captcha'   => true,
+            'captcha' => true,
+        ),
+    );
+
+}
+```
+
+如果要指定验证码的 ID，直接在验证规则中指定即可，例如：
+
+`0.1.2` 新增
+
+``` php
+namespace app\index\validate;
+
+use ginkgo\Validate;
+
+class User extends Validate {
+
+    protected $rule = array(
+        'captcha' => array(
+            'require' => true,
+            'captcha' => 'captcha_id',
         ),
     );
 

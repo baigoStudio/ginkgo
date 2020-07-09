@@ -16,17 +16,17 @@ use ginkgo\Validate;
 class User extends Validate {
 
     protected $rule = array(
-      'name'  => array(
-          'require' => true,
-          'max'     => 25,
-      ),
-      'age'   => array(
-          'between' => '1,120',
-          'format'  => 'number',
-      ),
-      'email' => array(
-          'format'  => 'email',
-      ),
+        'name'  => array(
+            'require' => true,
+            'max'     => 25,
+        ),
+        'age'   => array(
+            'between' => '1,120',
+            'format'  => 'number',
+        ),
+        'email' => array(
+            'format'  => 'email',
+        ),
     );
 
 }
@@ -52,7 +52,7 @@ if(!$result){
 
 会输出
 
-    age must between 1,120
+    age must between 1 - 120
 
 可以给 age 字段设置中文名，例如：
 
@@ -64,17 +64,17 @@ use ginkgo\Validate;
 class User extends Validate {
 
     protected $rule = array(
-      'name'  => array(
-          'require' => true,
-          'max'     => 25,
-      ),
-      'age'   => array(
-          'between' => '1,120',
-          'format'  => 'number',
-      ),
-      'email' => array(
-          'format'  => 'email',
-      ),
+        'name'  => array(
+            'require' => true,
+            'max'     => 25,
+        ),
+        'age'   => array(
+            'between' => '1,120',
+            'format'  => 'number',
+        ),
+        'email' => array(
+            'format'  => 'email',
+        ),
     );
 
     public function __construct() {
@@ -86,7 +86,7 @@ class User extends Validate {
 
 会输出
 
-    年龄 must between 1,120
+    年龄 must between 1 - 120
 
 `setAttrName` 方法说明
 
@@ -122,17 +122,17 @@ use ginkgo\Validate;
 class User extends Validate {
 
     protected $rule = array(
-      'name'  => array(
-          'require' => true,
-          'max'     => 25,
-      ),
-      'age'   => array(
-          'between' => '1,120',
-          'format'  => 'number',
-      ),
-      'email' => array(
-          'format'  => 'email',
-      ),
+        'name'  => array(
+            'require' => true,
+            'max'     => 25,
+        ),
+        'age'   => array(
+            'between' => '1,120',
+            'format'  => 'number',
+        ),
+        'email' => array(
+            'format'  => 'email',
+        ),
     );
 
     public function __construct() {
@@ -145,7 +145,7 @@ class User extends Validate {
 
 会输出
 
-    年龄 只能在 1,120 之间    
+    年龄 只能在 1 - 120 之间    
 
 `setTypeMsg` 方法说明
 
@@ -181,17 +181,17 @@ use ginkgo\Validate;
 class User extends Validate {
 
     protected $rule = array(
-      'name'  => array(
-          'require' => true,
-          'max'     => 25,
-      ),
-      'age'   => array(
-          'between' => '1,120',
-          'format'  => 'number',
-      ),
-      'email' => array(
-          'format'  => 'email',
-      ),
+        'name'  => array(
+            'require' => true,
+            'max'     => 25,
+        ),
+        'age'   => array(
+            'between' => '1,120',
+            'format'  => 'number',
+        ),
+        'email' => array(
+            'format'  => 'email',
+        ),
     );
 
 }
@@ -229,17 +229,17 @@ use ginkgo\Validate;
 class User extends Validate {
 
     protected $rule = array(
-      'name'  => array(
-          'require' => true,
-          'max'     => 25,
-      ),
-      'age'   => array(
-          'between' => '1,120',
-          'format'  => 'number',
-      ),
-      'email' => array(
-          'format'  => 'email',
-      ),
+        'name'  => array(
+            'require' => true,
+            'max'     => 25,
+        ),
+        'age'   => array(
+            'between' => '1,120',
+            'format'  => 'number',
+        ),
+        'email' => array(
+            'format'  => 'email',
+        ),
     );
 
     public function __construct() {
@@ -282,4 +282,21 @@ function setFormatMsg( $msg [, $value = array()] )
 #### 获取验证消息
 
 可以使用 `getMessage` 方法获取，返回值是所有的错误消息数组，该方法没有参数。
+
+
+----------
+
+#### 规则消息定界符
+
+上述几个例子可能有开发者注意，当规则中包含逗号 <kbd>,</kbd> 时，输出消息时会被替换成连字符 <kbd>-</kbd>，如果想要替换成其他字符，可以通过 `ginkgo/Validate` 实例的 `delimiter` 属性进行定义，默认为 <kbd>-</kbd>，如：
+
+`0.1.1` 新增
+
+
+``` php
+$obj_validate = new ginkgo/Validate();
+
+$obj_validate->delimiter = ' - '
+```
+
 

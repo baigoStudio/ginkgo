@@ -37,7 +37,8 @@ define('GK_NAME_CONFIG', 'config');
 
 * 系统会自动加载 `config.inc.php`、`dbconfig.inc.php` 这两个默认配置文件。
 * 如果存在 `extra_smtp.inc.php`、`extra_upload.inc.php` 和 `extra_ftp.inc.php` 这几个扩展配置文件，系统会自动加载。
-* 如果存在 `./app/config/当前模块名/common.inc.php` 的模块配置，系统会自动加载。
+* 如果存在 `./app/config/当前模块名/common.inc.php` 模块配置，系统会自动加载。
+* 如果存在 `./app/config/当前模块名/控制器名.inc.php` 控制器配置，系统会自动加载。 `0.1.2` 新增
 * 如果需要额外的配置，可以通过配置增加或者手动加载。
 
 > 注意：配置文件必须以 `.inc.php` 结尾
