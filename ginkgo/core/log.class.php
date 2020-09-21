@@ -93,27 +93,29 @@ class Log {
      * @return void
      */
     static function save() {
-        if (Func::isEmpty(self::$init)) {
-            self::init();
-        }
+        if (isset(self::$config['save']) && (self::$config['save'] === true || self::$config['save'] === 'true')) {
+            if (Func::isEmpty(self::$init)) {
+                self::init();
+            }
 
-        if (!Func::isEmpty(self::$log)) {
-            $_obj_file = File::instance();
+            if (!Func::isEmpty(self::$log)) {
+                $_obj_file = File::instance();
 
-            foreach (self::$log as $_key=>$_value) {
-                $_str_logPath = GK_PATH_LOG . $_key . GK_EXT_LOG;
+                foreach (self::$log as $_key=>$_value) {
+                    $_str_logPath = GK_PATH_LOG . $_key . GK_EXT_LOG;
 
-                if (Func::isFile($_str_logPath) && filesize($_str_logPath) >= floor(self::$config['file_size'])) { // 日志文件大于设置, 则按日期另存
-                    try {
-                        $_obj_file->fileMove($_str_logPath, dirname($_str_logPath) . DS . date('Y-m-d') . '_' . basename($_str_logPath));
-                    } catch (\Exception $e) {
+                    if (Func::isFile($_str_logPath) && filesize($_str_logPath) >= floor(self::$config['file_size'])) { // 日志文件大于设置, 则按日期另存
+                        try {
+                            $_obj_file->fileMove($_str_logPath, dirname($_str_logPath) . DS . date('Y-m-d') . '_' . basename($_str_logPath));
+                        } catch (\Exception $e) {
+                        }
                     }
-                }
 
-                $_str_content = '';
+                    $_str_content = '';
 
-                foreach ($_value as $_key_row=>$_value_row) {
-                    $_obj_file->fileWrite($_str_logPath, $_value_row . PHP_EOL, true); // 写入
+                    foreach ($_value as $_key_row=>$_value_row) {
+                        $_obj_file->fileWrite($_str_logPath, $_value_row . PHP_EOL, true); // 写入
+                    }
                 }
             }
         }

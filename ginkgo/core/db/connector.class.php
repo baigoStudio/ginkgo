@@ -29,14 +29,15 @@ abstract class Connector {
 
     protected $configDebug; // 调试配置
 
-    protected $_table       = ''; // 数据表名
-    protected $_tableTemp   = ''; // 临时数据表名, 切换操作的数据表, 对多表进行操作
+    protected $_table       = array(); // 数据表名
+    protected $_tableTemp   = array(); // 临时数据表名, 切换操作的数据表, 对多表进行操作
     protected $_force       = ''; // 强制使用索引名
     protected $_distinct    = false; // 是否不重复
     protected $_join        = ''; // join 语句
     protected $_where       = ''; // where 条件语句
     protected $_whereOr     = array(); // whereOr 语句数组
     protected $_whereAnd    = array(); // whereAnd 语句数组
+    protected $_paginate    = array(); // 分页参数
     protected $_group       = ''; // group 语句
     protected $_order       = ''; // order 语句
     protected $_limit       = ''; // limit 语句
@@ -234,8 +235,6 @@ abstract class Connector {
             $this->bind($bind, $value, $type); // 绑定处理
         }
 
-        $this->resetSql(); // 重置 sql
-
         return $_obj_result;
     }
 
@@ -249,12 +248,14 @@ abstract class Connector {
      * @param string $type (default: '') 参数类型
      * @return void
      */
-    function execute($bind = array(), $value = '', $type = '') {
+    function execute($bind = array(), $value = '', $type = '', $reset = true) {
         if (!Func::isEmpty($bind)) {
             $this->bind($bind, $value, $type); // 绑定处理
         }
 
-        $this->resetSql(); // 重置 sql
+        if ($reset !== false) {
+            $this->resetSql(); // 重置 sql
+        }
 
         return $this->obj_result->execute(); // 执行
     }
@@ -269,6 +270,28 @@ abstract class Connector {
      */
     function distinct($bool = false) {
         $this->_distinct = $bool;
+
+        return $this;
+    }
+
+
+    /** 分页
+     * paginate function.
+     *
+     * @access public
+     * @param int $perpage (default: 0) 每页数据
+     * @param string $current (default: 'get') 当前页
+     * @param string $pageparam (default: 'page') 分页参数
+     * @param int $pergroup (default: 0) 每组页数
+     * @return 当前实例
+     */
+    function paginate($perpage = 0, $current = 'get', $pageparam = 'page', $pergroup = 0) {
+        $this->_paginate = array(
+            'perpage'   => $perpage,
+            'current'   => $current,
+            'pageparam' => $pageparam,
+            'pergroup'  => $pergroup,
+        );
 
         return $this;
     }
@@ -433,8 +456,6 @@ abstract class Connector {
             $_result = $this->bindProcess($bind, $value, $type);
         }
 
-        $this->resetSql();
-
         return $this;
     }
 
@@ -446,17 +467,18 @@ abstract class Connector {
      * @return void
      */
     function resetSql() {
-        $this->_tableTemp   = '';
+        $this->_tableTemp   = array();
         $this->_force       = '';
         $this->_join        = '';
-        $this->_distinct    = false;
-        $this->_where       = '';
         $this->_group       = '';
         $this->_order       = '';
         $this->_limit       = '';
         $this->_bind        = '';
+        $this->_where       = '';
         $this->_whereOr     = array();
         $this->_whereAnd    = array();
+        $this->_paginate    = array();
+        $this->_distinct    = false;
         $this->_fetchSql    = false;
     }
 

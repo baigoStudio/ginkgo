@@ -28,16 +28,15 @@ return array(
         'class' => 'container p-5', //调试信息包含标签的 css 类名
     ),
     'log' => array( //日志
+        'save'      => false, //是否保存日志
         'file_size' => 2 * GK_MB, //日志大小限制
     ),
     'tpl' => array( //模板
         'type'      => 'php', //默认模板驱动
         'path'      => '', //默认模板路径
-        'suffix'    => '', //模板后缀 (默认 .tpl.php)
     ),
     'tpl_sys' => array( //模板
         'path'      => '', //默认模板路径
-        'suffix'    => '', //模板后缀 (默认 .tpl.php)
     ),
     'exception_page' => array( ),
     'session' => array( //会话
@@ -134,6 +133,7 @@ return array(
             'pasv'   => 'off',
         ),
         'smtp' => array(
+            'method'        => 'smtp',
             'host'          => '',
             'secure'        => 'off',
             'port'          => 25,

@@ -7,8 +7,8 @@
 // 不能非法包含或直接执行
 defined('IN_GINKGO') or exit('Access denied');
 
-define('GK_VERSION', '0.1.2'); //框架版本
-define('GK_PUBLISH', 20200709); //框架发布时间
+define('GK_VERSION', '0.1.3'); //框架版本
+define('GK_PUBLISH', 20200821); //框架发布时间
 define('GK_NOW', $_SERVER['REQUEST_TIME']); //当前时间
 define('GK_START_TIME', microtime(true)); //启动时间
 define('GK_START_MEM', memory_get_usage()); //启动时内存

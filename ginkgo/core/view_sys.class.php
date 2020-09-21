@@ -90,16 +90,11 @@ class View_Sys {
 
 
     private static function pathProcess($tpl = '') {
-        $_str_suffix            = GK_EXT_TPL; // 默认模板文件后缀
         $_arr_configTplSys      = Config::get('tpl_sys'); // 取得系统模板目录
         $_arr_configExceptPage  = Config::get('exception_page'); // 取得异常页配置
 
-        if (!Func::isEmpty($_arr_configTplSys['suffix'])) { // 默认后缀
-            $_str_suffix = $_arr_configTplSys['suffix'];
-        }
-
         $_str_pathTpl   = GK_PATH_TPL;
-        $_str_tpl       = $_str_pathTpl . 'exception' . $_str_suffix;
+        $_str_tpl       = $_str_pathTpl . 'exception' . GK_EXT_TPL;
 
         if (!Func::isEmpty($_arr_configTplSys['path'])) { // 如果定义了模板路径, 则替换默认路径
             if (strpos($_arr_configTplSys['path'], DS) !== false) {
@@ -115,10 +110,10 @@ class View_Sys {
             if (strpos($_str_tplName, DS) !== false) { // 如果模板名中有目录分隔符, 则认为是定义了完整路径
                 $_str_tpl = $_str_tplName;
             } else { // 否则用系统默认的路径和后缀补全
-                $_str_tpl = $_str_pathTpl . $_str_tplName . $_str_suffix;
+                $_str_tpl = $_str_pathTpl . $_str_tplName . GK_EXT_TPL;
             }
         } else if (!Func::isEmpty($tpl)) { // 假如只定义了模板参数, 则直接用该模板
-            $_str_tpl = $_str_pathTpl . $tpl . $_str_suffix; // 用系统默认的路径和后缀补全
+            $_str_tpl = $_str_pathTpl . $tpl . GK_EXT_TPL; // 用系统默认的路径和后缀补全
         }
 
         //print_r($_str_tpl);
@@ -126,7 +121,7 @@ class View_Sys {
         $_str_ext = pathinfo($_str_tpl, PATHINFO_EXTENSION); // 取得模板路径的扩展名
 
         if (Func::isEmpty($_str_ext)) { // 如有没有扩展名, 用系统默认的后缀补全
-            $_str_tpl .= $_str_suffix;
+            $_str_tpl .= GK_EXT_TPL;
         }
 
         return $_str_tpl;

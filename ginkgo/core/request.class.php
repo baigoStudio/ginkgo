@@ -758,9 +758,10 @@ class Request {
      *
      * @access public
      * @param bool $with_domain (default: false) 是否包含域名
+     * @param bool $with_domain (default: false) 是否包含域名
      * @return URL
      */
-    function baseUrl($with_domain = false) {
+    function baseUrl($with_domain = false, $route_type = '') {
         $_arr_configRoute = Config::get('route');
 
         $_str_baseFile  = $this->baseFile();
@@ -771,7 +772,7 @@ class Request {
         /*print_r($_arr_configRoute['route_type']);
         print_r('<br>');*/
 
-        if ($_arr_configRoute['route_type'] == 'noBaseFile' || strpos($_str_url, $_str_baseFile) === false) {
+        if ($_arr_configRoute['route_type'] == 'noBaseFile' || $route_type == 'noBaseFile' || strpos($_str_url, $_str_baseFile) === false) {
             $_str_baseRoute = $this->root();
         }
 
@@ -797,23 +798,31 @@ class Request {
 
         if (is_array($param) && !Func::isEmpty($param)) {
             foreach ($param as $_key=>$_value) { // 遍历参数
+                $_type      = 'str'; // 未指定期待类型, 则认为是字符串
+                $_default   = ''; // 未指定默认值, 则用空值
+                $_html      = false; // 未指定 html 模式, 则为否
+
                 if (!isset($data[$_key])) {
                     $data[$_key] = ''; // 如果不存在则用空值填充
                 }
 
-                if (!isset($_value[0])) {
-                    $_value[0] = 'str'; // 未指定期待类型, 则认为是字符串
+                if (is_array($_value)) {
+                    if (isset($_value[0])) {
+                        $_type = $_value[0]; // 指定期待类型
+                    }
+
+                    if (isset($_value[1])) {
+                        $_default = $_value[1]; // 指定默认值
+                    }
+
+                    if (isset($_value[2])) {
+                        $_html = $_value[2]; // 指定 html 模式
+                    }
+                } else if (is_scalar($_value)) {
+                    $_type = $_value; // 仅指定类型
                 }
 
-                if (!isset($_value[1])) {
-                    $_value[1] = ''; // 未指定默认值, 则用空值
-                }
-
-                if (!isset($_value[2])) {
-                    $_value[2] = false; // 未指定 html 模式, 则为否
-                }
-
-                $_arr_return[$_key] = $this->input($data[$_key], $_value[0], $_value[1], $_value[2]); // 过滤
+                $_arr_return[$_key] = $this->input($data[$_key], $_type, $_default, $_html); // 过滤
             }
         }
 
@@ -821,123 +830,26 @@ class Request {
     }
 
 
-    /** 取得分也参数
+    /** 取得分页参数
      * pagination function.
      *
      * @access public
      * @param int $count (default: 0) 记录数
      * @param int $perpage (default: 0) 每页数
-     * @param string $method (default: 'get') 方法
+     * @param string $current (default: 'get') 方法
      * @param string $param (default: 'page') 参数名
      * @param int $pergroup (default: 0) 每个分组的页数
      * @return 分页参数
      */
-    function pagination($count = 0, $perpage = 0, $method = 'get', $param = 'page', $pergroup = 0) {
-        if ($perpage < 1) { // 如果未指定每页数, 则用默认配置
-            $_arr_configDefault = Config::get('var_default'); // 取得默认配置
-            $perpage       = $_arr_configDefault['perpage'];
-        }
+    function pagination($count = 0, $perpage = 0, $current = 'get', $pageparam = 'page', $pergroup = 0) {
+        $_obj_paginator = Paginator::instance();
 
-        if ($perpage < 1) { // 如果每页数依然小于 1, 则直接为 10
-            $perpage = 10;
-        }
+        $_obj_paginator->count($count);
+        $_obj_paginator->perpage($perpage);
+        $_obj_paginator->pergroup($pergroup);
+        $_obj_paginator->pageparam($pageparam);
 
-        if ($pergroup < 1) { // 如果未指定每个分组的页数, 则默认为 10
-            $pergroup = 10;
-        }
-
-        if (is_numeric($method)) { // 如果方法为数字, 则直接认为是当前页码
-            $_num_this = $method;
-        } else {
-            $method = strtolower($method); // 将方法转为小些
-
-            switch ($method) {
-                case 'post':
-                    $_num_this = $this->post($param, false, 'int', 1); // 从 post 中取得当前页码
-                break;
-
-                default:
-                    //print_r($this->param);
-                    if (isset($this->param[$param])) { // 如果参数中有当前页码, 则直接使用
-                        $_num_this = $this->input($this->param[$param], 'int', 1);
-                    } else { // 否则从 get 中取得
-                        $_num_this = $this->get($param, false, 'int', 1);
-                    }
-                break;
-            }
-        }
-
-        if ($_num_this < 1) { // 如果当前页小与 1, 则直接认为是首页
-            $_num_this = 1;
-        }
-
-        $_num_total = $count / $perpage; // 记录数除以每页数
-
-        if (intval($_num_total) < $_num_total) { // 有余数, 则总页数加 1
-            $_num_total = intval($_num_total) + 1;
-        } else if ($_num_total < 1) { // 总页数小于 1, 则认为只有一页
-            $_num_total = 1;
-        } else {
-            $_num_total = intval($_num_total); // 将总页数转换为整数
-        }
-
-        if ($_num_this > $_num_total) { // 如果当前页码大于总页数, 则总页数为当前页码
-            $_num_this = $_num_total;
-        }
-
-        if ($_num_this <= 1) { // 如果当前页码小于等于 1, 则无需排除记录
-            $_num_except = 0;
-        } else { // 否则计算应排除的记录数
-            $_num_except = ($_num_this - 1) * $perpage;
-        }
-
-        $_num_p     = intval(($_num_this - 1) / $pergroup); // 是否存在上十页、下十页参数
-        $_num_groupBegin = $_num_p * $pergroup + 1; // 当前组起始页
-        $_num_groupEnd   = $_num_p * $pergroup + $pergroup; // 当前组结束页
-
-        if ($_num_groupEnd >= $_num_total) { // 如果当前组的结束页大于总页数, 则总页数为当前组的结束页
-            $_num_groupEnd = $_num_total;
-        }
-
-        // 链接以及数值
-        $_num_first     = false; // 首页 (false 为隐藏, 以下同)
-        $_num_final     = false; // 尾页
-        $_num_prev      = false; // 上一页
-        $_num_next      = false; // 下一页
-        $_num_groupPrev = false; // 上一组
-        $_num_groupNext = false; // 下一组
-
-        if ($_num_this > 1) { // 当前页码大于 1 时
-            $_num_first = 1; // 显示首页连接
-            $_num_prev  = $_num_this - 1; // 上一页设置为当前页减 1
-        }
-
-        if ($_num_this < $_num_total) { // 当前页小于总页数时
-            $_num_final = $_num_total; // 显示尾页
-            $_num_next  = $_num_this + 1; // 下一页设置为当前页加 1
-        }
-
-        if ($_num_p * $pergroup > 0) {
-            $_num_groupPrev = $_num_p * $pergroup;
-        }
-
-        if ($_num_groupEnd < $_num_final) { // 当前组的结束页小于尾页
-            $_num_groupNext = $_num_groupEnd + 1; // 下一组为当前组的结束页加 1
-        }
-
-        return array(
-            'page'          => $_num_this, // 当前页码
-            'total'         => $_num_total, // 总页数
-            'except'        => $_num_except, // 应排除的记录数
-            'first'         => $_num_first, // 首页
-            'final'         => $_num_final, // 尾页
-            'prev'          => $_num_prev, // 上一页
-            'next'          => $_num_next, // 下一页
-            'group_begin'   => $_num_groupBegin, // 当前组的起始页
-            'group_end'     => $_num_groupEnd, // 当前组的结束页
-            'group_prev'    => $_num_groupPrev, // 上一组
-            'group_next'    => $_num_groupNext, // 下一组
-        );
+        return $_obj_paginator->make($current);
     }
 
 
@@ -982,10 +894,14 @@ class Request {
             break;
 
             case 'arr': //数组
+                if (!is_array($input)) {
+                    $input = array();
+                }
+
                 $_return = Func::arrayEach($input); // 遍历数组
             break;
 
-            default: //默认
+            default: // 默认
                 $_return = Func::safe($input, $htmlmode); // 安全过滤
             break;
 

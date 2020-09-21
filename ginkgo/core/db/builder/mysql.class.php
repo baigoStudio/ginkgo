@@ -523,16 +523,22 @@ class Mysql {
      * limit function.
      *
      * @access public
-     * @param int $offset (default: 1) 偏离或数量
+     * @param int $limit 偏离或数量
      * @param bool $length (default: false) 数量
      * @return void
      */
-    function limit($offset = 1, $length = false) {
-        if ($length === false) {
-            return $offset;
-        } else {
-            return $offset . ', ' . $length;
+    function limit($limit = false, $length = false) {
+        $_return = '';
+
+        if ($limit !== false) {
+            if ($length === false) {
+                $_return = $limit;
+            } else {
+                $_return = $limit . ', ' . $length;
+            }
         }
+
+        return $_return;
     }
 
 

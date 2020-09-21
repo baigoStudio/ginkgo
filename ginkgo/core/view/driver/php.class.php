@@ -21,7 +21,6 @@ defined('IN_GINKGO') or exit('Access denied');
 class Php {
 
     protected static $instance; // 当前实例
-    private $suffix = GK_EXT_TPL; // 默认模板文件后缀
     private $config; // 配置
     private $route; // 路由
     private $param; // 参数
@@ -199,10 +198,6 @@ class Php {
     private function pathProcess($tpl = '') {
         $_str_tpl = $this->pathTpl;
 
-        if (!Func::isEmpty($this->config['suffix'])) { // 如果定义了后缀名
-            $this->suffix = $this->config['suffix']; // 替换默认后缀名
-        }
-
         $_str_act = Func::toLine($this->route['act']); // 转为文件名
 
         if (Func::isEmpty($tpl)) {
@@ -210,7 +205,7 @@ class Php {
         } else {
             $tpl = str_replace(array('/', '\\'), DS, $tpl); // 分拆模板参数
 
-            if (stristr($tpl, $this->suffix)) { // 如果定义了后缀, 则认为是完整路径, 直接使用
+            if (strpos($tpl, GK_EXT_TPL) !== false) { // 如果定义了后缀, 则认为是完整路径, 直接使用
                 $_str_tpl = $tpl;
             } else if (strpos($tpl, DS) !== false) { // 如果定义了目录分隔符, 则认为是 控制器/模板 形式
                 $_str_tpl .= $tpl;
@@ -219,8 +214,11 @@ class Php {
             }
         }
 
-        $_str_tplPath = $_str_tpl . $this->suffix;
-        $_str_tplPath = str_replace(array('/', '\\'), DS, $_str_tplPath);
+        $_str_tplPath = str_replace(array('/', '\\'), DS, $_str_tpl);
+
+        if (strpos($_str_tplPath, GK_EXT_TPL) === false) { // 如果后缀空缺, 则补全
+            $_str_tplPath .= GK_EXT_TPL;
+        }
 
         return str_replace('-', '_', $_str_tplPath);
     }

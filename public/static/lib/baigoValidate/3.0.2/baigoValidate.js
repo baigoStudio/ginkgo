@@ -1,5 +1,5 @@
 /*
-v3.0.0 jQuery baigoValidate plugin 表单验证插件
+v3.0.2 jQuery baigoValidate plugin 表单验证插件
 (c) 2017 baigo studio - http://www.baigo.net/jquery/baigovalidate.html
 License: http://www.opensource.org/licenses/mit-license.php
 */
@@ -29,6 +29,10 @@ License: http://www.opensource.org/licenses/mit-license.php
         var opts_default = {
             timeout: 30000,
             delimiter: ' - ',
+            result_obj: {
+                error_msg: 'error_msg',
+                msg: 'msg'
+            },
             type_msg: {
                 require: '{:attr} require',
                 confirm: '{:attr} out of accord with {:confirm}',
@@ -676,10 +680,8 @@ License: http://www.opensource.org/licenses/mit-license.php
                     _arr_data[field.name] = field.value;
                 });
 
-                //console.log(_arr_data);
-
                 $.each(opts.rules, function(key, value){
-                    if (_arr_data[key] != 'undefined') {
+                    if (typeof _arr_data[key] != 'undefined') {
                         form_data[key] = _arr_data[key];
                     } else {
                         var _selector  = process.getSelector(key);
@@ -1114,10 +1116,10 @@ License: http://www.opensource.org/licenses/mit-license.php
                     },
                     success: function(result) { //读取返回结果
                         //console.log(result);
-                        if (typeof result.error != 'undefined') {
-                            process.output(key, result.error, opts.class_name.input.err, opts.class_name.msg.err, opts.class_name.attach.err);
-                        } else if (typeof result.msg != 'undefined') {
-                            process.output(key, result.msg, opts.class_name.input.success, opts.class_name.msg.success, opts.class_name.attach.success);
+                        if (typeof result[opts.result_obj.error_msg] != 'undefined') {
+                            process.output(key, result[opts.result_obj.error_msg], opts.class_name.input.err, opts.class_name.msg.err, opts.class_name.attach.err);
+                        } else if (typeof result[opts.result_obj.msg] != 'undefined') {
+                            process.output(key, result[opts.result_obj.msg], opts.class_name.input.success, opts.class_name.msg.success, opts.class_name.attach.success);
                         }
                     }
                 });

@@ -15,7 +15,6 @@ class Debug {
     private static $error; // 错误
     private static $data; // 数据
     private static $init; // 是否初始化标志
-    private static $suffix = GK_EXT_TPL; // 默认模板文件后缀
     private static $obj_request; // 请求实例
 
     protected function __construct() {

@@ -14,7 +14,7 @@ class Auth {
 
     protected static $instance; // 当前实例
 
-    public $prefix;
+    public $prefix = 'user';
 
     private $configAuth;
     private $session;
@@ -28,11 +28,14 @@ class Auth {
         'remember_expire'   => 2592000,
     );
 
-    protected function __construct($config = array(), $prefix = 'user') {
+    protected function __construct($config = array(), $prefix = '') {
         $_arr_config        = Config::get('auth');
 
         $this->configAuth   = array_replace_recursive($this->this_config, $config, $_arr_config); // 合并配置
-        $this->prefix       = $prefix; // 前缀
+
+        if (!Func::isEmpty($prefix)) {
+            $this->prefix = $prefix; // 前缀
+        }
     }
 
     protected function __clone() {
@@ -46,7 +49,7 @@ class Auth {
      * @static
      * @return 当前类的实例
      */
-    public static function instance($config = array(), $prefix = 'user') {
+    public static function instance($config = array(), $prefix = '') {
         if (Func::isEmpty(static::$instance)) {
             static::$instance = new static($config, $prefix);
         }
@@ -108,43 +111,43 @@ class Auth {
      * write function.
      *
      * @access public
-     * @param mixed $userRow 认证信息
+     * @param mixed $authRow 认证信息
      * @param bool $regen (default: false) 是否使用新生成的会话 ID
      * @param string $loginType (default: 'form') 登录类型
      * @param string $remember (default: '') 记住登录状态
      * @param string $pathCookie (default: '/') Cookie 保存路径
      * @return void
      */
-    function write($userRow, $regen = false, $loginType = 'form', $remember = '', $pathCookie = '/') {
+    function write($authRow, $regen = false, $loginType = 'form', $remember = '', $pathCookie = '/') {
         if ($regen) {
             session_regenerate_id(true); // 使用新生成的会话 ID 更新现有会话 ID
         }
 
         $_arr_optCookie = array(
-            'expire'    => GK_NOW + $this->configAuth['session_expire'], // 会话过期时间
+            'expire'    => GK_NOW + 2592000, // Cookie 过期时间
             'path'      => $pathCookie,
         );
 
-        //print_r($userRow);
+        //print_r($authRow);
 
-        Session::set($this->prefix . '_id', $userRow[$this->prefix . '_id']);
-        Session::set($this->prefix . '_name', $userRow[$this->prefix . '_name']);
+        Session::set($this->prefix . '_id', $authRow[$this->prefix . '_id']);
+        Session::set($this->prefix . '_name', $authRow[$this->prefix . '_name']);
         Session::set($this->prefix . '_time', GK_NOW);
-        Session::set($this->prefix . '_hash', $this->hashProcess($userRow));
+        Session::set($this->prefix . '_hash', $this->hashProcess($authRow));
         Session::set($this->prefix . '_login_type', $loginType);
 
-        Cookie::set($this->prefix . '_id', $userRow[$this->prefix . '_id'], $_arr_optCookie);
-        Cookie::set($this->prefix . '_name', $userRow[$this->prefix . '_name'], $_arr_optCookie);
+        Cookie::set($this->prefix . '_id', $authRow[$this->prefix . '_id'], $_arr_optCookie);
+        Cookie::set($this->prefix . '_name', $authRow[$this->prefix . '_name'], $_arr_optCookie);
         Cookie::set($this->prefix . '_time', GK_NOW, $_arr_optCookie);
-        Cookie::set($this->prefix . '_hash', $this->hashProcess($userRow), $_arr_optCookie);
+        Cookie::set($this->prefix . '_hash', $this->hashProcess($authRow), $_arr_optCookie);
         Cookie::set($this->prefix . '_login_type', $loginType, $_arr_optCookie);
 
         $_arr_optCookie['expire'] = $this->configAuth['remember_expire']; // 保存密码过期时间
 
         if ($remember === 'remember') {
-            Cookie::set('remember_' . $this->prefix . '_id', $userRow[$this->prefix . '_id'], $_arr_optCookie);
-            Cookie::set('remember_' . $this->prefix . '_name', $userRow[$this->prefix . '_id'], $_arr_optCookie);
-            Cookie::set('remember_' . $this->prefix . '_hash', $this->hashProcess($userRow), $_arr_optCookie);
+            Cookie::set('remember_' . $this->prefix . '_id', $authRow[$this->prefix . '_id'], $_arr_optCookie);
+            Cookie::set('remember_' . $this->prefix . '_name', $authRow[$this->prefix . '_name'], $_arr_optCookie);
+            Cookie::set('remember_' . $this->prefix . '_hash', $this->hashProcess($authRow), $_arr_optCookie);
             Cookie::set('remember_' . $this->prefix . '_time', GK_NOW, $_arr_optCookie);
         }
     }
@@ -181,82 +184,82 @@ class Auth {
      * check function.
      *
      * @access public
-     * @param mixed $userRow
+     * @param mixed $authRow
      * @param string $pathCookie (default: '/')
      * @return bool
      */
-    function check($userRow, $pathCookie = '/') {
+    function check($authRow, $pathCookie = '/') {
         $_arr_session   = $this->session;
         $_arr_cookie    = $this->cookie;
         $_arr_remember  = $this->remember;
 
         /*print_r($_arr_cookie);
         print_r($_arr_session);
-        print_r($userRow);*/
+        print_r($authRow);*/
 
-        if (!$this->checkUser($userRow)) {
+        if (!$this->checkUser($authRow)) {
             $this->end();
             return false;
         }
 
         if ($this->haveSession()) {
-            if ($userRow[$this->prefix . '_id'] != $_arr_session[$this->prefix . '_id']) {
+            if ($authRow[$this->prefix . '_id'] != $_arr_session[$this->prefix . '_id']) {
                 $this->end();
                 $this->error = 'Session ID is incorrect';
                 return false;
             }
 
-            if ($userRow[$this->prefix . '_name'] != $_arr_session[$this->prefix . '_name']) {
+            if ($authRow[$this->prefix . '_name'] != $_arr_session[$this->prefix . '_name']) {
                 $this->end();
                 $this->error = 'Session ID is incorrect';
                 return false;
             }
 
-            if ($this->hashProcess($userRow) != $_arr_session[$this->prefix . '_hash']) {
+            if ($this->hashProcess($authRow) != $_arr_session[$this->prefix . '_hash']) {
                 $this->end();
                 $this->error = 'Session hash is incorrect';
                 return false;
             }
 
-            if ($userRow[$this->prefix . '_id'] != $_arr_cookie[$this->prefix . '_id']) {
+            if ($authRow[$this->prefix . '_id'] != $_arr_cookie[$this->prefix . '_id']) {
                 $this->end();
                 $this->error = 'Cookie ID is incorrect';
                 return false;
             }
 
-            if ($userRow[$this->prefix . '_name'] != $_arr_cookie[$this->prefix . '_name']) {
+            if ($authRow[$this->prefix . '_name'] != $_arr_cookie[$this->prefix . '_name']) {
                 $this->end();
                 $this->error = 'Cookie ID is incorrect';
                 return false;
             }
 
-            if ($this->hashProcess($userRow) != $_arr_cookie[$this->prefix . '_hash']){
+            if ($this->hashProcess($authRow) != $_arr_cookie[$this->prefix . '_hash']){
                 $this->end();
                 $this->error = 'Cookie hash is incorrect';
                 return false;
             }
 
-            $this->write($userRow, false, 'form', '', $pathCookie);
+            $this->write($authRow, false, 'form', '', $pathCookie);
         } else if ($this->haveRemenber()) {
-            if ($userRow[$this->prefix . '_id'] != $_arr_remember[$this->prefix . '_id']) {
+            if ($authRow[$this->prefix . '_id'] != $_arr_remember[$this->prefix . '_id']) {
                 $this->end();
                 $this->error = 'Remember ID is incorrect';
                 return false;
             }
 
-            if ($userRow[$this->prefix . '_name'] != $_arr_remember[$this->prefix . '_name']) {
+            if ($authRow[$this->prefix . '_name'] != $_arr_remember[$this->prefix . '_name']) {
                 $this->end();
                 $this->error = 'Remember ID is incorrect';
                 return false;
             }
 
-            if ($this->hashProcess($userRow) != $_arr_remember[$this->prefix . '_hash']){
+            if ($this->hashProcess($authRow) != $_arr_remember[$this->prefix . '_hash']){
                 $this->end();
                 $this->error = 'Remember hash is incorrect';
                 return false;
             }
 
-            $this->write($userRow, false, 'auto', '', $pathCookie);
+            $this->write($authRow, false, 'auto', '', $pathCookie);
         } else {
             $this->end();
             $this->error = 'No session';
@@ -294,27 +297,27 @@ class Auth {
     }
 
 
-    /** 验证 userRow 结构
+    /** 验证 authRow 结构
      * checkUser function.
      *
      * @access private
      * @return void
      */
-    private function checkUser($userRow) {
-        if (!isset($userRow[$this->prefix . '_id'])) {
-            $this->error = 'Missing user ID';
+    private function checkUser($authRow) {
+        if (!isset($authRow[$this->prefix . '_id'])) {
+            $this->error = 'Missing auth ID';
             return false;
         }
-        if (!isset($userRow[$this->prefix . '_name'])) {
-            $this->error = 'Missing user name';
+        if (!isset($authRow[$this->prefix . '_name'])) {
+            $this->error = 'Missing auth name';
             return false;
         }
-        if (!isset($userRow[$this->prefix . '_time_login'])) {
-            $this->error = 'Missing user login time';
+        if (!isset($authRow[$this->prefix . '_time_login'])) {
+            $this->error = 'Missing auth login time';
             return false;
         }
-        if (!isset($userRow[$this->prefix . '_id'])) {
-            $this->error = 'Missing user IP';
+        if (!isset($authRow[$this->prefix . '_ip'])) {
+            $this->error = 'Missing auth IP';
             return false;
         }
 
@@ -419,14 +422,14 @@ class Auth {
      * hashProcess function.
      *
      * @access private
-     * @param mixed $userRow
+     * @param mixed $authRow
      * @return 哈希值
      */
-    private function hashProcess($userRow) {
+    private function hashProcess($authRow) {
         $_str_return = '';
 
-        if (isset($userRow[$this->prefix . '_id']) && isset($userRow[$this->prefix . '_name']) && isset($userRow[$this->prefix . '_time_login']) && isset($userRow[$this->prefix . '_ip'])) {
-            $_str_return = Crypt::crypt($userRow[$this->prefix . '_id'] . $userRow[$this->prefix . '_name'] . $userRow[$this->prefix . '_time_login'], $userRow[$this->prefix . '_ip']);
+        if (isset($authRow[$this->prefix . '_id']) && isset($authRow[$this->prefix . '_name']) && isset($authRow[$this->prefix . '_time_login']) && isset($authRow[$this->prefix . '_ip'])) {
+            $_str_return = Crypt::crypt($authRow[$this->prefix . '_id'] . $authRow[$this->prefix . '_name'] . $authRow[$this->prefix . '_time_login'], $authRow[$this->prefix . '_ip']);
         }
 
         return $_str_return;

@@ -341,7 +341,11 @@ class Image extends File {
                     $_value['thumb_height'] = 100; // 默认高度
                 }
 
-                if (!isset($_value['thumb_type'])) {
+                if (isset($_value['thumb_type_value'])) {
+                    $_value['thumb_type'] = $_value['thumb_type_value'];
+                } else if (isset($_value['thumb_type'])) {
+                    $_value['thumb_type'] = $_value['thumb_type'];
+                } else {
                     $_value['thumb_type'] = 'ratio'; // 默认类型
                 }
 
