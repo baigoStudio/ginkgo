@@ -77,8 +77,7 @@ class Error {
             }
         }
 
-        //error_reporting(0); // 禁用系统报错
-        error_reporting(E_ALL); // 禁用系统报错
+        error_reporting(0); // 禁用系统报错
         libxml_use_internal_errors(true); // 禁止 html xml 解析报错
         set_error_handler(array(__CLASS__, 'appError')); // 注册错误处理方法
         set_exception_handler(array(__CLASS__, 'appException')); // 注册异常处理方法
