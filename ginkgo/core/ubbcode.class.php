@@ -27,7 +27,7 @@ class Ubbcode {
     );
 
     // 正则规则
-    public static $pregRules = array(
+    public static $regexRules = array(
         '/\[url\](.+?)\[\/url\]/i'               => '<a href="$1" target="_blank">$1</a>',
         '/\[url=(.+?)\](.+?)\[\/url\]/i'         => '<a href="$1" target="_blank" title="$1">$2</a>',
         '/\[img\](.+?)\[\/img\]/i'               => '<img src="$1">',
@@ -39,7 +39,7 @@ class Ubbcode {
 
 
     // 添加成对规则
-    static function addPair($pair) {
+    public static function addPair($pair) {
         if (is_array($pair)) {
             self::$pairRules = array_merge(self::$pairRules, $pair);
         } else if (is_string($pair)) {
@@ -49,7 +49,7 @@ class Ubbcode {
 
 
     // 添加单独规则
-    static function addSingle($single) {
+    public static function addSingle($single) {
         if (is_array($single)) {
             self::$singleRules = array_merge(self::$singleRules, $single);
         } else if (is_string($single)) {
@@ -59,26 +59,26 @@ class Ubbcode {
 
 
     // 添加替换规则
-    static function addReplace($src, $dst = '') {
-        if (is_array($src)) {
-            self::$replaceRules = array_replace_recursive(self::$replaceRules, $src);
-        } else if (is_string($src)) {
-            self::$replaceRules[$src] = $dst;
+    public static function addReplace($replace, $dst = '') {
+        if (is_array($replace)) {
+            self::$replaceRules = array_replace_recursive(self::$replaceRules, $replace);
+        } else if (is_string($replace)) {
+            self::$replaceRules[$replace] = $dst;
         }
     }
 
     // 添加正则规则
-    static function addPreg($src, $dst = '') {
-        if (is_array($src)) {
-            self::$pregRules = array_replace_recursive(self::$pregRules, $src);
-        } else if (is_string($src)) {
-            self::$pregRules[$src] = $dst;
+    public static function addRegex($regex, $dst = '') {
+        if (is_array($regex)) {
+            self::$regexRules = array_replace_recursive(self::$regexRules, $regex);
+        } else if (is_string($regex)) {
+            self::$regexRules[$regex] = $dst;
         }
     }
 
 
     // 去除标签
-    static function stripCode($string) {
+    public static function stripCode($string) {
         $_arr_regs = array(
             '/\[img=(.+?)\](.+?)\[\/img\]/i',
             '/\[img\](.+?)\[\/img\]/i',
@@ -93,7 +93,7 @@ class Ubbcode {
     }
 
     // 转换 ubbcode
-    static function convert($string) {
+    public static function convert($string) {
         $_arr_src = array();
         $_arr_dst = array();
 
@@ -135,7 +135,7 @@ class Ubbcode {
         $_arr_dsts = array();
 
         // 转换正则规则
-        foreach (self::$pregRules as $_key=>$_value) {
+        foreach (self::$regexRules as $_key=>$_value) {
             if (strpos($_key, '/') === false && !preg_match('/\/[imsU]{0,4}$/', $_key)) {
                 // 不是正则表达式则两端补上/
                 $_key = '/^' . $_key . '$/';
@@ -146,8 +146,67 @@ class Ubbcode {
         }
 
         $string = preg_replace($_arr_regs, $_arr_dsts, $string);
+        $string = nl2br($string, false);
 
         return $string;
     }
 
+    // 获取图片
+    public static function getImages($string = '', $options = '', $filter = '', $include = '') {
+        $_arr_data      = array();
+        $_arr_return    = array();
+
+        if (!Func::isEmpty($string)) {
+            preg_match_all('/\[img\](.+?)\[\/img\]/i', $string, $_arr_matches_1); // 正则匹配
+            preg_match_all('/\[img=(.+?)\](.+?)\[\/img\]/i', $string, $_arr_matches_2); // 正则匹配
+
+            if (isset($_arr_matches_1[1]) && !Func::isEmpty($_arr_matches_1[1])) {
+                $_arr_data = array_merge($_arr_data, $_arr_matches_1[1]);
+            }
+
+            if (isset($_arr_matches_2[1]) && !Func::isEmpty($_arr_matches_2[1])) {
+                $_arr_data = array_merge($_arr_data, $_arr_matches_2[1]);
+            }
+        }
+
+        if (!Func::isEmpty($_arr_data) && !Func::isEmpty($include)) {
+            foreach ($_arr_data as $_key=>$_value) {
+                if (is_array($include)) {
+                    foreach ($include as $_key_filter=>$_value_filter) {
+                        if (!stristr($_value, $_value_filter)) {
+                            unset($_arr_data[$_key]);
+                        }
+                    }
+                } else if (is_string($include)) {
+                    if (!stristr($_value, $include)) {
+                        unset($_arr_data[$_key]);
+                    }
+                }
+            }
+        }
+
+        if (!Func::isEmpty($_arr_data) && !Func::isEmpty($filter)) {
+            foreach ($_arr_data as $_key=>$_value) {
+                if (is_array($filter)) {
+                    foreach ($filter as $_key_filter=>$_value_filter) {
+                        if (stristr($_value, $_value_filter)) {
+                            unset($_arr_data[$_key]);
+                        }
+                    }
+                } else if (is_string($filter)) {
+                    if (stristr($_value, $filter)) {
+                        unset($_arr_data[$_key]);
+                    }
+                }
+            }
+        }
+
+        if (!Func::isEmpty($_arr_data)) {
+            foreach ($_arr_data as $_key=>$_value) {
+                $_arr_return[] = pathinfo(Html::decode($_value, 'url'), $options);
+            }
+        }
+
+        return $_arr_return;
+    }
 }

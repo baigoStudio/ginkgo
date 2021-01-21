@@ -4,6 +4,14 @@
 以下为系统文件，请勿修改
 -----------------------------------------------------------------*/
 
-require(__DIR__ . DIRECTORY_SEPARATOR . 'base.php'); //载入基础引导文件
+namespace ginkgo\validate\rule;
 
-ginkgo\App::run()->send('boot'); //运行并输出
+use ginkgo\validate\Rule;
+
+// 不能非法包含或直接执行
+defined('IN_GINKGO') or exit('Access denied');
+
+// 验证规则
+class Ginkgo extends Rule {
+
+}

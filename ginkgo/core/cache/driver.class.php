@@ -4,29 +4,36 @@
 以下为系统文件，请勿修改
 -----------------------------------------------------------------*/
 
-namespace ginkgo;
+namespace ginkgo\cache;
+
+use ginkgo\Func;
+use ginkgo\Config;
 
 // 不能非法包含或直接执行
 defined('IN_GINKGO') or exit('Access denied');
 
-// 缓存
-class Cache {
+// 驱动抽象类
+abstract class Driver {
 
-    public $config = array(); // 配置
+    public $config = array();
 
     protected static $instance; // 当前实例
 
     // 默认配置
     private $configThis = array(
-        'type'      => 'file',
         'prefix'    => '',
+        'life_time' => 1200,
     );
 
-    private $obj_driver; // 驱动实例
-
-    protected function __construct($type = 'file', $config = array()) {
-        $this->config($config);
-        $this->driver($type, $this->config); // 设置驱动
+    /** 构造函数
+     * __construct function.
+     *
+     * @access protected
+     * @param array $config (default: array()) 配置
+     * @return void
+     */
+    protected function __construct($config = array()) {
+        $this->config($config); // 合并配置
     }
 
     protected function __clone() { }
@@ -36,24 +43,17 @@ class Cache {
      *
      * @access public
      * @static
-     * @param string $type (default: 'file') 驱动类型
-     * @param array $config (default: array()) 配置
      * @return 当前类的实例
      */
-    public static function instance($type = 'file', $config = array()) {
+    public static function instance($config = array()) {
         if (Func::isEmpty(self::$instance)) {
-            self::$instance = new static($type, $config);
+            self::$instance = new static($config);
         }
+
         return self::$instance;
     }
 
-    /** 配置
-     * prefix function.
-     * since 0.1.4
-     * @access public
-     * @param string $config (default: array()) 配置
-     * @return
-     */
+    // since 0.1.4
     public function config($config = array()) {
         $_arr_config       = Config::get('cache'); // 获取缓存配置
         $_arr_configDo     = array_replace_recursive($this->configThis, $_arr_config, $this->config, $config); // 合并配置
@@ -68,47 +68,11 @@ class Cache {
      * @return 如果参数为空则返回当前前缀, 否则无返回
      */
     public function prefix($prefix = '') {
-        return $this->obj_driver->prefix($prefix);
-    }
-
-    /** 设置驱动
-     * driver function.
-     *
-     * @access public
-     * @param string $type (default: 'file') 驱动类型
-     * @param array $config (default: array()) 配置
-     * @return 当前实例
-     */
-    public function driver($type = 'file', $config = array()) {
-        // 未指定驱动, 则使用默认
-        if (Func::isEmpty($type)) {
-            if (isset($config['type']) && !Func::isEmpty($config['type'])) {
-                $type = $config['type'];
-            }
-        }
-
-        if (Func::isEmpty($type)) {
-            $type = $this->configThis['type'];
-        }
-
-        if (strpos($type, '\\')) {
-            $_class = $type;
+        if (Func::isEmpty($prefix)) {
+            return $this->config['prefix'];
         } else {
-            $_class = 'ginkgo\\cache\\driver\\' . String::ucwords($type, '_');
+            $this->config['prefix'] = $prefix;
         }
-
-        // 初始化驱动类
-        if (class_exists($_class)) {
-            $this->obj_driver = $_class::instance($config);
-        } else {
-            $_obj_excpt = new Exception('Cache driver not found', 500);
-
-            $_obj_excpt->setData('err_detail', $_class);
-
-            throw $_obj_excpt;
-        }
-
-        return $this;
     }
 
     /** 检查缓存是否存在
@@ -120,7 +84,7 @@ class Cache {
      * @return 检查结果 (bool)
      */
     public function check($name, $check_expire = false) {
-        return $this->obj_driver->check($name, $check_expire);
+        return true;
     }
 
     /** 读取
@@ -131,7 +95,7 @@ class Cache {
      * @return 缓存内容
      */
     public function read($name) {
-        return $this->obj_driver->read($name);
+       return '';
     }
 
     /** 写入
@@ -140,11 +104,10 @@ class Cache {
      * @access public
      * @param mixed $name 缓存名称
      * @param mixed $content 缓存内容
-     * @param mixed $life_time 有效时间
      * @return 写入字节数
      */
     public function write($name, $content, $life_time = 0) {
-        return $this->obj_driver->write($name, $content, $life_time);
+        return 0;
     }
 
     /** 删除
@@ -155,6 +118,6 @@ class Cache {
      * @return 删除结果 (bool)
      */
     public function delete($name) {
-        return $this->obj_driver->delete();
+        return true;
     }
 }
