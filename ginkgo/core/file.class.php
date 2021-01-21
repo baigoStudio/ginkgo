@@ -13,25 +13,11 @@ defined('IN_GINKGO') or exit('Access denied');
 class File {
 
     public $error; // 错误
-    public $errno; // 错误号
-    public $rule = 'md5'; // 生成文件名规则 (函数名)
     public $mod  = 0755; // 目录权限
-    public $mimeRows = array(); // mime 池
-
-    // 默认 $_FILES 变量结构
-    public $fileInfo = array(
-        'width'    => 100,
-        'height'   => 100,
-        'name'     => '',
-        'tmp_name' => '',
-        'ext'      => '',
-        'mime'     => '',
-        'size'     => 0,
-    );
 
     protected static $instance; // 当前实例
 
-    protected function __construct($config = array()) { }
+    protected function __construct() { }
     protected function __clone() { }
 
     /** 实例化
@@ -41,14 +27,39 @@ class File {
      * @static
      * @return 当前类的实例
      */
-    public static function instance($config = array()) {
+    public static function instance() {
         if (Func::isEmpty(self::$instance)) {
-            self::$instance = new static($config);
+            self::$instance = new static();
         }
 
         return self::$instance;
     }
 
+
+    /** 文件夹是否存在
+     * dirHas function.
+     *
+     * @access public
+     * @static
+     * @param string $path 路径
+     * @return bool
+     */
+    public static function dirHas($path) {
+        return is_dir(strtolower($path));
+    }
+
+
+    /** 文件是否存在
+     * fileHas function.
+     *
+     * @access public
+     * @static
+     * @param string $path 路径
+     * @return bool
+     */
+    public static function fileHas($path) {
+        return is_file(strtolower($path));
+    }
 
 
     /** 列出目录结构
@@ -203,19 +214,6 @@ class File {
     }
 
 
-    /** 文件夹是否存在
-     * dirHas function.
-     *
-     * @access public
-     * @static
-     * @param string $path 路径
-     * @return bool
-     */
-    public static function dirHas($path) {
-        return is_dir(strtolower($path));
-    }
-
-
     /** 读取文件
      * fileRead function.
      *
@@ -316,102 +314,6 @@ class File {
     }
 
 
-    /** 文件是否存在
-     * fileHas function.
-     *
-     * @access public
-     * @static
-     * @param string $path 路径
-     * @return bool
-     */
-    public static function fileHas($path) {
-        return is_file(strtolower($path));
-    }
-
-    /** 获取文件的 mime 类型
-     * getMime function.
-     *
-     * @access public
-     * @param string $path 路径
-     * @param bool $strict (default: false) 严格获取 mime, true 严格, 字符串 直接报告, false 以路径为准
-     * @return mime 类型
-     */
-    public function getMime($path, $strict = false) {
-        if ($strict === true || $strict === 'true') {
-            $_obj_finfo = new \finfo();
-
-            $_str_mime  = $_obj_finfo->file($path, FILEINFO_MIME_TYPE);
-        } else if (!Func::isEmpty($strict) && is_string($strict)) {
-            $_str_mime = $strict;
-        } else {
-            $_str_ext = $this->getExt($path); //取得扩展名
-
-            if (isset($this->mimeRows[$_str_ext])) {
-                $_str_mime = $this->mimeRows[$_str_ext][0];
-            }
-        }
-
-        return $_str_mime;
-    }
-
-
-    /** 获取扩展名
-     * getExt function.
-     *
-     * @access public
-     * @param string $path 路径
-     * @param mixed $mime (default: false) mime 类型
-     * @return 扩展名
-     */
-    public function getExt($path, $mime = false) {
-        $_str_ext = strtolower(pathinfo($path, PATHINFO_EXTENSION)); //取得扩展名
-
-        if ($mime) {
-            // 扩展名与 mime 不符的情况下, 反向查找, 如果存在, 则更改扩展名
-            if (!isset($this->mimeRows[$_str_ext]) || !in_array($mime, $this->mimeRows[$_str_ext])) {
-                foreach ($this->mimeRows as $_key_allow=>$_value_allow) {
-                    if (in_array($mime, $_value_allow)) {
-                        return $_key_allow;
-                    }
-                }
-            }
-        }
-
-        return $_str_ext;
-    }
-
-
-    /** 设置 mime
-     * setMime function.
-     *
-     * @access public
-     * @param mixed $mime
-     * @param array $value (default: array())
-     * @return void
-     */
-    public function setMime($mime, $value = array()) {
-        if (is_array($mime)) {
-            $this->mimeRows = array_replace_recursive($this->mimeRows, $mime);
-        } else {
-            $this->mimeRows[$mime] = $value;
-        }
-    }
-
-
-    /** 设置生成文件名规则 (函数名)
-     * rule function.
-     *
-     * @access public
-     * @param mixed $rule
-     * @return 当前实例
-     */
-    public function rule($rule) {
-        $this->rule = $rule;
-
-        return $this;
-    }
-
-
     // 设置目录权限
     public function mod($mod = '') {
         if (Func::isEmpty($mod)) {
@@ -422,103 +324,8 @@ class File {
     }
 
 
-    // 兼容用
-    public function __call($method, $params) {
-        return $this->getInfo($params);
-    }
-
-
-    /** 获取信息
-     * size function.
-     *
-     * @access public
-     * @return 0 - 图像宽度, 1 - 图像高度
-     */
-    public function getInfo($name = '') {
-        $_mix_retrun = '';
-
-        if (Func::isEmpty($name)) {
-            $_mix_retrun = $this->fileInfo;
-        } else if (isset($this->fileInfo[$name])) {
-            $_mix_retrun = $this->fileInfo[$name];
-        }
-
-        return $_mix_retrun;
-    }
-
-
     // 获取错误
     public function getError() {
         return $this->error;
-    }
-
-
-    /** 取得错误号
-     * getErrno function.
-     *
-     * @access public
-     * @return 错误号
-     */
-    public function getErrno() {
-        return $this->errno;
-    }
-
-
-    /** 生成文件名
-     * genFilename function.
-     *
-     * @access protected
-     * @param mixed $name (default: true) 文件名
-     * @return 文件名
-     */
-    protected function genFilename($name = true) {
-        if ($name === true) { // 参数为 true 时, 按规则生成文件名
-            if (is_callable($this->rule)) {
-                $_str_type = $this->rule;
-            } else {
-                $_str_type = 'md5';
-            }
-
-            if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
-                $_tm_time = $_SERVER['REQUEST_TIME_FLOAT'];
-            } else {
-                $_tm_time = GK_NOW;
-            }
-
-            $name = call_user_func($_str_type, $_tm_time) . '.' . $this->fileInfo['ext'];
-        } else if ($name === false) { // 参数为 false 时, 使用原始文件名
-            $name = $this->fileInfo['name'];
-        }
-
-        // 指定为字符串时, 直接使用
-
-        return $name;
-    }
-
-
-    /** 验证是否为允许的文件
-     * verifyFile function.
-     *
-     * @access protected
-     * @param mixed $ext
-     * @param mixed $mime
-     * @return 验证结果 (bool)
-     */
-    protected function verifyFile($ext, $mime) {
-        if (!Func::isEmpty($this->mimeRows)) {
-            if (!isset($this->mimeRows[$ext])) { //该扩展名的 mime 数组是否存在
-                $this->error = 'MIME check failed';
-
-                return false;
-            }
-
-            if (!in_array($mime, $this->mimeRows[$ext])) { //是否允许
-                $this->error = 'MIME not allowed';
-
-                return false;
-            }
-        }
-
-        return true;
     }
 }
