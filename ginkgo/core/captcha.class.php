@@ -65,7 +65,15 @@ class Captcha {
      * @return void
      */
     public function config($config = array()) {
-        $_arr_configDo = array_replace_recursive($this->configThis, $this->config, $config); // 合并配置
+        $_arr_configDo = $this->configThis;
+
+        if (is_array($this->config) && !Func::isEmpty($this->config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
+        }
+
+        if (is_array($config) && !Func::isEmpty($config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
+        }
 
         if (Func::isEmpty($_arr_configDo['font_file'])) { // 如果没有指定字体, 则从系统字体库随机取
             $_arr_configDo['font_file']  = $this->fontProcess();

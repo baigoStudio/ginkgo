@@ -76,7 +76,20 @@ class Smtp {
     // 配置 since 0.1.4
     public function config($config = array()) {
         $_arr_config   = Config::get('smtp', 'var_extra'); // 取得配置
-        $_arr_configDo = array_replace_recursive($this->configThis, $_arr_config, $this->config, $config); // 合并配置
+
+        $_arr_configDo = $this->configThis;
+
+        if (is_array($_arr_config) && !Func::isEmpty($_arr_config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config); // 合并配置
+        }
+
+        if (is_array($this->config) && !Func::isEmpty($this->config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
+        }
+
+        if (is_array($config) && !Func::isEmpty($config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
+        }
 
         $this->reply[0]['addr'] = $_arr_configDo['reply_addr'];
 

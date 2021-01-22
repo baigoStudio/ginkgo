@@ -61,10 +61,20 @@ class View {
    public function config($config = '') {
       $_arr_config   = Config::get('view'); // 取得配置
 
+
+      $_arr_configDo = $this->configThis;
+
+     if (is_array($_arr_config) && !Func::isEmpty($_arr_config)) {
+         $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config); // 合并配置
+     }
+
+     if (is_array($this->config) && !Func::isEmpty($this->config)) {
+         $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
+     }
+
       if (is_array($config)) {
-         $_arr_configDo = array_replace_recursive($this->configThis, $_arr_config, $this->config, $config); // 合并配置
+         $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
       } else if (is_string($config) && !Func::isEmpty($config)) {
-         $_arr_configDo = array_replace_recursive($this->configThis, $_arr_config, $this->config); // 合并配置
          $_arr_configDo['type'] = $config;
       }
 

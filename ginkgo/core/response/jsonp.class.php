@@ -20,8 +20,12 @@ class Jsonp extends Response {
     const CALLBACK_PARAM = 'callback';
     const CALLBACK       = 'callback';
 
+    public $header   = array(
+        'Content-Type'  => 'application/javascript; Charset=UTF-8',
+    ); // 头数据
+
     protected function output($data) {
-        $this->contentType('application/javascript');
+        //$this->contentType('application/javascript');
         $_param    = CALLBACK_PARAM;
         $_callback = CALLBACK;
 

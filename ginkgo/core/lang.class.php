@@ -53,7 +53,21 @@ class Lang {
     // 配置 since 0.1.4
     public function config($config = array()) {
         $_arr_config    = Config::get('lang'); // 取得图片配置
-        $_arr_configDo  = array_replace_recursive($this->configThis, $this->config, $config); // 合并配置
+
+        $_arr_configDo = $this->configThis;
+
+        if (is_array($_arr_config) && !Func::isEmpty($_arr_config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config); // 合并配置
+        }
+
+        if (is_array($this->config) && !Func::isEmpty($this->config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
+        }
+
+        if (is_array($config) && !Func::isEmpty($config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
+        }
+
         $this->config   = $_arr_configDo;
     }
 

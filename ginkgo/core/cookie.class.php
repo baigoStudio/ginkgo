@@ -48,7 +48,21 @@ class Cookie {
      */
     public static function config($config = array()) {
         $_arr_config   = Config::get('cookie'); // 取得配置
-        $_arr_configDo = array_replace_recursive(self::$configThis, $_arr_config, self::$config, $config); // 合并配置
+
+        $_arr_configDo = self::$configThis;
+
+        if (is_array($_arr_config) && !Func::isEmpty($_arr_config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config); // 合并配置
+        }
+
+        if (is_array(self::$config) && !Func::isEmpty(self::$config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, self::$config); // 合并配置
+        }
+
+        if (is_array($config) && !Func::isEmpty($config)) {
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
+        }
+
         self::$config  = $_arr_configDo;
     }
 

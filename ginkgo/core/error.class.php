@@ -67,14 +67,8 @@ class Error {
     public static function register($config = false) {
         self::config($config);
 
-        if (is_array(self::$config)) {
-            if (self::$config['dump']) { // 假如配置为输出
-                self::$optDebugDump = true;
-            }
-        } else if (is_scalar(self::$config)) {
-            if (self::$config) { // 假如配置为输出
-                self::$optDebugDump = true;
-            }
+        if (self::$config['dump']) { // 假如配置为输出
+            self::$optDebugDump = true;
         }
 
         error_reporting(0); // 禁用系统报错
@@ -88,9 +82,26 @@ class Error {
     // since 0.1.4
     public static function config($config = false) {
         $_mix_config   = Config::get('debug'); // 取得调试配置
-        $_arr_config   = self::configProcess($_mix_config);
-        $config        = self::configProcess($config);
-        $_arr_configDo = array_replace_recursive(self::$configThis, $_arr_config, self::$config, $config);
+
+        $_arr_configDo = self::$configThis;
+
+        if (!Func::isEmpty($_mix_config)) {
+            $_arr_config   = self::configProcess($_mix_config);
+
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config);
+        }
+
+        if (!Func::isEmpty(self::$config)) {
+            $_arr_config   = self::configProcess(self::$config);
+
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config);
+        }
+
+        if (!Func::isEmpty($config)) {
+            $_arr_config   = self::configProcess($config);
+
+            $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config);
+        }
 
         self::$config  = $_arr_configDo;
     }
@@ -188,7 +199,7 @@ class Error {
             $_arr_error['err_detail']   = $err_detail;
         }
 
-        //print_r($excpt->getTrace());
+        print_r(self::$optDebugDump);
 
         unset($excpt); //销毁异常实例
 
