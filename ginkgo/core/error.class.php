@@ -199,7 +199,7 @@ class Error {
             $_arr_error['err_detail']   = $err_detail;
         }
 
-        print_r(self::$optDebugDump);
+        //print_r(self::$optDebugDump);
 
         unset($excpt); //销毁异常实例
 
