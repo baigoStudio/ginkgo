@@ -85,7 +85,7 @@ abstract class Ctrl {
      * @param string $url (default: '') 重定向地址
      * @return 响应实例
      */
-    protected function redirect($url) {
+    protected function redirect($url = '') {
         return Response::create($url, 'redirect', 302); // 用重定向地址实例化响应类
     }
 
