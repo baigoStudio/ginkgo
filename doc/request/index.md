@@ -29,7 +29,7 @@ echo 'url with domain: ' . $request->url(true) . '<br>';
 echo 'url without query: ' . $request->baseUrl() . '<br>';
 
 // 获取 URL 访问的 ROOT 地址
-echo 'root:' . $request->root() . '<br>';
+echo 'root: ' . $request->root() . '<br>';
 
 // 获取 URL 访问的 ROOT 地址（包含域名）
 echo 'root with domain: ' . $request->root(true) . '<br>';
@@ -58,13 +58,13 @@ $request = Request::instance();
 $route = $request->route();
 echo '实际模块名称是' . $route['mod'];
 echo '实际控制器名称是' . $route['ctrl'];
-echo '实际操作名称是' . $route['act'];
+echo '实际动作名称是' . $route['act'];
 
 // 获取原始 模块 / 控制器 / 动作 名称
 $routeOrig = $request->routeOrig();
 echo '原始模块名称是' . $routeOrig['mod'];
 echo '原始控制器名称是' . $routeOrig['ctrl'];
-echo '原始操作名称是' . $routeOrig['act'];
+echo '原始动作名称是' . $routeOrig['act'];
 ```
 
 如果当前访问的地址是
@@ -75,11 +75,11 @@ echo '原始操作名称是' . $routeOrig['act'];
 
     实际模块名称是 index
     实际控制器名称是 index
-    实际操作名称是 helloWorld
+    实际动作名称是 helloWorld
 
     原始模块名称是 index
     原始控制器名称是 index
-    原始操作名称是 hello_world
+    原始动作名称是 hello_world
 
 如果当前访问的地址是
 
@@ -90,7 +90,7 @@ echo '原始操作名称是' . $routeOrig['act'];
 ``` php
 'route' => array(
     'route_rule'    => array( //路由规则
-        'admin/hello/overview' => 'index/index/hello_world', 
+        'admin/hello/index' => 'index/index/hello_world',
     ),
 ),
 ```
@@ -99,13 +99,13 @@ echo '原始操作名称是' . $routeOrig['act'];
 
     实际模块名称是 index
     实际控制器名称是 index
-    实际操作名称是 helloWorld
+    实际动作名称是 helloWorld
 
     原始模块名称是 admin
     原始控制器名称是 hello
-    原始操作名称是 overview
-        
-设置路由可以调用 `setRoute` 方法。
+    原始动作名称是 index
+
+设置路由可以调用 `setRoute()` 方法。
 
 ``` php
 $request = Request::instance();
@@ -142,4 +142,3 @@ print_r($request->getParam());
         'test' => ddd,
         'name' => ginkgo,
     );
-      

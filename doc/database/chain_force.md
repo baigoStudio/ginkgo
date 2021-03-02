@@ -1,6 +1,6 @@
-## force
+## `force()`
 
-`force` 方法用于数据集的强制索引操作，例如：
+`force()` 方法用于数据集的强制索引操作，例如：
 
 ``` php
 Db::table('user')->force('user')->select();

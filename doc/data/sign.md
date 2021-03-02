@@ -11,10 +11,10 @@ Sign::make($str);
 ```
 ----------
 
-#### `make` 生成签名
+#### `make()` 生成签名
 
 ``` php
-function make( $str [, $salt = ''] )
+function make( $str [, $salt = '' ] )
 ```
 
 参数
@@ -28,10 +28,10 @@ function make( $str [, $salt = ''] )
 
 ----------
 
-#### `check` 验证签名
+#### `check()` 验证签名
 
 ``` php
-function check( $str, $sign [, $salt = ''] )
+function check( $str, $sign [, $salt = '' ] )
 ```
 
 参数
@@ -43,4 +43,3 @@ function check( $str, $sign [, $salt = ''] )
 返回
 
 * true / false
-

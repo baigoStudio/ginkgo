@@ -46,7 +46,7 @@ if (!class_exists('extend\plugin\hello\Hello')) { // 防止类重复
 
             return $param;
         }
-        
+
     }
 
 }
@@ -56,7 +56,7 @@ if (!class_exists('extend\plugin\hello\Hello')) { // 防止类重复
 
 #### 定义动作
 
-可以使用 `ginkgo\Plugin` 类的 `add` 方法向指定的钩子添加动作，此方法一般用于插件中，例如：
+可以使用 `ginkgo\Plugin` 类的 `add()` 方法向指定的钩子添加动作，此方法一般用于插件中，例如：
 
 ``` php
 namespace extend\plugin\hello;
@@ -71,9 +71,10 @@ class Hello {
     }
 
     function sayHello($param) {
+        $param = str_replace('a', 'A', $param);
         return $param;
     }
-    
+
     function doHello($param) {
         return $param;
     }
@@ -85,11 +86,13 @@ class Hello {
 }
 ```
 
+> 向过滤器钩子添加动作时，务必保持传入的参数在返回时保持一样的类型，否则可能出现不可预期的错误。
+
 ----------
 
 #### 插件属性
 
-插件类中可以定义 config 与 opts 属性，必须声明为 public，系统在初始化插件时，会自动读取 `config.json` 和 `opts_var.json` 文件，并将值定义为插件类的属性，如：
+插件类中可以定义 `$config` 与 `$opts` 属性，必须声明为 public，系统在初始化插件时，会自动读取 `config.json` 和 `opts_var.json` 文件，并将值定义为插件类的属性，如：
 
 ``` php
 namespace extend\plugin\hello;
@@ -100,7 +103,7 @@ class Hello {
 
     public $config;
     public $opts;
-    
+
     function __construct() {
         Plugin::add('action_console_menu_plugin', $this, 'sayHello'); // 单个定义
     }
@@ -108,7 +111,7 @@ class Hello {
     function sayHello($param) {
         print_r($this->config);
     }
-    
+
 }
 ```
 
@@ -145,4 +148,3 @@ class Hello {
 | detail | 说明 |
 | plugin_url | 插件网址，由该开发者自行设立，介绍插件的使用方法等。 |
 | author_url | 作者网址，由该开发者自行设立，介绍作者等。 |
-

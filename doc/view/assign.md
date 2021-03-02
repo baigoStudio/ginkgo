@@ -4,7 +4,7 @@
 
 ----------
 
-#### assign 方法
+#### `assign()` 方法
 
 ```php
 namespace app\ctrl\index;
@@ -15,7 +15,7 @@ class Index extends ginkgo\Ctrl {
         // 模板变量赋值
         $this->assign('name', 'baigo');
         $this->assign('email', 'baigo@qq.com');
-        
+
         $data = array(
             'name'  => 'baigo',
             'email' => 'baigo@qq.com'
@@ -34,7 +34,7 @@ class Index extends ginkgo\Ctrl {
 
 #### 传入参数方法
 
-方法 `fetch` 及 `display` 均可传入模版变量，例如
+`fetch()` 及 `display()` 方法均可传入模版变量，例如
 
 ```php
 namespace app\ctrl\index;

@@ -11,6 +11,7 @@ SMTP 功能由 `ginkgo\Smtp` 类完成，SMTP 全称 Simple Mail Transfer Protoc
 ``` php
 'var_extra' => array(
     'smtp' => array(
+        'method'        => 'smtp', // 发送方法 0.1.3 新增
         'host'          => '', // 服务器
         'secure'        => 'off', // 加密传输
         'port'          => 25, // 端口
@@ -31,6 +32,7 @@ SMTP 功能由 `ginkgo\Smtp` 类完成，SMTP 全称 Simple Mail Transfer Protoc
 
 ``` php
 $config = array(
+    'method'        => 'smtp', // 发送方法 0.1.3 新增
     'host'          => '', // 服务器
     'secure'        => 'off', // 加密类型
     'port'          => 25, // 端口
@@ -53,7 +55,9 @@ $smtp = Smtp::instance($config);
 
 #### 连接服务器
 
-`connect` 方法可连接服务器
+`connect()` 方法可连接服务器
+
+> `send()` 方法在执行时，也会自动调用此方法 `0.1.3` 新增
 
 ``` php
 $smtp->connect();
@@ -64,6 +68,7 @@ $smtp->connect();
 ``` php
 $smtp = Smtp::instance($config);
 
+$smtp->connect();
 $smtp->addRcpt('baigo@baigo.net'); // 支持多个收件人
 $smtp->addRcpt('fone@baigo.net', 'fone'); // 支持定义收件人名
 $smtp->setSubject('这是一封邮件');
@@ -126,4 +131,3 @@ $smtp->send();
     ``` php
     $smtp->getError();
     ```
-

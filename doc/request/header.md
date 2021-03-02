@@ -1,6 +1,6 @@
 ## HTTP 头信息
 
-可以使用 `Request` 对象的 `header` 方法获取当前请求的 HTTP 请求头信息，例如：
+可以使用 `Request` 对象的 `header()` 方法获取当前请求的 HTTP 请求头信息，例如：
 
 ``` php
 $request = Request::instance();

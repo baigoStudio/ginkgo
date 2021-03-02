@@ -11,7 +11,17 @@ Crypt::encrypt($str);
 ```
 ----------
 
-#### `crypt` 单向加密
+#### 公钥
+
+ginkgo 安装以后，会自动生成一个公钥文件，默认位于：
+
+> ./runtime/data/`GK_APP_HASH`/key_pub.inc.php
+
+假如您用到此类加密一些数据，在迁移时必须同时迁移这个文件，否则会导致解密失败或者无法验证。
+
+----------
+
+#### `crypt()` 单向加密
 
 加密结果无法解密
 
@@ -31,7 +41,7 @@ function crypt( $str, $salt, $is_md5 )
 
 ----------
 
-#### `encrypt` 加密
+#### `encrypt()` 加密
 
 ``` php
 function encrypt( $str, $key, $iv )
@@ -49,7 +59,7 @@ function encrypt( $str, $key, $iv )
 
 ----------
 
-#### `decrypt` 解密
+#### `decrypt()` 解密
 
 ``` php
 function decrypt( $str, $key, $iv )
@@ -67,7 +77,7 @@ function decrypt( $str, $key, $iv )
 
 ----------
 
-#### `getError` 获取错误消息
+#### `getError()` 获取错误消息
 
 当 `encrypt` 或 `decrypt` 发生错误时，返回 false，此时可以通过本函数获取详细的错误信息。
 
@@ -82,4 +92,3 @@ function getError()
 返回
 
 * 错误消息
-

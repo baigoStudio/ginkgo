@@ -1,4 +1,4 @@
-## join
+## `join()`
 
 JOIN 通常有下面几种类型，不同类型的 JOIN 操作会影响返回的数据结果。
 
@@ -7,19 +7,19 @@ JOIN 通常有下面几种类型，不同类型的 JOIN 操作会影响返回的
 * RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行
 * FULL JOIN：只要其中一个表中存在匹配，就返回行
 
-`join` 方法说明：
+`join()` 方法说明：
 
 ``` php
-function join( $join [, $condition = '' [, $type = 'INNER']] )
+function join( $join [, $condition = '' [, $type = 'INNER' ]] )
 ```
 
-`join` 方法也是链式操作之一，用于根据两个或多个表中的列之间的关系，从这些表中查询数据。
+`join()` 方法也是链式操作之一，用于根据两个或多个表中的列之间的关系，从这些表中查询数据。
 
 参数
 
 * `join` 关联
 
-    支持两种类型：字符串、数组
+    支持两种类型：字符串、数组，为数组时表示批量 JOIN
 
 * `condition` 条件
 

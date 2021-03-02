@@ -6,7 +6,7 @@
 
 ##### 配置文件定义
 
-常用的配置方式是在应用目录下面 dbconfig.php 中添加下面的配置参数：
+常用的配置方式是在应用目录下面 dbconfig.inc.php 中添加下面的配置参数：
 
 ``` php
 return array(
@@ -44,8 +44,6 @@ type 参数支持完整命名空间定义，默认采用 `ginkgo\db\connector` �
 
 ##### 方法配置
 
-获取全部
-
 ``` php
 $dbconfig = array(
     // 数据库类型
@@ -75,7 +73,11 @@ Db::connect($dbconfig);
 
 ##### 模型类定义
 
-如果在某个模型类里面定义了 connection 属性，则操作该模型的时候会连接给定的数据库，而不是配置文件中的。通常用于某些数据位于其它数据库的情况，例如：
+如果在某个模型类里面定义了 `$config` 属性，则操作该模型的时候会连接给定的数据库，而不是配置文件中的。通常用于某些数据位于其它数据库的情况
+
+`0.2.0` 之前为 `$connection` 属性
+
+例如：
 
 ``` php
 //在模型里单独设置数据库连接信息
@@ -84,7 +86,7 @@ namespace app\model\index;
 use ginkgo\Model;
 
 class User extends Model {
-    protected $connection = array(
+    protected $config = array(
         // 数据库类型
         'type'    => 'mysql',
         // 服务器地址

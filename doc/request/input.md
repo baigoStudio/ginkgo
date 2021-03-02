@@ -29,10 +29,10 @@ $request->get(); // 获取所有的 get 变量（经过滤）
 $request->get(false); // 获取所有的 get 变量（原始）
 ```
 
-`get` 方法说明：
+`get()` 方法说明：
 
 ``` php
-function get( [$name = true [, $type = 'str' [, $default = '']]] )
+function get( [ $name = true [, $type = 'str' [, $default = '' ]]] )
 ```
 
 参数
@@ -40,17 +40,17 @@ function get( [$name = true [, $type = 'str' [, $default = '']]] )
 * `name` 变量名
 
     支持三种类型
-    
+
     布尔值：true (默认)，取得所有被过滤的变量，false，取得所有原始变量
-    
+
     字符串：取得指定变量
-    
+
     数组：取得数组指定的变量，如不存在或为空，则自动用空值补全。
 
 * `type` 类型
 
     当 `name` 为数组时自动忽略。
-    
+
     可能的值
 
     | 值 | 描述 |
@@ -64,13 +64,13 @@ function get( [$name = true [, $type = 'str' [, $default = '']]] )
 * `default` 默认值
 
     当 `name` 为数组时自动忽略。
-    
+
 说明：当变量不存在或者类型不符合时，会用默认值填充变量。
 
 ``` php
 $request = Request::instance();
 
-$id = $request->get('id' 'int', 0); 
+$id = $request->get('id' 'int', 0);
 ```
 
  变量名为多维数组时：
@@ -102,7 +102,7 @@ $request->post(); // 获取所有的 post 变量（经过滤）
 $request->post(false); // 获取所有的 post 变量（原始）
 ```
 
-`post` 方法的用法与 `get` 方法相同
+`post()` 方法的用法与 `get()` 方法相同
 
 ----------
 
@@ -117,7 +117,7 @@ $request->request(); // 获取所有的 request 变量（经过滤）
 $request->request(false); // 获取所有的 request 变量（原始）
 ```
 
-`request` 方法的用法与 `get` 方法相同
+`request()` 方法的用法与 `get()` 方法相同
 
 ----------
 
@@ -134,7 +134,7 @@ $request->param(); // 获取所有的 param 变量（经过滤）
 $request->param(false); // 获取所有的 param 变量（原始）
 ```
 
-`param` 方法的用法与 `get` 方法相同
+`param()` 方法的用法与 `get()` 方法相同
 
 ----------
 

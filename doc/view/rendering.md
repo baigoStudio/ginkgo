@@ -2,17 +2,17 @@
 
 因为控制器可以无需继承任何基础类，因此在控制器中如何使用视图取决于你怎么定义控制器。
 
-渲染模板最常用的方法是控制器继承 `ginkgo\Ctrl` 类后调用 `fetch` 方法：
+渲染模板最常用的方法是控制器继承 `ginkgo\Ctrl` 类后调用 `fetch()` 方法：
 
-`fetch` 方法说明
+`fetch()` 方法说明
 
 ``` php
-function fetch( [$template = '' [, $assign = '' [, $value = '']]] )
+function fetch( [ $tpl = '' [, $assign = '' [, $value = '' ]]] )
 ```
 
 参数
 
-* `template` 模板
+* `tpl` 模板
 
     支持如下几种写法：
 
@@ -21,16 +21,16 @@ function fetch( [$template = '' [, $assign = '' [, $value = '']]] )
     | 不带任何参数	 | 自动定位 | app/tpl/`当前模块/当前控制器/当前动作`.tpl.php |
     | 动作 | 常用写法 | app/tpl/当前模块/当前控制器/`动作`.tpl.php |
     | 控制器/动作 | 常用写法 | app/tpl/当前模块/`控制器/动作`.tpl.php |
-    | 完整的模板路径 | 必须包含模板后缀 | 模板后缀必须与系统配置一致，详情请查看 [配置 -> 常量配置](../config/const.md) 和 [附录 -> 配置参考](../attach/overview.md) |
+    | 完整的模板路径 | 必须包含模板后缀 | 模板后缀必须与配置一致，详情请查看 [配置 -> 常量配置](../config/const.md) |
 
 * `assign` 变量
 
-    支持两种类型：字符串、数组
+    支持两种类型：为字符串时表示变量名，为数组时表示批量传输
 
 * `value` 变量值
 
     当 `assign` 为字符串时为必须，当 `assign` 为数组时自动忽略。
-        
+
 
 下面是一个最典型的用法，不带任何参数：
 
@@ -136,7 +136,7 @@ class Index extends Ctrl {
 return $this->fetch('/web/app/tpl/index/index/cate_list.tpl.php');
 ```
 
-调用 `setPath` 方法
+调用 `setPath()` 方法
 
 ``` php
 $this->obj_view->setPath('/web/app/tpl/index/');
@@ -174,7 +174,7 @@ return $this->fetch('index/cate_list');
 
 #### 渲染内容
 
-如果希望直接解析内容而不通过模板文件的话，可以使用 `display` 方法：
+如果希望直接解析内容而不通过模板文件的话，可以使用 `display()` 方法：
 
 ``` php
 namespace app\ctrl\index;
@@ -187,7 +187,7 @@ class Index extends Ctrl {
         // 直接渲染内容
         $content = '\<?php echo $name; ?\> - \<?php echo $email; ?\>';
         $data = array(
-            'name'  => 'ginkgo', 
+            'name'  => 'ginkgo',
             'email' => 'ginkgo@qq.com'
         );
         return $this->display($content, $data);

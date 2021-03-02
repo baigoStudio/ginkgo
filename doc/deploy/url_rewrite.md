@@ -14,7 +14,7 @@
 <IfModule mod_rewrite.c>
     Options +FollowSymlinks -Multiviews
     RewriteEngine on
-    
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
@@ -25,9 +25,9 @@
 
 ##### IIS
 
-如果你的服务器环境支持 ISAPI_Rewrite 的话，可以配置 httpd.ini 文件，添加下面的内容：
-
 `0.1.1` 新增
+
+如果你的服务器环境支持 ISAPI_Rewrite 的话，可以配置 httpd.ini 文件，添加下面的内容：
 
 ``` clike
 RewriteRule (.*)$ /index\.php\?pathname=$1 [I]
@@ -55,9 +55,9 @@ RewriteRule (.*)$ /index\.php\?pathname=$1 [I]
 
 ##### Nginx
 
-在 Nginx 低版本中，是不支持 PATHINFO 的，但是可以通过在 Nginx.conf 中配置转发规则实现：
-
 `0.1.1` 新增
+
+在 Nginx 低版本中，是不支持 PATHINFO 的，但是可以通过在 Nginx.conf 中配置转发规则实现：
 
 ``` clike
 location / { // …..省略部分代码

@@ -27,7 +27,7 @@ Session::set('name', 'baigo');
 Session::get('name');
 ```
 
-或者调用 `init` 方法进行初始化：
+或者调用 `init()` 方法进行初始化：
 
 ``` php
 $config = array(
@@ -41,6 +41,12 @@ $config = array(
 ),
 
 Session::init($config);
+```
+
+还可以调用 `config()` 方法改变配置：
+
+``` php
+Session::config($config);
 ```
 
 ----------
@@ -69,7 +75,7 @@ Session::init($config);
 );
 ```
 
-表示采用 `org\session\File` 类作为引擎，而不是默认的 `ginkgo\session\driver\file`。
+表示采用 `org\session\File` 类作为驱动，而不是默认的 `ginkgo\session\driver\file`。
 
 > 如果做了 Session 驱动扩展，可能有些参数不一定有效。
 

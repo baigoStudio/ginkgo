@@ -11,7 +11,7 @@
 <?php echo $request->param('name'); ?>
 ```
 
-支持 `Request` 类的所有方法，详情请查看 [请求](../request/overview.md)。
+支持 `Request` 类的所有方法，详情请查看 [请求](../request/index.md)。
 
 下面都是有效的输出：
 

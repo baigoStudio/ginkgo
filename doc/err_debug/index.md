@@ -17,12 +17,11 @@
 可以通过配置参数来自定义的异常页面模板：
 
 ``` php
-'tpl' => array( //模板
-    ...
-    'sys' => '', //系统模板
-    ...
+'tpl_sys' => array( // 系统模板
+    'path'      => '', // 默认模板路径
 ),
 ```
+
 默认的异常模板为
 
 > ginkgo/tpl/exception.tpl.php
@@ -51,7 +50,7 @@ ginkgo 大部分情况异常都是自动抛出和捕获的，你也可以手动�
 throw new ginkgo\Exception('异常消息', 10006);
 ```
 
-还可以通过 `setData` 方法设置一些自定义的消息
+还可以通过 `setData()` 方法设置一些自定义的消息
 
 ``` php
 // 使用 ginkgo 自带异常类抛出异常
@@ -60,7 +59,7 @@ $exce->setData('name', $value);
 throw $exce;
 ```
 
-`ginkgo\Exception` 类还提供 `getData` 方法在需要的地方调用，如：
+`ginkgo\Exception` 类还提供 `getData()` 方法在需要的地方调用，如：
 
 ``` php
 try {

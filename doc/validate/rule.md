@@ -1,6 +1,6 @@
 ## 验证规则
 
-验证规则的定义有两种方式，验证器内通常使用 `rule` 属性定义，独立验证，则是通过 `rule` 方法进行定义。
+验证规则的定义有两种方式，验证器内通常使用 `$rule` 属性定义，独立验证，则是通过 `rule()` 方法进行定义。
 
 ----------
 
@@ -33,17 +33,17 @@ class User extends Validate {
 
 系统内置了一些常用的验证规则，可以满足大部分需求，具体含义请查看 [内置规则](builtin.md)。
 
-一个字段可以使用多个验证规则（如上面的 age 字段定义了 between 和 format 两个规则）。
+一个属性可以使用多个验证规则（如上面的 age 属性定义了 between 和 format 两个规则）。
 
 ----------
 
 #### 方法定义
 
-独立验证时（即手动调用验证类进行验证），使用 `rule` 方法进行定义，如：
+独立验证时（即手动调用验证类进行验证），使用 `rule()` 方法进行定义，如：
 
 ``` php
 $validate = ginkgo\Validate::instance();
-    
+
 $name = array(
     'require' => true,
     'max'     => 25,
@@ -73,7 +73,7 @@ if (!$validate->verify($data)) {
 }
 ```
 
-`rule` 方法说明
+`rule()` 方法说明
 
 ``` php
 function rule( $rule [, $value = array()] )
@@ -83,11 +83,7 @@ function rule( $rule [, $value = array()] )
 
 * `rule` 规则
 
-    支持两种类型
-
-    字符串：规则名
-    
-    数组：批量设置规则
+    支持两种类型: 为字符串时表示规则名，为数组时表示批量设置规则
 
 * `value` 规则值
 

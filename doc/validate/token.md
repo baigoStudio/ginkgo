@@ -63,7 +63,7 @@ class User extends Validate {
 }
 ```
 
-如果需要自定义令牌生成规则，可以调用 `Request` 类的 `token` 方法，例如：
+如果需要自定义令牌生成规则，可以调用 `Request` 类的 `token()` 方法，例如：
 
 ``` php
 namespace app\index\ctrl;

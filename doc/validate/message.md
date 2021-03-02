@@ -4,7 +4,7 @@
 
 ----------
 
-#### 字段名定义
+#### 属性名定义
 
 以下是一个实例
 
@@ -54,7 +54,7 @@ if(!$result){
 
     age must between 1 - 120
 
-可以给 age 字段设置中文名，例如：
+可以给 age 属性设置中文名，例如：
 
 ``` php
 namespace app\index\validate;
@@ -88,7 +88,7 @@ class User extends Validate {
 
     年龄 must between 1 - 120
 
-`setAttrName` 方法说明
+`setAttrName()` 方法说明
 
 ``` php
 function setAttrName( $attr [, $value = array()] )
@@ -96,18 +96,14 @@ function setAttrName( $attr [, $value = array()] )
 
 参数
 
-* `attr` 字段名
+* `attr` 属性名
 
-    支持两种类型
+    支持两种类型: 为字符串时表示属性名，为数组时表示批量设置属性名
 
-    字符串：字段名
-    
-    数组：批量设置字段名
-
-* `value` 字段值
+* `value` 属性值
 
     当 `attr` 为字符串时为必须，当 `attr` 为数组时自动忽略。
-    
+
 ----------
 
 #### 消息定义
@@ -145,9 +141,9 @@ class User extends Validate {
 
 会输出
 
-    年龄 只能在 1 - 120 之间    
+    年龄 只能在 1 - 120 之间
 
-`setTypeMsg` 方法说明
+`setTypeMsg()` 方法说明
 
 ``` php
 function setTypeMsg( $msg [, $value = array()] )
@@ -157,16 +153,12 @@ function setTypeMsg( $msg [, $value = array()] )
 
 * `msg` 消息
 
-    支持两种类型
-
-    字符串：消息
-    
-    数组：批量设置消息
+    支持两种类型: 为字符串时表示消息，为数组时表示批量设置消息
 
 * `value` 消息值
 
     当 `msg` 为字符串时为必须，当 `msg` 为数组时自动忽略。
-    
+
 ----------
 
 #### 格式消息定义
@@ -218,7 +210,7 @@ if(!$result){
 会输出
 
     email not a valid email address
-    
+
 可以给格式消息设置中文，例如：
 
 ``` php
@@ -254,7 +246,7 @@ class User extends Validate {
 
     邮箱 不是合法的 E-mail 地址
 
-`setFormatMsg` 方法说明
+`setFormatMsg()` 方法说明
 
 ``` php
 function setFormatMsg( $msg [, $value = array()] )
@@ -264,33 +256,29 @@ function setFormatMsg( $msg [, $value = array()] )
 
 * `msg` 消息
 
-    支持两种类型
-
-    字符串：消息
-    
-    数组：批量设置消息
+    支持两种类型: 为字符串时表示消息，为数组时表示批量设置消息
 
 * `value` 消息值
 
     当 `msg` 为字符串时为必须，当 `msg` 为数组时自动忽略。
 
 
-> 注意：`{:attr}` 和 `{:rule}` 这两个特殊标签会被 `字段名` 和 `规则` 分别替换。
+> 注意：`{:attr}` 和 `{:rule}` 这两个特殊标签会被 `属性名` 和 `规则` 分别替换。
 
 ----------
 
 #### 获取验证消息
 
-可以使用 `getMessage` 方法获取，返回值是所有的错误消息数组，该方法没有参数。
+可以使用 `getMessage()` 方法获取，返回值是所有的错误消息数组，该方法没有参数。
 
 
 ----------
 
 #### 规则消息定界符
 
-上述几个例子可能有开发者注意，当规则中包含逗号 <kbd>,</kbd> 时，输出消息时会被替换成连字符 <kbd>-</kbd>，如果想要替换成其他字符，可以通过 `ginkgo/Validate` 实例的 `delimiter` 属性进行定义，默认为 <kbd>-</kbd>，如：
-
 `0.1.1` 新增
+
+上述几个例子可能有开发者注意，当规则中包含逗号 <kbd>,</kbd> 时，输出消息时会被替换成连字符 <kbd>-</kbd>，如果想要替换成其他字符，可以通过 `ginkgo/Validate` 实例的 `$delimiter` 属性进行定义，默认为 <kbd>-</kbd>，如：
 
 
 ``` php
@@ -298,5 +286,3 @@ $obj_validate = new ginkgo/Validate();
 
 $obj_validate->delimiter = ' - '
 ```
-
-

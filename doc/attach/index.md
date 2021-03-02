@@ -9,7 +9,7 @@
     'site_name'             => 'ginkgo Framework', // 站点名称
     'timezone'              => 'Asia/Shanghai', // 默认时区
     'perpage'               => 30, // 默认每页记录数
-    'pergroup'              => 10, // 分页每组页数
+    'pergroup'              => 10, // 每组页数
     'return_type'           => 'html', // 默认 返回类型
     'return_type_ajax'      => 'json', // 默认 ajax 返回类型
     'jsonp_callback'        => '', // 默认 jsonp 处理方法
@@ -56,9 +56,10 @@
 
 ```php
 'tpl' => array( // 模板
-    'type'      => 'php', // 默认模板驱动
+    'type'      => 'php', // 默认视图驱动
     'path'      => '', // 默认模板路径
-    'suffix'    => '', // 模板后缀 (默认 .tpl.php)
+    'suffix'    => '', // 模板后缀 0.1.3 起弃用，直接用 GK_EXT_TPL 定义
+    'sys'       => '', // 系统模板, 0.1.1 起弃用，改用 tpl_sys 配置
 ),
 ```
 
@@ -71,7 +72,7 @@
 ```php
 'tpl_sys' => array( // 系统模板
     'path'      => '', // 默认模板路径
-    'suffix'    => '', // 模板后缀 (默认 .tpl.php)
+    'suffix'    => '', // 模板后缀 0.1.3 起弃用，直接用 GK_EXT_TPL 定义
 ),
 ```
 
@@ -127,7 +128,7 @@
 
 ```php
 'cache' => array( //缓存
-    'type'          => 'file', // 类型 (可选 file)
+    'type'          => 'file', // 类型 (可选 file)，支持完整命名空间定义
     'prefix'        => 'ginkgo', // 前缀
     'life_time'     => 86400, // cache 生存时间 0 为永久保存
 ),
@@ -226,6 +227,7 @@
         'pasv'   => 'off', // 被动模式
     ),
     'smtp' => array( // SMTP
+        'method'        => 'smtp', // 发送方法 0.1.3 新增
         'host'          => '', // 服务器
         'secure'        => 'off', // 加密类型
         'port'          => 25, // 端口

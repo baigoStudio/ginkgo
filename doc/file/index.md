@@ -4,18 +4,37 @@
 
 ----------
 
+#### 静态方法
+
+`0.2.0` 新增
+
+* `fileHas` 文件是否存在
+
+    ``` php
+    File::fileHas('./image/test.jpg');
+    ```
+
+* `dirHas` 文件是否存在
+
+    ``` php
+    File::dirHas('./image/');
+    ```
+
+
+----------
+
 #### 基本操作
 
 * 列出文件和目录
 
     ``` php
     $file = File::instance();
-    
+
     $lists = $file->dirList('./image');
     ```
 
     列出所有 JPG 文件
-    
+
     ``` php
     $file->dirList('./image', 'jpg');
     ```
@@ -68,13 +87,13 @@
     $file->fileDelete('./src.txt');
     ```
 
-* 取得文件 MIME 类型
+* 取得文件 MIME 类型 `0.2.0` 起废弃
 
     ``` php
     $mime = $file->getMime('./src.txt');
     ```
 
-* 取得文件扩展名
+* 取得文件扩展名 `0.2.0` 起废弃
 
     ``` php
     $ext = $file->getExt('./src.txt');

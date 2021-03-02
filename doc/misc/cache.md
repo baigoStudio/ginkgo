@@ -6,7 +6,7 @@
 
 #### 设置
 
-缓存在使用之前，需要进行初始化。
+缓存在使用之前，需要进行初始化。初始化时可以定义缓存参数。
 
 ``` php
 $config = array(
@@ -14,7 +14,7 @@ $config = array(
     'life_time' => 0, // 缓存生命周期为永久有效
     'prefix'    => 'ginkgo', //缓存前缀
 );
-$cache = Cache::instance($config);
+$cache = Cache::instance('file', $config);
 ```
 
 或者通过定义配置参数的方式，在配置文件中添加：
@@ -27,7 +27,7 @@ $cache = Cache::instance($config);
 ),
 ```
 
-缓存目前只支持 file 类型，开发者可以自行扩展。
+缓存目前只支持 file 类型，开发者可以自行扩展，扩展的缓存驱动文件请根据命名空间放置。
 
 缓存参数根据不同的缓存方式会有所区别，通用的缓存参数如下：
 
@@ -47,9 +47,9 @@ $cache = Cache::instance($config);
 );
 ```
 
-表示采用 `org\cache\File` 类作为引擎，而不是默认的 `ginkgo\cache\driver\file`。
+表示采用 `org\cache\File` 类作为驱动，而不是默认的 `ginkgo\cache\driver\file`。
 
-缓存类也提供了 `driver` 方法对缓存驱动进行初始化或者切换，driver 方法的参数同样支持完整命名空间定义，例如：
+缓存类也提供了 `driver()` 方法对缓存驱动进行初始化或者切换，`driver()` 方法的参数同样支持完整命名空间定义，例如：
 
 ``` php
 $cache->driver('file')->read('name');
@@ -91,4 +91,3 @@ $cache->driver('org\cache\file')->read('name');
     $cache->check('name'); // 检测缓存是否存在
     $cache->check('name', true); // 检测缓存是否过期
     ```
-    

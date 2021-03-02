@@ -11,13 +11,15 @@
 'route' => array(
     'route_rule'    => array( //路由规则
         //静态例子 规则 => 地址
-        'index/article/index' => 'index/article/show', 
-        
+        'index/article/index' => 'index/article/show',
+
         //动态例子 array(规则, 地址)
-        array('article/:year/:month/:id', 'index/article/index'), 
-        
+        array('article/:year/:month/:id', 'index/article/index'),
+        'article/:year/:month/:id' => 'index/article/index', // 0.2.0 新增
+
         //正则例子 array(规则, 地址, 参数)
-        array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'), 
+        array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'),
+        '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 0.2.0 新增
 
         ... // 更多规则
     ),
@@ -27,7 +29,7 @@
 ----------
 
 ##### 静态规则
-    
+
 静态规则为一个 `键名 => 键值` 方式表达的数组，如：
 
 ``` php
@@ -49,11 +51,16 @@
 
 ##### 动态规则
 
-动态规则为一个 `array(规则, 地址)` 方式表达的数组，如：
+动态规则为一个 `array(规则, 地址)` 方式表达的数组
+
+`0.2.0` 新增 `规则 => 地址` 的方式
+
+如：
 
 ``` php
 'route_rule' => array( // 路由规则
-    array('article/:year/:month/:id', 'index/article/index') // array(规则, 地址)
+    array('article/:year/:month/:id', 'index/article/index'), // array(规则, 地址)
+    'article/:year/:month/:id' => 'index/article/index', // 规则 => 地址 0.2.0 新增
     ... // 更多规则
 ),
 ```
@@ -65,18 +72,25 @@
 * 系统会忽略规则外的 URL 部分，还是以上述规则为例，访问 __http://server/index.php/`article/2015/06/234325`/status/public__
 
     会自动路由到 __http://server/index.php/index/article/show/year/2015/month/06/id/234325/status/public__
-    
+
 每个参数中以 <kbd>:</kbd> 开头的参数都表示动态变量，并且会自动绑定到动作的对应参数。
-    
+
 ----------
 
 ##### 正则规则
 
-正则规则为一个 `array(规则, 地址, 参数)` 方式表达的数组，其中 `参数` 可以为数组或者字符串，系统会根据正则规则匹配到的结果，自动绑定到动作的对应参数，如：
+正则规则为一个 `array(规则, 地址, 参数)` 方式表达的数组
+
+`0.2.0` 新增 `规则 => array(地址, 参数)` 的方式
+
+其中 `参数` 可以为数组或者字符串，系统会根据正则规则匹配到的结果，自动绑定到动作的对应参数
+
+如：
 
 ``` php
 'route_rule' => array( // 路由规则
-    array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id') // array(正则规则, 地址, 参数)
+    array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'), // array(规则, 地址, 参数)
+    '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 规则 => array(地址, 参数) 0.2.0 新增
     ... // 更多规则
 ),
 ```
@@ -109,7 +123,7 @@
 
 ##### 特别注意
 
-根据 [概况 -> 开发规范](../overview/spec.md) 的要求，因此 ginkgo 采用了如下两种自动转换的策略：
+根据 [概况 -> 开发规范](../index/spec.md) 的要求，因此 ginkgo 采用了如下两种自动转换的策略：
 
 * 文件夹和文件的命名使用使用小写和下划线，当路由中的模块与控制器为小写字母和横杠时，系统会将横杠 <kbd>-</kbd> 转换为下划线 <kbd>_</kbd>。
 

@@ -17,7 +17,7 @@ FTP 功能由 `ginkgo\Ftp` 类完成，FTP 全称 File Transfer Protocol，即�
         'pass'   => '', // 密码
         'path'   => '', // 远程路径
         'pasv'   => 'off', // 被动模式
-    ),    
+    ),
     ...
 ),
 ```
@@ -43,19 +43,21 @@ $ftp = Ftp::instance($config);
 
 #### 连接服务器
 
-`init` 方法可快捷的连接并登录服务器
+`0.2.0` 起，不再需要如下操作
+
+`init()` 方法可快捷的连接并登录服务器
 
 ``` php
 $ftp->init();
 ```
 
-`connect` 方法可连接服务器
+`connect()` 方法可连接服务器
 
 ``` php
 $ftp->connect();
 ```
 
-`login` 方法可登录服务器
+`login()` 方法可登录服务器
 
 ``` php
 $ftp->login();
@@ -67,21 +69,21 @@ $ftp->login();
 
 > 默认所有操作均为相对目录，即系统会自动在路径前加上配置中所定义的远程路径。下列方法中的 $abs 参数可以定义。true 为绝对路径，false 为相对路径。
 
-* 列出文件和目录
+* 列出文件和目录 `0.2.0` 起废弃
 
     ``` php
     $ftp = Ftp::instance();
-    
+
     $lists = $ftp->dirList('./image', $abs);
     ```
 
-* 创建文件夹
+* 创建文件夹 `0.2.0` 起废弃
 
     ``` php
     $ftp->dirMk('./image', $abs);
     ```
 
-* 删除目录
+* 删除目录 `0.2.0` 起废弃
 
     ``` php
     $ftp->dirDelete('./dir', $abs);
@@ -92,7 +94,7 @@ $ftp->login();
     ``` php
     $ftp->fileUpload($local, $remote, $abs, $mod);
     ```
-    
+
     1. local 本地服务器路径
     2. remote 远程服务器路径
     3. abs 是否绝对路径

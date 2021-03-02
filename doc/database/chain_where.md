@@ -1,6 +1,6 @@
-## where
+## `where()`
 
-`where` 方法是数据库查询的精髓，可以完成包括普通查询、表达式查询、组合查询在内的查询操作。`where` 方法的参数支持字符串和数组。详情请查看 [查询方法](../query.md)
+`where()` 方法是数据库查询的精髓，可以完成包括普通查询、表达式查询、组合查询在内的查询操作。`where()` 方法的参数支持字符串和数组。详情请查看 [查询方法](query.md)
 
 ----------
 
@@ -12,7 +12,7 @@
 Db::table('user')
     ->where('id', '>', 1)
     ->whereOr('name', '=', 'baigo')
-    ->select(); 
+    ->select();
 ```
 ----------
 
@@ -23,14 +23,14 @@ Db::table('user')
 ``` php
 $map = array('id', '>', 1);
 
-Db::table('user')->where($map)->select(); 
+Db::table('user')->where($map)->select();
 
 $map = array(
     array('id', '>', 1),
     array('mail', 'like', '%baigo@qq.com%'),
 );
 
-Db::table('user')->where($map)->select(); 
+Db::table('user')->where($map)->select();
 ```
 
 ----------
@@ -40,7 +40,7 @@ Db::table('user')->where($map)->select();
 使用原生 SQL 条件直接查询和操作，必须使用 <kbd>&#96;</kbd> 符号来包裹 表名、字段名 等，例如：
 
 ``` php
-Db::table('user')->where('`type`=1 AND `status`=1')->select(); 
+Db::table('user')->where('`type`=1 AND `status`=1')->select();
 ```
 
 最后生成的 SQL 语句是

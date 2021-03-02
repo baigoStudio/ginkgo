@@ -30,39 +30,38 @@ $lang = Lang::instance();
 echo $lang->getCurrent();
 ```
 
-`getCurrent` 方法说明
+`getCurrent()` 方法说明
 
 ``` php
-function getCurrent( [$lower = false [, $separator = '' [, $client = false]]] )
+function getCurrent( [ $lower = false [, $separator = '' [, $client = false ]]] )
 ```
-参数 `0.1.1` 新增
 
-* `lower` 是否小写
-    
-* `separator` 分割线
+* `lower` 是否小写 `0.1.1` 新增
 
-* `client` 取得自动检测的语言值
+* `separator` 分割线 `0.1.1` 新增
+
+* `client` 取得自动检测的语言值 `0.1.1` 新增
 
 ----------
 
 #### 获取语言变量
 
-使用 `get` 方法
- 
+使用 `get()` 方法
+
 ``` php
 echo $lang->get('Add user error');
 ```
 
-`get` 方法说明
+`get()` 方法说明
 
 ``` php
-function get( $name [, $range = '' [, $replace = array() [, $show_src = true]]] )
+function get( $name [, $range = '' [, $replace = array() [, $show_src = true ]]] )
 ```
 
 参数
 
 * `name` 变量名
-    
+
 * `range` 作用域
 
 * `replace` 输出替换
@@ -87,7 +86,7 @@ class Ctrl {
 ```
 
 验证类 `ginkgo\Validate` 内置了如下类的实例：
- 
+
 ``` php
 class Validate {
     // ginkgo\Lang 的实例
@@ -109,7 +108,7 @@ class Validate {
 
 > 注意：为了符合开发规范，所有文件名必须小写，当前语言转换为语言包路径时，系统会做自动转换。
 
-如果还需要加载其他语言包，可以用 `load` 方法加载：
+如果还需要加载其他语言包，可以用 `load()` 方法加载：
 
 ``` php
 $lang->load(GK_APP_LANG . 'zh_CN.php');
@@ -149,7 +148,7 @@ class Index extends Ctrl {
             'name'  => 'Ginkgo',
             'email' => 'ginkgo@qq.com',
         );
-        
+
         echo $this->obj_lang->get('Hello {:name}', '', $replace);
         echo $this->obj_lang->get('Email: {:email} not found', '', $replace);
     }
@@ -185,22 +184,22 @@ return array(
 
 ``` php
 // 导入 my_lang.lang.php 中的语言变量，并纳入 user 作用域
-$lang->load('my_lang.lang.php', '', 'user'); 
+$lang->load('my_lang.lang.php', '', 'user');
 
 // 设置 user_type 参数，并纳入 user 作用域
-$lang->set('user_type', '用户类型', 'user'); 
+$lang->set('user_type', '用户类型', 'user');
 
 // 批量设置语言变量，并纳入 test 作用域
-$lang->set($my_lang, '', 'test'); 
+$lang->set($my_lang, '', 'test');
 
 // 批量设置语言变量，并纳入 test 下面的 abc 作用域
-$lang->set($my_lang, '', 'test.abc'); 
+$lang->set($my_lang, '', 'test.abc');
 
 // 读取 user 作用域的 user_type 语言变量
-echo $lang->get('user_type', 'user'); 
+echo $lang->get('user_type', 'user');
 ```
 
-可以使用 `range` 方法切换当前语言的作用域，例如：
+可以使用 `range()` 方法切换当前语言的作用域，例如：
 
 ``` php
 $lang->range('test');

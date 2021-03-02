@@ -34,7 +34,7 @@ class Index {
 <div><img src="http://server/index.php/index/index/verify" alt="captcha"></div>
 ```
 
-如果要在一个页面中生成多个验证码，`create` 方法可以传入标识信息（数字或字符串），例如：
+如果要在一个页面中生成多个验证码，`create()` 方法可以传入标识信息（数字或字符串），例如：
 
 ``` php
 namespace app\index\ctrl;
@@ -52,7 +52,7 @@ class Index {
 }
 ```
 
-可以用 `Captcha` 类的 `check` 方法检测验证码是否正确
+可以用 `Captcha` 类的 `check()` 方法检测验证码是否正确
 
 ``` php
 if (!$captcha->check($value)) {

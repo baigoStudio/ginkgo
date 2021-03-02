@@ -12,7 +12,7 @@ Db::table('user')
     ->select();
 ```
 
-这里的 `where`、`order` 和 `limit` 方法就被称之为链式操作方法，除了 `select` 方法必须放到最后一个外（因为 `select` 方法并不是链式操作方法），链式操作的方法调用顺序没有先后，例如，下面的代码和上面的等效：
+这里的 `where()`、`order()` 和 `limit()` 方法就被称之为链式操作方法，除了 `select()` 方法必须放到最后一个外（因为 `select()` 方法并不是链式操作方法），链式操作的方法调用顺序没有先后，例如，下面的代码和上面的等效：
 
 ``` php
 Db::table('user')
@@ -27,7 +27,7 @@ Db::table('user')
 ``` php
 Db::table('user')
     ->where('id', '=', 1)
-    ->find(array('id', 'name', 'email')); 
+    ->find(array('id', 'name', 'email'));
 
 Db::table('user')
     ->where('status', '=', 1)

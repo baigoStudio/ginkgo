@@ -47,7 +47,7 @@ require(__DIR__ . '/../ginkgo/boot.php');
 
 系统的自动加载由下面主要部分组成：
 
-* 注册系统的自动加载方法 `ginkgo\Loader::autoload`
+* 注册系统的自动加载方法 `ginkgo\Loader::autoload()`
 * 如果存在 Composer 安装，则注册 Composer 自动加载
 * 注册 extend 扩展目录
 
@@ -59,9 +59,9 @@ require(__DIR__ . '/../ginkgo/boot.php');
 
 由三部分组成：
 
-* 应用关闭方法：`ginkgo\Error::appShutdown`
-* 错误处理方法：`ginkgo\Error::appError`
-* 异常处理方法：`ginkgo\Error::appException`
+* 应用关闭方法：`ginkgo\Error::appShutdown()`
+* 错误处理方法：`ginkgo\Error::appError()`
+* 异常处理方法：`ginkgo\Error::appException()`
 
 注册应用关闭方法是为了便于拦截一些系统错误。
 

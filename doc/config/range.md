@@ -4,25 +4,25 @@
 
 ``` php
 // 导入 my_config.inc.php 中的配置参数，并纳入 user 作用域
-Config::load('my_config.inc.php', '', 'user'); 
+Config::load('my_config.inc.php', '', 'user');
 
 // 设置 user_type 参数，并纳入 user 作用域
-Config::set('user_type', 'super', 'user'); 
+Config::set('user_type', 'super', 'user');
 
 // 批量设置配置参数，并纳入 test 作用域
-Config::set($config, '', 'test'); 
+Config::set($config, '', 'test');
 
 // 批量设置配置参数，并纳入 test 下面的 abc 作用域
-Config::set($config, '', 'test.abc'); 
+Config::set($config, '', 'test.abc');
 
 // 读取 user 作用域的 user_type 配置参数
-echo Config::get('user_type', 'user'); 
+echo Config::get('user_type', 'user');
 
 // 读取 user 作用域下面的所有配置参数
-print_r(Config::get('', 'user')); 
+print_r(Config::get('', 'user'));
 ```
 
-可以使用 `range` 方法切换当前配置的作用域，例如：
+可以使用 `range()` 方法切换当前配置的作用域，例如：
 
 ``` php
 Config::range('test');

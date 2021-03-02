@@ -88,14 +88,14 @@ define('GK_NAME_APP', 'app');
 
 详情请查看 [配置 -> 常量配置](../config/const.md)
 
-> 模块名称请避免使用 PHP 保留关键字，保留字列表参见 <http://php.net/manual/zh/reserved.keywords.php>，否则会造成系统错误。
+> 模块名称请避免使用 PHP 保留关键字，保留字列表参见 [php 官网](http://www.php.net/manual/zh/reserved.keywords.php)，否则会造成系统错误。
 
 
 ----------
 
 ##### 特别注意
 
-根据 [概况 -> 开发规范](../overview/spec.md) 的要求，因此 ginkgo 采用了如下两种自动转换的策略：
+根据 [概况 -> 开发规范](../index/spec.md) 的要求，因此 ginkgo 采用了如下两种自动转换的策略：
 
 * 文件夹和文件的命名使用使用小写和下划线，当路由中的模块与控制器为小写字母和横杠时，系统会将横杠 <kbd>-</kbd> 转换为下划线 <kbd>_</kbd>。
 

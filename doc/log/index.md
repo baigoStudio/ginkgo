@@ -23,7 +23,7 @@
 `record` 是否为空
 
 ``` php
-function record( $log [, $type = ''] )
+function record( $log [, $type = '' ] )
 ```
 
 参数
@@ -37,5 +37,5 @@ function record( $log [, $type = ''] )
     | - | - |
     | log | 普通日志 |
     | error | 错误 |
-    | excpt | 异常 | 
-    | sql | SQL 执行结果 | 
+    | excpt | 异常 |
+    | sql | SQL 执行结果 |

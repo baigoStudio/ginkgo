@@ -15,13 +15,13 @@ class Blog {
     public function index() {
         return 'index';
     }
-    
+
     public function add() {
         return 'add';
     }
-    
+
     public function edit($param) {
-        return 'edit:' . $param['id'];
+        return 'edit: ' . $param['id'];
     }
 }
 ```
@@ -32,16 +32,16 @@ class Blog {
 
 当前定义的主控制器位于 index 模块下面，所以当访问不同的 URL 地址的页面：
 
-* http://server/index.php/index/blog/index    
-* http://server/index.php/index/blog/add     
-* http://server/index.php/index/blog/edit/id/5 
+* http://server/index.php/index/blog/index
+* http://server/index.php/index/blog/add
+* http://server/index.php/index/blog/edit/id/5
 
 输出如下：
 
     index
     add
     edit:5
-    
+
 ----------
 
 ##### 分层控制器
@@ -57,13 +57,13 @@ class Blog {
     public function insert() {
         return 'insert';
     }
-    
+
     public function update($param) {
-        return 'update:' . $param['id'];
+        return 'update: ' . $param['id'];
     }
-    
+
     public function delete($param) {
-        return 'delete:' . $param['id'];
+        return 'delete: ' . $param['id'];
     }
 }
 ```
@@ -86,7 +86,7 @@ echo $event->delete(5);
 
     update:5
     delete:5
-    
+
 ----------
 
 #### 跨模块调用
@@ -108,7 +108,7 @@ echo $event->update(5);
 
     update:5
 
-表示实例化 admin 模块的 Blog 控制器类，并执行 update 方法。
+表示实例化 admin 模块的 Blog 控制器类，并执行 `update()` 方法。
 
 ``` php
 use ginkgo\Loader
@@ -125,4 +125,4 @@ echo $event->update(5);
 
     update:5
 
-表示实例化 admin 模块的 event 层下的 Blog 控制器类，并执行 update 方法。
+表示实例化 admin 模块的 event 层下的 Blog 控制器类，并执行 `update()` 方法。

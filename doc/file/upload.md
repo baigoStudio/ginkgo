@@ -6,8 +6,8 @@
 
 ``` markup
 <form action="/index/index/upload" enctype="multipart/form-data" method="post">
-    <input type="file" name="image"> <br> 
-    <input type="submit" value="上传"> 
+    <input type="file" name="image"> <br>
+    <input type="submit" value="上传">
 </form>
 ```
 
@@ -22,10 +22,10 @@ class Index {
 
     public function upload() {
         $upload = Upload::instance();
-        
+
         // 获取表单上传文件 例如上传了 001.jpg
-        $file = $upload->create('image');        
-        
+        $file = $upload->create('image');
+
         if ($file) {
             // 移动到框架应用根目录 /uploads/ 目录下
             if ($upload->move('../uploads/', '001.jpg')) {
@@ -42,7 +42,7 @@ class Index {
 }
 ```
 
-`create` 方法在上传失败返回 false，上传成功返回一个数组，结构如下
+`create()` 方法在上传失败返回 false，上传成功返回一个数组，结构如下
 
 ``` php
 array(
@@ -58,22 +58,22 @@ array(
 
 #### 保存文件
 
-`move` 方法说明
+`move()` 方法说明
 
 ``` php
-function move( string $dir [, string $name = true [, bool $replace = false]] )
+function move( string $dir [, string $name = true [, bool $replace = false ]] )
 ```
 
 参数
 
 * `dir` 移动到指定目录
-    
+
     建议使用完整路径
-    
+
 * `name` 保存为指定文件名
-    
+
     可能的值
-    
+
     | 值 | 描述 |
     | - | - |
     | true（默认值） | 自动生成 |
@@ -92,7 +92,7 @@ function move( string $dir [, string $name = true [, bool $replace = false]] )
 
 42a79759f284b767dfcb2a0197904287.jpg
 
-我们可以指定上传文件的命名规则，使用 `rule` 方法即可，例如：
+我们可以指定上传文件的命名规则，使用 `rule()` 方法即可，例如：
 
 ``` php
 $upload->rule('sha1')->move('../uploads/');
@@ -115,11 +115,11 @@ $upload->move('../uploads/', false);
     'upload' => array(
         'limit_size'    => 200, // 上传尺寸
         'limit_unit'    => 'kb', // 尺寸单位（kb、mb、gb）
-    ),    
+    ),
     ...
 ),
 ```
-        
+
 也可以在实例化上传类时定义
 
 ``` php
@@ -131,7 +131,7 @@ $config = array(
 $upload = Upload::instance($config);
 ```
 
-还可以通过方法定义，方法定义必须在 `create` 方法执行之前。
+还可以通过方法定义，方法定义必须在 `create()` 方法执行之前。
 
 限制文件 MIME 类型
 
@@ -156,9 +156,9 @@ class Index {
                 'image/x-png'
             ),
         );
-        
+
         $upload = Upload::instance();
-        $upload->setMime($mime);        
+        $upload->setMime($mime);
     }
 
 }
@@ -175,7 +175,7 @@ class Index {
 
     public function upload() {
         $upload = Upload::instance();
-        $upload->setLimit(10989);        
+        $upload->setLimit(10989);
     }
 
 }

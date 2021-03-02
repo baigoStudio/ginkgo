@@ -4,7 +4,7 @@
 
 * [常规验证](#common)
 * [长度和区间验证](#length)
-* [字段比较](#comparison)
+* [属性比较](#comparison)
 * [格式验证](#format)
 * [特殊格式验证](#special)
 * [filter 验证](#filter)
@@ -18,7 +18,7 @@
 
 > require
 
-验证某个字段必须，例如：
+验证某个属性必须，例如：
 
 ``` php
 $rule = array(
@@ -30,7 +30,7 @@ $rule = array(
 
 > accepted
 
-验证某个字段是否为为 yes, on, 或是 1。这在确认 "服务条款" 是否同意时很有用，例如：
+验证某个属性是否为为 yes, on, 或是 1。这在确认 "服务条款" 是否同意时很有用，例如：
 
 ``` php
 $rule = array(
@@ -48,7 +48,7 @@ $rule = array(
 
 > in
 
-验证某个字段的值是否在某个范围，例如：
+验证某个属性的值是否在某个范围，例如：
 
 ``` php
 $rule = array(
@@ -60,7 +60,7 @@ $rule = array(
 
 > not_in
 
-验证某个字段的值不在某个范围，例如：
+验证某个属性的值不在某个范围，例如：
 
 ``` php
 $rule = array(
@@ -72,7 +72,7 @@ $rule = array(
 
 > between
 
-验证某个字段的值是否在某个区间，例如：
+验证某个属性的值是否在某个区间，例如：
 
 ``` php
 $rule = array(
@@ -84,7 +84,7 @@ $rule = array(
 
 > not_between
 
-验证某个字段的值不在某个区间，例如：
+验证某个属性的值不在某个区间，例如：
 
 ``` php
 $rule = array(
@@ -96,7 +96,7 @@ $rule = array(
 
 > length
 
-验证某个字段的值的长度是否在某个范围，例如：
+验证某个属性的值的长度是否在某个范围，例如：
 
 ``` php
 $rule = array(
@@ -108,7 +108,7 @@ $rule = array(
 
 > min
 
-验证某个字段的值的最小长度，例如：
+验证某个属性的值的最小长度，例如：
 
 ``` php
 $rule = array(
@@ -120,7 +120,7 @@ $rule = array(
 
 > max
 
-验证某个字段的值的最大长度，例如：
+验证某个属性的值的最大长度，例如：
 
 ``` php
 $rule = array(
@@ -132,7 +132,7 @@ $rule = array(
 
 > after
 
-验证某个字段的值是否在某个日期之后，例如：
+验证某个属性的值是否在某个日期之后，例如：
 
 ``` php
 $rule = array(
@@ -144,7 +144,7 @@ $rule = array(
 
 > before
 
-验证某个字段的值是否在某个日期之前，例如：
+验证某个属性的值是否在某个日期之前，例如：
 
 ``` php
 $rule = array(
@@ -156,7 +156,7 @@ $rule = array(
 
 > expire
 
-验证某个字段是否在某个有效日期之内，例如：
+验证某个属性是否在某个有效日期之内，例如：
 
 ``` php
 $rule = array(
@@ -170,11 +170,11 @@ $rule = array(
 
 <span id="comparison"></span>
 
-#### 字段比较
+#### 属性比较
 
 > confirm
 
-验证某个字段是否和另外一个字段的值一致，例如：
+验证某个属性是否和另外一个属性的值一致，例如：
 
 ``` php
 $rule = array(
@@ -189,7 +189,7 @@ $rule = array(
 
 系统会自动验证 password_confirm 与 password 是否一致。
 
-该规则是自动验证的，只要在需要验证的字段名后加上 <kdb>_confirm</kbd>，也可以指定需要验证的字段名，例如：
+该规则是自动验证的，只要在需要验证的属性名后加上 <kdb>_confirm</kbd>，也可以指定需要验证的属性名，例如：
 
 ``` php
 $rule = array(
@@ -204,7 +204,7 @@ $rule = array(
 
 > different
 
-验证某个字段是否和另外一个字段的值不一致，例如：
+验证某个属性是否和另外一个属性的值不一致，例如：
 
 ``` php
 $rule = array(
@@ -217,7 +217,7 @@ $rule = array(
 );
 ```
 
-该规则与 confirm 类似，只要在需要验证的字段名后加上 <kdb>_different</kbd>，也可以指定需要验证的字段名，例如：
+该规则与 confirm 类似，只要在需要验证的属性名后加上 <kdb>_different</kbd>，也可以指定需要验证的属性名，例如：
 
 ``` php
 $rule = array(
@@ -354,17 +354,17 @@ format 参数可选如下值
 | email | Email | |
 | array | 数组 | |
 | date | 有效日期 | |
-| time | 有效时间 | 会对值进行 strtotime 后判断 |
-| date_time | 有效日期时间 | |
+| time | 有效时间 | 会对值进行 `strtotime` 后判断 |
+| date_time | 有效日期时间 | 会对值进行 `strtotime` 后判断 |
 | alpha | 字母 | |
 | alpha_number | 字母与纯数字 | |
-| alpha_dash | 字母、数字、破折号与下划线 | |
+| alpha_dash | 字母、数字、连字符（<kbd>-</kbd>）与下划线（<kbd>_</kbd>） | |
 | chs | 中文 | |
 | chs_alpha | 中文与字母 | |
 | chs_alpha_number | 中文、字母与纯数字 | |
-| chs_dash | 中文、字母、数字、破折号与下划线 | |
+| chs_dash | 中文、字母、数字、连字符（<kbd>-</kbd>）与下划线（<kbd>_</kbd>） | |
 | url | URL 地址 | |
-| ip | IP 地址 | 含 IPv4 与 IPv6 |
+| ip | IP 地址 | 含 `IPv4` 与 `IPv6` |
 
 
 ----------
@@ -384,7 +384,7 @@ format 参数可选如下值
 
 > date_format
 
-验证某个字段的值是否为指定格式的日期，例如：
+验证某个属性的值是否为指定格式的日期，例如：
 
 ``` php
 $rule = array(
@@ -396,7 +396,7 @@ $rule = array(
 
 > time_format
 
-验证某个字段的值是否为指定格式的时间，例如：
+验证某个属性的值是否为指定格式的时间，例如：
 
 ``` php
 $rule = array(
@@ -408,7 +408,7 @@ $rule = array(
 
 > date_time_format
 
-验证某个字段的值是否为指定格式的日期时间，例如：
+验证某个属性的值是否为指定格式的日期时间，例如：
 
 ``` php
 $rule = array(

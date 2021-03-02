@@ -53,7 +53,7 @@ class User extends Validate {
 
 #### 方法定义
 
-使用 `setScene` 方法定义场景，如
+使用 `setScene()` 方法定义场景，如
 
 ``` php
 class User extends Validate {
@@ -93,11 +93,11 @@ class User extends Validate {
 
         $this->setScene($scene);
     }
-    
+
 }
 ```
 
-`setScene` 方法说明
+`setScene()` 方法说明
 
 ``` php
 function setScene( $scene [, $value = array()] )
@@ -107,21 +107,17 @@ function setScene( $scene [, $value = array()] )
 
 * `scene` 场景
 
-    支持两种类型
-
-    字符串：场景名
-    
-    数组：批量设置场景
+    支持两种类型: 为字符串表示场景名，为数组时表示批量设置场景
 
 * `value` 场景值
 
     当 `scene` 为字符串时为必须，当 `scene` 为数组时自动忽略。
-    
+
 ----------
 
 #### 场景调用方法
 
-在需要进行验证的地方调用 `scene` 方法
+在需要进行验证的地方调用 `scene()` 方法
 
 ``` php
 $data = array(
@@ -148,4 +144,3 @@ if(!$result){
 | append | 追加验证规则 |
 
 > 注意：所有方法均支持链式操作，优先级为 only &gt; remove &gt; append
-

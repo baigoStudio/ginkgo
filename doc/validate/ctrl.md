@@ -1,6 +1,6 @@
 ## 控制器验证
 
-如果需要在控制器中进行验证，且继承了 `ginkgo\Ctrl` 类，可以调用控制器类提供的 `validate` 方法进行验证，如：
+如果需要在控制器中进行验证，且继承了 `ginkgo\Ctrl` 类，可以调用控制器类提供的 `validate()` 方法进行验证，如：
 
 ``` php
 $data = array(
@@ -26,7 +26,7 @@ if($result !== true){
 }
 ```
 
-如果定义了验证器的话，例如：
+如果定义了验证器，例如：
 
 ``` php
 namespace app\index\validate;
@@ -43,7 +43,7 @@ class User extends Validate {
             'format'  => 'email',
         ),
     );
-    
+
     protected $scene = array(
         'add'   =>  array(
             'name',
@@ -90,7 +90,7 @@ class User extends Ctrl {
 
     function edit() {
         $result = $this->validate($data);
-        
+
         if($result !== true){
             // 验证失败 输出错误信息
             print_r($result);
@@ -111,7 +111,7 @@ class User {
 
     function edit() {
         $result = $this->validate($data, '', 'edit');
-        
+
         if($result !== true){
             // 验证失败 输出错误信息
             print_r($result);
@@ -132,7 +132,7 @@ class User {
 
     function edit() {
         $result = $this->validate($data, '', false);
-        
+
         if($result !== true){
             // 验证失败 输出错误信息
             print_r($result);

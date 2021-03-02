@@ -4,9 +4,9 @@
 
 ----------
 
-#### 使用 `fetchSql` 方法
+#### 使用 `fetchSql()` 方法
 
-`fetchSql` 方法表示不进行查询而只是返回构建的 SQL 语句，适用于任何 `CURD` 查询。
+`fetchSql()` 方法表示不进行查询而只是返回构建的 SQL 语句，适用于任何 `CURD` 查询。
 
 使用示例：
 
@@ -40,9 +40,9 @@ SELECT * FROM `user` WHERE `id` NOT IN (SELECT `id` FROM `user` WHERE `id` > 10)
 
 ----------
 
-#### 使用 `buildSql` 方法
+#### 使用 `buildSql()` 方法
 
-调用 `buildSql` 方法后不会进行实际的查询操作，而只是生成该次查询的 SQL 语句，该方法只能返回 where、whereAnd、whereOr 方法产生的语句，其他方法请使用 `fetchSql` 方法。
+调用 `buildSql()` 方法后不会进行实际的查询操作，而只是生成该次查询的 SQL 语句，该方法只能返回 `where()`、`whereAnd()`、`whereOr()` 方法产生的语句，其他方法请使用 `fetchSql()` 方法。
 
 ``` php
 $where = array(

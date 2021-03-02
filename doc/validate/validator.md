@@ -1,6 +1,6 @@
 ## 验证器
 
-验证器是最推荐的方式，为具体的验证场景或者数据定义好验证器类，直接调用验证类的 `verify` 方法即可完成验证，下面是一个例子：
+验证器是最推荐的方式，为具体的验证场景或者数据定义好验证器类，直接调用验证类的 `verify()` 方法即可完成验证，下面是一个例子：
 
 我们定义一个 `app\validate\index\User` 验证器类用于 User 的验证，验证器必须继承验证类 `ginkgo\Validate`。
 
@@ -41,7 +41,7 @@ if(!$validate->verify($data)){
 ```
 
 验证类 `ginkgo\Validate` 内置了如下类的实例：
- 
+
 ``` php
 class Validate {
     // ginkgo\Lang 的实例
@@ -53,7 +53,7 @@ class Validate {
 
 #### 验证器初始化
 
-验证器同样支持初始化，与控制器的初始化类似，可以定义验证器初始化方法 `v_init`，具体如下
+验证器同样支持初始化，与控制器的初始化类似，可以定义验证器初始化方法 `v_init()`，具体如下
 
 ``` php
 namespace app\validate\index;

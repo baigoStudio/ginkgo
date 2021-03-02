@@ -18,7 +18,7 @@ echo Html::encode($html);
 
 #### 静态方法
 
-`encode` HTML 编码
+`encode()` HTML 编码
 
 ``` php
 function encode( $html )
@@ -34,7 +34,7 @@ function encode( $html )
 
 ----------
 
-`decode` HTML 解码
+`decode()` HTML 解码
 
 ``` php
 function decode( $string )
@@ -47,6 +47,31 @@ function decode( $string )
 返回
 
 * HTML 代码
+
+----------
+
+<span id="fillImg"></span>
+
+`fillImg()` 将 HTML 内的图片 URL 补充完整
+
+`0.2.0` 新增
+
+``` php
+function fillImg( $content, $baseUrl )
+```
+
+参数
+
+* `content` HTML 内容
+* `baseUrl` 基本 URL
+
+返回
+
+* 图片具备完整的 URL 的 HTML 内容，如：
+    HTML 为 &lt;div&gt;&lt;img src=&quot;./image/logo.png&quot;&gt;&lt;/div&gt;
+    基本 URL 为 http://www.baigo.net，
+    补充完整后为 &lt;div&gt;&lt;img src=&quot;http://www.baigo.net/image/logo.png&quot;&gt;&lt;/div&gt;
+
 
 ----------
 
@@ -105,6 +130,7 @@ $str = '<div id="test">test</div>'
 
 echo $html->stripAttr($str);
 ```
+
 输出结果
 
 ``` markup

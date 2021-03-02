@@ -125,7 +125,7 @@ $event = Loader::classes('Blog', 'event', 'admin');
 
 如需要扩展和使用第三方类库，且该类库不是通过 Composer 安装，可以放入根目录下的 extend 目录，该目录是推荐的第三方扩展类库目录。
 
-类的命名和命名空间请遵循 [概况 -> 开发规范](../overview/spec.md) 的建议，例如：
+类的命名和命名空间请遵循 [概况 -> 开发规范](../index/spec.md) 的建议，例如：
 
 ``` php
 namespace extend\first\second;

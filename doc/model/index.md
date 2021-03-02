@@ -16,7 +16,7 @@ class User extends Model {
 ```
 
 模型基类 `ginkgo\Model` 内置了如下类的实例：
- 
+
 ``` php
 class Model {
     // ginkgo\Request 的实例
@@ -34,7 +34,7 @@ class Model {
 namespace app\model\index;
 
 class User extends ginkgo\Model {
-    protected $connection = array(
+    protected $config = array(
         // 数据库类型
         'type'    => 'mysql',
         // 服务器地址
@@ -57,7 +57,9 @@ class User extends ginkgo\Model {
 }
 ```
 
-和连接数据库的参数一样，`connection` 属性的值也可以设置为数据库的配置参数。
+和连接数据库的参数一样，`$config` 属性的值也可以设置为数据库的配置参数。
+
+`0.2.0` 之前为 `$connection` 属性
 
 ----------
 

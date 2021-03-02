@@ -1,8 +1,8 @@
 ## 认证
 
-认证是鉴定用户身份的过程。它通常使用一个标识符（如用户名）和一个加密令牌（比如密码或者存取令牌）来鉴别用户身份。认证是登录功能的基础。认证功能由 `ginkgo\Auth` 类完成。
-
 `0.1.2` 新增
+
+认证是鉴定用户身份的过程。它通常使用一个标识符（如用户名）和一个加密令牌（比如密码或者存取令牌）来鉴别用户身份。认证是登录功能的基础。认证功能由 `ginkgo\Auth` 类完成。
 
 ----------
 
@@ -112,7 +112,7 @@ $auth = Auth::instance(array(), 'user');
 ```
 
 
-通过 `prefix` 属性设置，如：
+通过 `$prefix` 属性设置，如：
 
 ``` php
 $auth = Auth::instance();
@@ -121,7 +121,7 @@ $auth->prefix = 'user';
 ```
 
 
-通过 `prefix` 方法设置，如：
+通过 `prefix()` 方法设置，如：
 
 ``` php
 $auth = Auth::instance();
@@ -129,7 +129,7 @@ $auth = Auth::instance();
 $auth->prefix('user');
 ```
 
-用 `prefix` 属性和 `prefix` 方法还可以取得当前前缀，如：
+用 `$prefix` 属性和 `prefix()` 方法还可以取得当前前缀，如：
 
 ``` php
 $auth = Auth::instance();
@@ -138,6 +138,56 @@ echo $auth->prefix();
 echo $auth->prefix;
 ```
 
+----------
+
+#### 设置、取得选项
+
+`0.2.0` 新增
+
+选项可以控制认证实例的一些功能开启与关闭，目前支持的功能如下：
+
+| 参数 | 描述 | 默认 |
+| - | - | - |
+| cookie | 是否开启 cookie，如果开启，系统将同时通过 cookie 来验证 | true |
+| remember | 是否开启记住用户，如果开启，系统可以实现自动登录 | false |
+
+
+通过 `$options` 属性来设置选项，如：
+
+``` php
+$auth = Auth::instance();
+
+$auth->options = array(
+    'cookie'    => true,
+    'remember'  => false,
+);
+```
+
+
+通过 `setOptions()` 方法设置，如：
+
+``` php
+$auth = Auth::instance();
+
+$auth->setOptions('cookie', true); // 单个设置
+
+$options = array(
+    'cookie'    => true,
+    'remember'  => false,
+);
+
+$auth->setOptions($options); // 批量设置
+```
+
+
+用 `$options` 属性和 `getOptions()` 方法还可以取得当前前缀，如：
+
+``` php
+$auth = Auth::instance();
+
+echo $auth->options;
+echo $auth->getOptions();
+```
 
 ----------
 
@@ -156,18 +206,18 @@ $auth->prefix = 'user'; // 注意与 userRow 数组的名称对应
 $auth->write($userRow, true, 'auto', 'remember');
 ```
 
-`write` 方法说明
+`write()` 方法说明
 
 ``` php
-function write( $userRow [, $regen = false [, $loginType = 'form' [, $remember = '' [, $pathCookie = '/']]]] )
+function write( $userRow [, $regen = false [, $loginType = 'form' [, $remember = '' [, $pathCookie = '/' ]]]] )
 ```
 
 参数
 
 * `userRow` 用户信息：
-    
+
     必须为数组，结构如下：
-    
+
     | 名称 | 类型 | 必需 | 描述 |
     | - | - | - | - |
     | 前缀_id | int | true | ID |
@@ -179,23 +229,23 @@ function write( $userRow [, $regen = false [, $loginType = 'form' [, $remember =
 * `regen` 使用新生成的会话 ID 更新现有会话 ID
 
     布尔值，默认为 false
-    
+
 * `loginType` 登录类型
 
     字符串，默认为 form，表示从表单登录，开发者可以根据实际情况自行命名，如：auto 等等
-    
+
 * `remember` 记住登录状态
 
-    字符串，默认为空，要记住登录状态，必须将本参数设置为 `remember`
+    字符串，默认为空，要记住登录状态，必须将本参数设置为 `remember`，`0.2.0` 起可以为 `true`
 
 * `pathCookie` Cookie 保存路径
 
-    字符串，默认 /
-    
+    字符串或数组，默认 /
+
 返回
 
 * 无
-    
+
 ----------
 
 #### 读取认证
@@ -246,18 +296,18 @@ $authinfo = $auth->read();
 $auth->check($userRow, $pathCookie);
 ```
 
-`check` 方法说明
+`check()` 方法说明
 
 ``` php
-function check( $userRow [, $pathCookie = '/'] )
+function check( $userRow [, $pathCookie = '/' ] )
 ```
 
 参数
 
 * `userRow` 用户信息：
-    
+
     必须为数组，结构如下：
-    
+
     | 名称 | 类型 | 必需 | 描述 |
     | - | - | - | - |
     | 前缀_id | int | true | ID |
@@ -268,7 +318,7 @@ function check( $userRow [, $pathCookie = '/'] )
 * `pathCookie` Cookie 保存路径
 
     字符串，默认 /
-    
+
 返回
 
 * 布尔值

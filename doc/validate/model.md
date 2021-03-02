@@ -1,6 +1,6 @@
 ## 模型验证
 
-如果需要在模型中进行验证，可以调用模型类提供的 `validate` 方法进行验证，如：
+如果需要在模型中进行验证，可以调用模型类提供的 `validate()` 方法进行验证，如：
 
 ``` php
 $data = array(
@@ -43,7 +43,7 @@ class User extends Validate {
             'format'  => 'email',
         ),
     );
-    
+
     protected $scene = array(
         'add'   =>  array(
             'name',
@@ -90,7 +90,7 @@ class User extends Model {
 
     function edit() {
         $result = $this->validate($data);
-        
+
         if($result !== true){
             // 验证失败 输出错误信息
             print_r($result);
@@ -111,7 +111,7 @@ class User {
 
     function edit() {
         $result = $this->validate($data, '', 'edit');
-        
+
         if($result !== true){
             // 验证失败 输出错误信息
             print_r($result);

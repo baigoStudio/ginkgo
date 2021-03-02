@@ -27,7 +27,7 @@ return array(
 );
 ```
 
-详细配置含义请查看 [附录 -> 配置参考](../attach/overview.md)。
+详细配置含义请查看 [附录 -> 配置参考](../attach/index.md)。
 
 ----------
 

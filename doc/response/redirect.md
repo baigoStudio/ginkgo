@@ -1,6 +1,6 @@
 ## 重定向
 
-如果控制器继承了 `ginkgo\Ctrl` 类，可以使用 `redirect` 方法进行重定向
+如果控制器继承了 `ginkgo\Ctrl` 类，可以使用 `redirect()` 方法进行重定向
 
 ``` php
 namespace app\index\ctrl;
@@ -26,7 +26,7 @@ class Index extends Ctrl {
 $this->redirect('/index/index/hello/name/baigo');
 ```
 
-这种方式会保持原来地址不做任何转换，第二种方式是使用 `params` 方法配合，例如：
+这种方式会保持原来地址不做任何转换，第二种方式是使用 `params()` 方法配合，例如：
 
 ``` php
 $param = array(
@@ -41,9 +41,9 @@ $this->redirect('/index/index/hello')->param($param);
 
 #### 记住请求地址
 
-在很多时候，重定向需要记住当前请求地址，便于跳转回来。此时可以使用 `remember` 方法记住重定向之前的地址。
+在很多时候，重定向需要记住当前请求地址，便于跳转回来。此时可以使用 `remember()` 方法记住重定向之前的地址。
 
-下面是一个示例，第一次访问 `index` 动作的时候会重定向到 `hello` 动作并记住当前地址，动作完成后到 `restore` 方法，`restore` 方法则自动重定向到之前记住的请求地址，完成一次重定向的回归，回到原点！
+下面是一个示例，第一次访问 `index` 动作的时候会重定向到 `hello` 动作并记住当前地址，动作完成后到 `restore()` 方法，`restore()` 方法则自动重定向到之前记住的请求地址，完成一次重定向的回归，回到原点！
 
 ``` php
 namespace app\ctrl\index;
@@ -63,7 +63,7 @@ class Index extends Ctrl {
             // 记住当前地址并重定向
             $redirect = $this->redirect('index/index/hello');
             $redirect->remember();
-            
+
             return $redirect;
         }
     }
@@ -79,6 +79,6 @@ class Index extends Ctrl {
         // 跳回之前的来源地址
         return $this->redirect()->restore();
     }
-    
+
 }
 ```

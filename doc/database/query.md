@@ -1,8 +1,8 @@
 ## 查询方法
 
-#### `where` 方法
+#### `where()` 方法
 
-可以使用 `where` 方法进行条件查询，链式操作中，`where` 方法只能调用一次：
+可以使用 `where()` 方法进行条件查询，链式操作中，`where()` 方法只能调用一次：
 
 ``` php
 Db::table('user')->where('name', 'LIKE', '%baigo', 'name', 'str')->find();
@@ -18,31 +18,31 @@ SELECT * FROM `user` WHERE `name` LIKE :name
 SELECT * FROM `user` WHERE `name` LIKE '%baigo'
 ```
 
-`where` 方法说明
+`where()` 方法说明
 
 ``` php
-function where( $where [, $expression , $conditional [, $parameter = '' [, $type = '']]] )
+function where( $where [, $exp , $value [, $param = '' [, $type = '' ]]] )
 ```
 
 参数
 
 * `where` 字段名
 
-    支持两种类型：字符串、数组
+    支持两种类型：字符串、数组，为数组时表示批量条件
 
-* `expression` 表达式
-
-    当 `where` 为字符串时为必须，当 `where` 为数组时自动忽略。
-    
-    详情请查看 [查询语法](syntax.md)
-
-* `conditional` 条件值
+* `exp` 表达式
 
     当 `where` 为字符串时为必须，当 `where` 为数组时自动忽略。
 
     详情请查看 [查询语法](syntax.md)
 
-* `parameter` 参数名
+* `value` 条件值
+
+    当 `where` 为字符串时为必须，当 `where` 为数组时自动忽略。
+
+    详情请查看 [查询语法](syntax.md)
+
+* `param` 参数名
 
     当 `where` 为数组时自动忽略。
 
@@ -51,7 +51,7 @@ function where( $where [, $expression , $conditional [, $parameter = '' [, $type
     为空自动判断，当 `where` 为数组时自动忽略。
 
     可能的值
-    
+
     | 值 | 描述 |
     | - | - |
     | str（默认值） | 字符串 |
@@ -59,7 +59,7 @@ function where( $where [, $expression , $conditional [, $parameter = '' [, $type
     | float | 浮点数 |
     | double | 数字 |
     | bool | 布尔值 |
-       
+
 多条件查询
 
 ``` php
@@ -110,9 +110,9 @@ SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
 
 ----------
 
-#### `whereOr` 方法
+#### `whereOr()` 方法
 
-`whereOr` 链式操作中，`whereOr` 方法可以多次调用：
+链式操作中，`whereOr()` 方法可以多次调用：
 
 ``` php
 $where = array(
@@ -130,7 +130,7 @@ $whereOr_2 = array(
     array('is_hide', '>', 1),
     array('time_hide', '>=', date('Y-m-d H:i:s'), 'date'),
 );
-    
+
 Db::table('user')
     ->where($where)
     ->whereOr($whereOr_1)
@@ -141,21 +141,21 @@ Db::table('user')
 生成的 SQL 语句类似于下面：
 
 ``` php
-SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key 
-    OR (`is_pub` < :is_pub AND `time_pub` <= :date) 
+SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
+    OR (`is_pub` < :is_pub AND `time_pub` <= :date)
     OR (`is_hide` > :is_hide AND `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo' 
-    OR (`is_pub` < 1 AND `time_pub` <= '2019-05-06 10:13:01') 
+SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+    OR (`is_pub` < 1 AND `time_pub` <= '2019-05-06 10:13:01')
     OR (`is_hide` > 1 AND `time_hide` >= '2019-05-06 10:13:01')
 ```
 
 ----------
 
-#### `whereAnd` 方法
+#### `whereAnd()` 方法
 
-`whereAnd` 链式操作中，`whereAnd` 方法可以多次调用：
+链式操作中，`whereAnd()` 方法可以多次调用：
 
 ``` php
 $where = array(
@@ -173,7 +173,7 @@ $whereAnd_2 = array(
     array('is_hide', '>', 1),
     array('time_hide', '>=', date('Y-m-d H:i:s'), 'date', '', '', 'OR'),
 );
-    
+
 Db::table('user')
     ->where($where)
     ->whereAnd($whereAnd_1)
@@ -184,13 +184,13 @@ Db::table('user')
 生成的 SQL 语句类似于下面：
 
 ``` php
-SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key 
-    AND (`is_pub` < :is_pub OR `time_pub` <= :date) 
+SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
+    AND (`is_pub` < :is_pub OR `time_pub` <= :date)
     AND (`is_hide` > :is_hide OR `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo' 
-    AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01') 
+SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+    AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01')
     AND (`is_hide` > 1 OR `time_hide` >= '2019-05-06 10:13:01')
 ```
 
@@ -214,7 +214,7 @@ $whereOr = array(
     array('is_hide', '>', 1),
     array('time_hide', '>=', date('Y-m-d H:i:s'), 'date'),
 );
-    
+
 Db::table('user')
     ->where($where)
     ->whereAnd($whereAnd)
@@ -225,12 +225,12 @@ Db::table('user')
 生成的 SQL 语句类似于下面：
 
 ``` php
-SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key 
-    AND (`is_pub` < :is_pub OR `time_pub` <= :date) 
+SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
+    AND (`is_pub` < :is_pub OR `time_pub` <= :date)
     OR (`is_hide` > :is_hide AND `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo' 
-    AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01') 
+SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+    AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01')
     OR (`is_hide` > 1 AND `time_hide` >= '2019-05-06 10:13:01')
 ```
