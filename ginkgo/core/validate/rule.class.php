@@ -42,7 +42,7 @@ abstract class Rule {
             return true;
         }
 
-        if (strpos($rule, '/') === false && !preg_match('/\/[imsU]{0,4}$/', $rule)) {
+        if (strpos($rule, '/') !== 0 && !preg_match('/\/[imsU]{0,4}$/', $rule)) {
             // 不是正则表达式则两端补上/
             $rule = '/^' . $rule . '$/';
         }

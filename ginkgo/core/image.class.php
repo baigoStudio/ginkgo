@@ -66,7 +66,7 @@ class Image {
         ),
     );
 
-    private $res_imgSrc; // 原始图片资源
+    private $res_imgSrc; // 源图片资源
     private $res_imgDst; // 目的图片资源
     private $obj_file; // 文件对象
     private $imageExts; // 设定哪些扩展名属于图片
@@ -205,7 +205,7 @@ class Image {
 
                 unset($_mix_imgStampSrc['resource']);
 
-                imagecopy($_res_imgStamp, $_res_imgStampSrc, 0, 0, 0, 0, $_mix_infoStampSrc['width'], $_mix_infoStampSrc['height']); // 将原始水印复制到空白水印图片并缩小
+                imagecopy($_res_imgStamp, $_res_imgStampSrc, 0, 0, 0, 0, $_mix_infoStampSrc['width'], $_mix_infoStampSrc['height']); // 将源水印复制到空白水印图片并缩小
 
                 empty($_res_imgStampSrc) || imagedestroy($_res_imgStampSrc);
             break;
@@ -219,7 +219,7 @@ class Image {
             $_arr_sizeStamp['height'] = imagesy($_res_imgStamp);
         }
 
-        imagecopymerge($_res_imgDst, $_res_imgStamp, $_arr_posiStamp['x'], $_arr_posiStamp['y'], 0, 0, $_arr_sizeStamp['width'], $_arr_sizeStamp['height'], $pct); // 将合并后的水印复制到原始图片
+        imagecopymerge($_res_imgDst, $_res_imgStamp, $_arr_posiStamp['x'], $_arr_posiStamp['y'], 0, 0, $_arr_sizeStamp['width'], $_arr_sizeStamp['height'], $pct); // 将合并后的水印复制到源图片
 
         empty($_res_imgStamp) || imagedestroy($_res_imgStamp);
 
@@ -235,10 +235,10 @@ class Image {
      * @access public
      * @param int $width 宽度
      * @param int $height 高度
-     * @param int $x_src (default: 0) 裁切 x 坐标
-     * @param int $y_src (default: 0) 裁切 y 坐标
-     * @param mixed $width_src (default: false) 原始文件宽度 (如为 false, 则采用原始宽度)
-     * @param mixed $height_src (default: false) 原始文件高度 (如为 false, 则采用原始高度)
+     * @param int $x_src (default: 0) 源裁切 x 坐标
+     * @param int $y_src (default: 0) 源裁切 y 坐标
+     * @param mixed $width_src (default: false) 源宽度 (如为 false, 则采用源宽度)
+     * @param mixed $height_src (default: false) 源高度 (如为 false, 则采用源高度)
      * @return 当前实例
      */
     public function crop($width, $height, $x_src = 0, $y_src = 0, $width_src = false, $height_src = false) {
@@ -248,11 +248,11 @@ class Image {
         }
 
         if (!$width_src) {
-            $width_src = $this->infoSrc['width']; // 原始文件宽度 (如为 false, 则采用原始宽度)
+            $width_src = $this->infoSrc['width']; // 源文件宽度 (如为 false, 则采用源宽度)
         }
 
         if (!$height_src) {
-            $height_src = $this->infoSrc['height']; // 原始文件高度 (如为 false, 则采用原始高度)
+            $height_src = $this->infoSrc['height']; // 源文件高度 (如为 false, 则采用源高度)
         }
 
         $_res_imgBg = $this->createImgBg($width, $height); // 创建背景
@@ -265,7 +265,7 @@ class Image {
         print_r(' || ');
         print_r($height_src);*/
 
-        if (!imagecopyresampled($_res_imgBg, $this->res_imgSrc, 0, 0, $x_src, $y_src, $width, $height, $width_src, $height_src)) { // 将原始图片合并到背景并缩小
+        if (!imagecopyresampled($_res_imgBg, $this->res_imgSrc, 0, 0, $x_src, $y_src, $width, $height, $width_src, $height_src)) { // 将源图片合并到背景并缩小
             $this->error = 'Failed to resize';
             return $this;
         }
@@ -290,26 +290,22 @@ class Image {
      * @return void
      */
     public function thumb($width = 100, $height = 100, $type = 'ratio') {
-        $_arr_thumbSize   = $this->thumbSizeProcess($width, $height, $type); // 计算缩略图尺寸
+        $_arr_thumbSize   = $this->thumbSizeCalc($width, $height, $type); // 计算缩略图尺寸
 
-        //print_r($_arr_thumbSize);
+        print_r($_arr_thumbSize);
 
         if (Func::isEmpty($this->infoDst)) {
-            $this->infoDst = $this->dstProcess($this->infoSrc['path'], $_arr_thumbSize['width'], $_arr_thumbSize['height'], $type); // 路径处理
+            $this->infoDst = $this->dstProcess($this->infoSrc['path'], $width, $height, $type); // 路径处理
         }
 
-        switch ($type) {
+        /*switch ($type) {
             case 'ratio':
                 $width  = false;
                 $height = false;
             break;
-        }
+        }*/
 
-        if ($width >= $this->infoSrc['width'] && $height >= $this->infoSrc['height']) { //如果源图片小于目标缩略图, 则只是拷贝
-            return $this;
-        } else {
-            $this->crop($_arr_thumbSize['width'], $_arr_thumbSize['height'], $_arr_thumbSize['x_src'], $_arr_thumbSize['y_src'], $_arr_thumbSize['width_src'], $_arr_thumbSize['height_src']); // 裁切
-        }
+        $this->crop($_arr_thumbSize['width'], $_arr_thumbSize['height'], $_arr_thumbSize['x_src'], $_arr_thumbSize['y_src'], $_arr_thumbSize['width_src'], $_arr_thumbSize['height_src']); // 裁切
 
         return $this;
     }
@@ -480,7 +476,6 @@ class Image {
         }
 
         if (!$this->output($_str_path, $_str_mime, $quality, $interlace)) {
-            $this->error = 'Failed to save image';
             return false;
         }
 
@@ -1090,7 +1085,7 @@ class Image {
             }
 
             $name = call_user_func($_str_type, $_tm_time) . '.' . $this->infoSrc['ext'];
-        } else if ($name === false) { // 参数为 false 时, 使用原始文件名
+        } else if ($name === false) { // 参数为 false 时, 使用源文件名
             $name = $this->infoSrc['name'];
         }
 
@@ -1141,7 +1136,7 @@ class Image {
 
 
     /** 计算缩略图尺寸
-     * thumbSizeProcess function.
+     * thumbSizeCalc function.
      *
      * @access public
      * @param int $width 宽度
@@ -1149,7 +1144,7 @@ class Image {
      * @param string $type (default: 'ratio') 类型（默认等比例）
      * @return 图片尺寸数组
      */
-    private function thumbSizeProcess($width_dst = 0, $height_dst = 0, $type = 'ratio') {
+    private function thumbSizeCalc($width_dst = 0, $height_dst = 0, $type = 'ratio') {
         $width_dst   = (int)$width_dst; // 目的宽度
         $height_dst  = (int)$height_dst; // 目的高度
         $_width_src  = (int)$this->infoSrc['width']; // 源图宽度
@@ -1192,36 +1187,69 @@ class Image {
             break;
 
             default:
-                if ($_width_src > $_height_src) { // 横向
-                    $_scale       = $_width_src / $_height_src; // 计算比例
-                    $_height_crop = $height_dst;
-                    $_width_crop  = $_height_crop * $_scale; // 按比例计算宽度
-                    $_y_src       = 0;
-                    $_x_src       = ($_width_src - $_height_src) / 2; // 需裁切的部分
-                    if ($_width_crop < $width_dst) { // 如缩小后, 宽度小于设定的宽度, 则按照宽度重新计算
-                        $_width_crop  = $width_dst;
+                if ($width_dst > $height_dst) { // 目的横向
+                    $_scale       = $width_dst / $height_dst; // 计算目的比例
+
+                    if ($_height_src > $height_dst && $width_dst > $_width_src) { // 目的横向交叉
+                        $_width_crop  = $_width_src;
                         $_height_crop = $_width_crop / $_scale;
-                        $_x_src       = 0;
-                        $_y_src       = ($_height_crop - $height_dst) / 2;
+
+                        $_x_src = 0;
+                        $_y_src = ($_height_src - $_height_crop) / 2;
+                    } else if ($height_dst > $_height_src && $_width_src > $width_dst) { // 目的纵向交叉
+                        $_height_crop = $_height_src;
+                        $_width_crop  = $_height_crop * $_scale; // 按比例计算宽度
+
+                        $_x_src = ($_width_src - $width_dst) / 2;
+                        $_y_src = 0;
+                    } else { // 目的在内
+                        $_height_crop = $_height_src;
+                        $_width_crop  = $_height_crop * $_scale; // 按比例计算宽度
+
+                        $_x_src = ($_width_src - $_width_crop) / 2;
+                        $_y_src = 0;
+
+                        if ($_width_crop > $_width_src) { // 如计算后, 设定宽度小于源宽度, 则按照宽度重新计算
+                            $_width_crop  = $_width_src;
+                            $_height_crop = $_width_crop / $_scale; // 按比例计算高度
+                            $_x_src = 0;
+                            $_y_src = ($_height_src - $_height_crop) / 2;
+                        }
                     }
-                    $_width_src = $_height_src;
-                } else { // 纵向
-                    $_scale       = $_height_src / $_width_src; // 计算比例
-                    $_width_crop  = $width_dst;
-                    $_height_crop = $_width_crop * $_scale; // 按比例计算高度
-                    $_x_src       = 0;
-                    $_y_src       = ($_height_src - $_width_src) / 2; // 需裁切的部分
-                    if ($_height_crop < $height_dst) { // 如缩小后, 高度小于设定的高度, 则按照高度重新计算
-                        $_height_crop = $height_dst;
+                } else {
+                    $_scale = $height_dst / $width_dst; // 计算目的比例
+
+                    if ($height_dst > $_height_src && $_width_src > $width_dst) { // 目的纵向交叉
+                        $_height_crop = $_height_src;
                         $_width_crop  = $_height_crop / $_scale;
-                        $_y_src       = 0;
-                        $_x_src       = ($_width_crop - $width_dst) / 2;
+
+                        $_x_src = ($_width_src - $width_dst) / 2;
+                        $_y_src = 0;
+                    } else if ($_height_src > $height_dst && $width_dst > $_width_src) { // 目的横向向交叉
+                        $_width_crop  = $_width_src;
+                        $_height_crop = $_width_crop * $_scale;
+
+                        $_x_src = 0;
+                        $_y_src = ($_height_src - $height_dst) / 2;
+                    } else { // 目的在内
+                        $_width_crop  = $_width_src;
+                        $_height_crop = $_width_crop * $_scale;
+                        $_x_src = 0;
+                        $_y_src = ($_height_src - $_height_crop) / 2;
+
+                        if ($_height_crop > $_height_src) { // 如计算后, 设定高度小于源高度, 则按照源高度重新计算
+                            $_height_crop = $_height_src;
+                            $_width_crop  = $_height_crop / $_scale; // 按比例计算宽度
+                            $_x_src = ($_width_src - $_width_crop) / 2;
+                            $_y_src = 0;
+                        }
                     }
-                    $_height_src = $_width_src;
                 }
 
-                $_width  = $width_dst;
-                $_height = $height_dst;
+                $_width      = $width_dst;
+                $_height     = $height_dst;
+                $_width_src  = $_width_crop;
+                $_height_src = $_height_crop;
             break;
         }
 

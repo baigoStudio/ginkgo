@@ -28,13 +28,13 @@ class Ubbcode {
 
     // 正则规则
     public static $regexRules = array(
-        '/\[url\](.+?)\[\/url\]/i'               => '<a href="$1" target="_blank">$1</a>',
-        '/\[url=(.+?)\](.+?)\[\/url\]/i'         => '<a href="$1" target="_blank" title="$1">$2</a>',
-        '/\[img\](.+?)\[\/img\]/i'               => '<img src="$1">',
-        '/\[img=(.+?)\](.+?)\[\/img\]/i'         => '<img src="$1" alt="$2" title="$2">',
-        '/\[color=(.+?)\](.+?)\[\/color\]/i'     => '<span style="color:$1">$2</span>',
-        '/\[bgcolor=(.+?)\](.+?)\[\/bgcolor\]/i' => '<span style="background-color:$1">$2</span>',
-        '/\[size=(.+?)\](.+?)\[\/size\]/i'       => '<span style="font-size:$1">$2</span>',
+        '/\[url=(.+)\](.+)\[\/url\]/i'         => '<a href="$1" target="_blank" title="$1">$2</a>',
+        '/\[url\](.+)\[\/url\]/i'              => '<a href="$1" target="_blank">$1</a>',
+        '/\[img=(.+)\](.+)\[\/img\]/i'         => '<img src="$1" alt="$2" title="$2">',
+        '/\[img\](.+)\[\/img\]/i'              => '<img src="$1">',
+        '/\[color=(.+)\](.+)\[\/color\]/i'     => '<span style="color:$1">$2</span>',
+        '/\[bgcolor=(.+)\](.+)\[\/bgcolor\]/i' => '<span style="background-color:$1">$2</span>',
+        '/\[size=(.+)\](.+)\[\/size\]/i'       => '<span style="font-size:$1">$2</span>',
     );
 
 
@@ -80,11 +80,11 @@ class Ubbcode {
     // 去除标签
     public static function stripCode($string) {
         $_arr_regs = array(
-            '/\[img=(.+?)\](.+?)\[\/img\]/i',
-            '/\[img\](.+?)\[\/img\]/i',
-            '/\[(.+?)\]/i',
-            '/\[(.+?)=(.+?)\]/i',
-            '/\[\/(.+?)\]/i',
+            '/\[img=(.+)\](.+)\[\/img\]/i',
+            '/\[img\](.+)\[\/img\]/i',
+            '/\[(.+)\]/i',
+            '/\[(.+)=(.+)\]/i',
+            '/\[\/(.+)\]/i',
         );
 
         $string = preg_replace($_arr_regs, '', $string);
@@ -136,7 +136,7 @@ class Ubbcode {
 
         // 转换正则规则
         foreach (self::$regexRules as $_key=>$_value) {
-            if (strpos($_key, '/') === false && !preg_match('/\/[imsU]{0,4}$/', $_key)) {
+            if (strpos($_key, '/') !== 0 && !preg_match('/\/[imsU]{0,4}$/', $_key)) {
                 // 不是正则表达式则两端补上/
                 $_key = '/^' . $_key . '$/';
             }
@@ -157,8 +157,8 @@ class Ubbcode {
         $_arr_return    = array();
 
         if (!Func::isEmpty($string)) {
-            preg_match_all('/\[img\](.+?)\[\/img\]/i', $string, $_arr_matches_1); // 正则匹配
-            preg_match_all('/\[img=(.+?)\](.+?)\[\/img\]/i', $string, $_arr_matches_2); // 正则匹配
+            preg_match_all('/\[img\](.+)\[\/img\]/i', $string, $_arr_matches_1); // 正则匹配
+            preg_match_all('/\[img=(.+)\](.+)\[\/img\]/i', $string, $_arr_matches_2); // 正则匹配
 
             if (isset($_arr_matches_1[1]) && !Func::isEmpty($_arr_matches_1[1])) {
                 $_arr_data = array_merge($_arr_data, $_arr_matches_1[1]);

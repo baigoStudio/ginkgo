@@ -255,7 +255,9 @@ class Http {
      * @return mime 类型
      */
     public function getMime($path, $strict = false) {
-        if ($strict === true || $strict === 'true') {
+        $_str_mime = '';
+
+        if ($strict === true) {
             $_obj_finfo = new \finfo();
 
             $_str_mime  = $_obj_finfo->file($path, FILEINFO_MIME_TYPE);
@@ -367,7 +369,10 @@ class Http {
             return false;
         }
 
-        $_str_mime  = $this->getMime($_tmp_path); // 取得 mime 类型
+        $_str_mime  = $this->getMime($_tmp_path, true); // 取得 mime 类型
+
+        //print_r($_str_mime);
+
         $_str_ext   = $this->getExt($url, $_str_mime); // 取得扩展名
 
         if (!$this->verifyFile($_str_ext, $_str_mime)) { // 验证是否为允许的类型
@@ -411,7 +416,7 @@ class Http {
 
         $_str_path = Func::fixDs($dir) . $name; // 补全路径
 
-        if (!$replace && parent::fileHas($_str_path)) { // 文件名冲突
+        if (!$replace && File::fileHas($_str_path)) { // 文件名冲突
             $this->error = 'Has the same filename: ' . $_str_path;
 
             return false;

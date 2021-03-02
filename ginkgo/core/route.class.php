@@ -279,7 +279,7 @@ class Route {
 
         if (!Func::isEmpty(self::$config['route_rule'])) {
             foreach (self::$config['route_rule'] as $_key=>$_value) { // 遍历规则
-                if (preg_match('/\/[imsU]{0,4}$/', $_key)) { // 正则规则
+                if (strpos($_key, '/') !== false && strpos($_key, '$') !== false) { // 正则规则
                     if (preg_match($_key, $_str_pathInfo, $_arr_pathInfo) && is_array($_value) && isset($_value[0]) && isset($_value[1])) {
                         self::regexRuleProcess($_arr_pathInfo, $_value[0], $_value[1]);
                         break;
@@ -290,7 +290,7 @@ class Route {
                     }
                 } else {
                     if (is_array($_value) && isset($_value[0]) && isset($_value[1])) { // 如果是数组
-                        if (preg_match('/\/[imsU]{0,4}$/', $_value[0])) { // 正则规则
+                        if (strpos($_value[0], '/') !== false && strpos($_value[0], '$') !== false) { // 正则规则
                             if (preg_match($_value[0], $_str_pathInfo, $_arr_pathInfo) && isset($_value[2])) { // 正则规则
                                 self::regexRuleProcess($_arr_pathInfo, $_value[1], $_value[2]);
                                 break; // 匹配到第一条就跳出遍历

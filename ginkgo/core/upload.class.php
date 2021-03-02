@@ -215,7 +215,7 @@ class Upload {
 
         $_str_path = Func::fixDs($dir) . $name; // 补全路径
 
-        if (!$replace && parent::fileHas($_str_path)) { // 如果为不替换, 冲突时报错
+        if (!$replace && File::fileHas($_str_path)) { // 如果为不替换, 冲突时报错
             $this->error = 'Has the same filename: ' . $_str_path;
 
             return false;
@@ -227,7 +227,7 @@ class Upload {
             return false;
         }
 
-        if (parent::fileHas($this->fileInfo['tmp_name'])) { // 如果临时文件仍然存在
+        if (File::fileHas($this->fileInfo['tmp_name'])) { // 如果临时文件仍然存在
             $this->obj_file->fileDelete($this->fileInfo['tmp_name']); // 删除临时文件
         }
 
@@ -254,7 +254,7 @@ class Upload {
 
     // 兼容用
     public function __call($method, $params) {
-        return $this->getInfo($params);
+        return $this->getInfo($method);
     }
 
 
