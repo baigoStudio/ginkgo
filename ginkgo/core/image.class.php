@@ -292,7 +292,7 @@ class Image {
     public function thumb($width = 100, $height = 100, $type = 'ratio') {
         $_arr_thumbSize   = $this->thumbSizeCalc($width, $height, $type); // 计算缩略图尺寸
 
-        print_r($_arr_thumbSize);
+        //print_r($_arr_thumbSize);
 
         if (Func::isEmpty($this->infoDst)) {
             $this->infoDst = $this->dstProcess($this->infoSrc['path'], $width, $height, $type); // 路径处理
@@ -465,8 +465,7 @@ class Image {
             return false;
         }
 
-        $_str_path = Func::fixDs($dir) . $name; // 拼合最终路径
-
+        $_str_path  = Func::fixDs($dir) . $name; // 拼合最终路径
         $_str_mime  = $this->getMime($_str_path);
 
         if (Func::isEmpty($_str_mime)) {
@@ -1106,6 +1105,10 @@ class Image {
      * @return 名称数组
      */
     private function dstProcess($path, $width = '', $height = '', $type = '') {
+        $width  = (int)$width;
+        $height = (int)$height;
+        $type   = (string)$type;
+
         $_arr_pathinfo  = pathinfo($path);
         $_str_pathDir   = Func::fixDs($_arr_pathinfo['dirname']);
         $_str_name      = $_arr_pathinfo['filename'];
@@ -1152,10 +1155,19 @@ class Image {
 
         switch ($type) {
             case 'ratio': // 按比例缩小
+                if ($width_dst < 1) {
+                    $width_dst = $_width_src * 1000;
+                }
+
+                if ($height_dst < 1) {
+                    $height_dst = $_height_src * 1000;
+                }
+
                 if ($_width_src > $_height_src) { // 横向
                     $_scale          = $_height_src / $_width_src; // 计算比例
                     $_width_ratio    = $width_dst;
                     $_height_ratio   = $_width_ratio * $_scale; // 按比例计算高度
+
                     if ($_height_ratio > $height_dst) { // 如缩小后, 高度大于设定高度, 则按照高度重新计算
                         $_height_ratio  = $height_dst;
                         $_width_ratio   = $_height_ratio / $_scale;
@@ -1164,18 +1176,13 @@ class Image {
                     $_scale          = $_width_src / $_height_src; // 计算比例
                     $_height_ratio   = $height_dst;
                     $_width_ratio    = $_height_ratio * $_scale; // 按比例计算宽度
+
+
+
                     if ($_width_ratio > $width_dst) { // 如缩小后, 宽度大于设定宽度, 则按照宽度重新计算
                         $_width_ratio   = $width_dst;
                         $_height_ratio  = $_width_ratio / $_scale;
                     }
-                }
-
-                if ($width_dst < 1) {
-                    $_width_ratio = $_width_ratio * 100;
-                }
-
-                if ($height_dst < 1) {
-                    $_height_ratio = $_height_ratio * 100;
                 }
 
                 $_x_src      = 0;

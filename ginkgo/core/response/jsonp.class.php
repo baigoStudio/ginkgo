@@ -26,8 +26,8 @@ class Jsonp extends Response {
 
     protected function output($data) {
         //$this->contentType('application/javascript');
-        $_param    = CALLBACK_PARAM;
-        $_callback = CALLBACK;
+        $_param    = self::CALLBACK_PARAM;
+        $_callback = self::CALLBACK;
 
         if (isset($this->config['jsonp_callback_param']) && !Func::isEmpty($this->config['jsonp_callback_param'])) {
             $_param = $this->config['jsonp_callback_param'];

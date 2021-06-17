@@ -571,31 +571,31 @@ class Validate {
             break;
 
             case 'confirm':
-                if (is_string($rule['rule'])) {
-                    $_str_rule = $rule['rule'];
-                } else {
-                    $_str_rule = str_ireplace('_confirm', '', $key);
+                if (!is_string($rule['rule'])) {
+                    $rule['rule'] = str_ireplace('_confirm', '', $key);
                 }
 
                 /*print_r('key: ' . $key . ' -- ');
                 print_r('value: ' . $value . ' -- ');
-                print_r('rule: ' . $_str_rule . ' -- ');*/
+                print_r('rule: ' . $rule['rule'] . ' -- ');*/
 
-                $_bool_return = $this->obj_rule->confirm($value, $_str_rule); // 确认输入
+                $_data = $this->data[$rule['rule']];
+
+                $_bool_return = $this->obj_rule->confirm($value, $_data); // 确认输入
             break;
 
             case 'different':
-                if (is_string($rule['rule'])) {
-                    $_str_rule = $rule['rule'];
-                } else {
-                    $_str_rule = str_ireplace('_different', '', $key);
+                if (!is_string($rule['rule'])) {
+                    $rule['rule'] = str_ireplace('_different', '', $key);
                 }
 
                 /*print_r('key: ' . $key . ' -- ');
                 print_r('value: ' . $value . ' -- ');
-                print_r('rule: ' . $_str_rule . ' -- ');*/
+                print_r('rule: ' . $rule['rule'] . ' -- ');*/
 
-                $_bool_return = $this->obj_rule->different($value, $_str_rule);
+                $_data = $this->data[$rule['rule']];
+
+                $_bool_return = $this->obj_rule->different($value, $_data);
             break;
 
             case 'format':

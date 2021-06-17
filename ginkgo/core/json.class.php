@@ -38,6 +38,6 @@ class Json extends Arrays {
      * @return 解码后的数组
      */
     static function decode($string = '', $decode = false, $option = true) {
-        return parent::fromJson($array, $decode, $option);
+        return parent::fromJson($string, $decode, $option);
     }
 }

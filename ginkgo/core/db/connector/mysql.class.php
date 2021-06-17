@@ -214,7 +214,7 @@ class Mysql extends Connector {
      * @return 读取结果
      */
     public function find($field = '') {
-        $this->limit();
+        $this->limit(1);
 
         $_arr_result = $this->select($field, false); // 执行 select 查询
 

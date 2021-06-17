@@ -26,15 +26,18 @@ class Ubbcode {
         's'     => 'del',
     );
 
+    // 是否将换行符替换为 br 标签
+    public static $nl2br = true;
+
     // 正则规则
     public static $regexRules = array(
-        '/\[url=(.+)\](.+)\[\/url\]/i'         => '<a href="$1" target="_blank" title="$1">$2</a>',
-        '/\[url\](.+)\[\/url\]/i'              => '<a href="$1" target="_blank">$1</a>',
-        '/\[img=(.+)\](.+)\[\/img\]/i'         => '<img src="$1" alt="$2" title="$2">',
-        '/\[img\](.+)\[\/img\]/i'              => '<img src="$1">',
-        '/\[color=(.+)\](.+)\[\/color\]/i'     => '<span style="color:$1">$2</span>',
-        '/\[bgcolor=(.+)\](.+)\[\/bgcolor\]/i' => '<span style="background-color:$1">$2</span>',
-        '/\[size=(.+)\](.+)\[\/size\]/i'       => '<span style="font-size:$1">$2</span>',
+        '/\[url=([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\](.+)\[\/url\]/i' => '<a href="$1" target="_blank" title="$1">$2</a>',
+        '/\[url\]([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\[\/url\]/i'      => '<a href="$1" target="_blank">$1</a>',
+        '/\[img=([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\](.+)\[\/img\]/i' => '<img src="$1" alt="$2" title="$2">',
+        '/\[img\]([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\[\/img\]/i'      => '<img src="$1">',
+        '/\[color=(\w+)\](.+)\[\/color\]/i'      => '<span style="color:$1">$2</span>',
+        '/\[bgcolor=(\w+)\](.+)\[\/bgcolor\]/i'  => '<span style="background-color:$1">$2</span>',
+        '/\[size=(\d+)\](\d+)\[\/size\]/i'       => '<span style="font-size:$1">$2</span>',
     );
 
 
@@ -146,7 +149,10 @@ class Ubbcode {
         }
 
         $string = preg_replace($_arr_regs, $_arr_dsts, $string);
-        $string = nl2br($string, false);
+
+        if (self::$nl2br === true) {
+            $string = nl2br($string, false);
+        }
 
         return $string;
     }
@@ -157,8 +163,8 @@ class Ubbcode {
         $_arr_return    = array();
 
         if (!Func::isEmpty($string)) {
-            preg_match_all('/\[img\](.+)\[\/img\]/i', $string, $_arr_matches_1); // 正则匹配
-            preg_match_all('/\[img=(.+)\](.+)\[\/img\]/i', $string, $_arr_matches_2); // 正则匹配
+            preg_match_all('/\[img\]([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\[\/img\]/i', $string, $_arr_matches_1); // 正则匹配
+            preg_match_all('/\[img=([\-A-Za-z0-9+&@#\/%?\=~\_|!:,\.;]+[\-A-Za-z0-9+&@#\/%\=~\_|])\](.+)\[\/img\]/i', $string, $_arr_matches_2); // 正则匹配
 
             if (isset($_arr_matches_1[1]) && !Func::isEmpty($_arr_matches_1[1])) {
                 $_arr_data = array_merge($_arr_data, $_arr_matches_1[1]);

@@ -268,7 +268,7 @@ class Func {
 
         $_str_return = trim($string);
         $_str_return = preg_replace($_arr_dangerRegs, '', $_str_return);
-        $_str_return = str_replace($_arr_dangerChars, '', $_str_return);
+        //$_str_return = str_replace($_arr_dangerChars, '', $_str_return);
         $_str_return = Html::encode($_str_return);
         $_str_return = str_replace(array_keys($_arr_replace), array_values($_arr_replace), $_str_return);
 
