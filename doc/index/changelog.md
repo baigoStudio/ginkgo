@@ -1,3 +1,14 @@
+##### v0.2.1
+
+* 修复 `ginkgo\Db\Connector\Mysql` 类中，`fetchSql()` 方法无法完整获取真实 SQL 语句的错误
+* 修复 `ginkgo\File` 类中，没有完全将文件路径转换成小写的问题
+* 修复 `ginkgo\Cookie` 类中，无法删除指定路径下的 Cookie 的问题
+* `ginkgo\Strings` 类改名为 `ginkgo\Strings`
+* 修复缓存有效期的逻辑错误
+* 做了兼容 PHP 7 的调整
+
+----------
+
 ### v0.2.0
 
 * 为 `ginkgo\Ubbcode` 类增加 `getImages()` 方法
@@ -5,9 +16,14 @@
 * 修复无法捕获部分错误的问题
 * 改善 Debug 输出信息
 * 新增 `ginkgo\Arrays` 类，用于处理数组，将原 `ginkgo\Func` 类中与数组相关的方法迁移
-* 新增 `ginkgo\String` 类，用于处理字符串，将原 `ginkgo\Func` 类中与字符串相关的方法迁移
+* 新增 `ginkgo\Strings` 类，用于处理字符串，将原 `ginkgo\Func` 类中与字符串相关的方法迁移
+* 为 `ginkgo\Ubbcode` 类增加是否启用 `nl2br` 的选项，并改善了部分正则规则
 * 彻底重写 `ginkgo\Ftp` 类，由 FTP 函数更改为 cURL
-* 为相关类增加了 `$config` 属性和 `config()` 方法，是的利用更加灵活
+* 修复 `ginkgo\Image` 类中，按比例生成缩略图时的错误
+* 修复 `ginkgo\Validate` 类中的部分错误
+* 修复数据库 `find()` 方法中，未指定 limit 参数的错误
+* 修复 jsonp 响应类中，默认参数指定的错误
+* 为相关类增加了 `$config` 属性和 `config()` 方法，应用更加灵活
 * 全面验证和重写了类成员的权限和类型
 
 ----------

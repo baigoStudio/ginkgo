@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 错误处理
 class Error {
@@ -32,7 +34,7 @@ class Error {
         E_NOTICE             => 'Notice - E_NOTICE',
         E_USER_NOTICE        => 'User Notice - E_USER_NOTICE',
 
-        E_STRICT             => 'Runtime Notice - E_STRICT',
+        //E_STRICT           => 'Runtime Notice - E_STRICT',
     );
 
     // 致命错误类型
@@ -61,7 +63,7 @@ class Error {
      *
      * @access public
      * @static
-     * @param mixed $config 配置 since 0.1.4
+     * @param mixed $config 配置 since 0.2.0
      * @return void
      */
     public static function register($config = false) {
@@ -79,7 +81,7 @@ class Error {
     }
 
 
-    // since 0.1.4
+    // since 0.2.0
     public static function config($config = false) {
         $_mix_config   = Config::get('debug'); // 取得调试配置
 
@@ -306,6 +308,7 @@ class Error {
             '{:DIR_ROOT}',
             '{:DIR_STATIC}',
             '{:ROUTE_ROOT}',
+            '{:PHP_VERSION}',
         );
 
         $_arr_replaceDst = array(
@@ -314,6 +317,7 @@ class Error {
             $_str_dirRoot,
             $_str_dirRoot . GK_NAME_STATIC . '/',
             $_str_routeRoot,
+            PHP_VERSION,
         );
 
         $_str_content = str_ireplace($_arr_replaceSrc, $_arr_replaceDst, $_str_content);
@@ -496,7 +500,7 @@ class Error {
         return $_str_tpl;
     }
 
-    // since 0.1.4
+    // since 0.2.0
     private static function configProcess($config = false) {
         $_arr_return = self::$configThis;
 

@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 发起 http 请求, 基于 curl
 class Http {
@@ -81,7 +83,7 @@ class Http {
         return self::$instance;
     }
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public function config($config = array()) {
         $_arr_configDo = $this->configThis;
 
@@ -554,7 +556,7 @@ class Http {
     }
 
 
-    // url 处理 since 0.1.4
+    // url 处理 since 0.2.0
     private function urlProcess($url) {
         $_arr_urlParsed = parse_url($url); // 解析 url
 

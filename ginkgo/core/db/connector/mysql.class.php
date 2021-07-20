@@ -13,7 +13,9 @@ use ginkgo\Paginator;
 use ginkgo\db\Connector;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 数据库连接器类
 class Mysql extends Connector {
@@ -328,7 +330,7 @@ class Mysql extends Connector {
 
         if ($this->_fetchSql === true || $this->optDebugDump === 'trace') { // 如果调试模式打开
             $_str_realSql = $this->fetchBind($_arr_sql['sql'], $this->_bind); // 取得绑定处理
-            $_str_realSql = $this->fetchBind($_arr_sql['sql'], $_arr_sql['bind']);
+            $_str_realSql = $this->fetchBind($_str_realSql, $_arr_sql['bind']);
         }
 
         if ($this->_fetchSql === true) { // 如果为获取 sql

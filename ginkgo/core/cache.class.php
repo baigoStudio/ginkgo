@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 缓存
 class Cache {
@@ -49,7 +51,7 @@ class Cache {
 
     /** 配置
      * prefix function.
-     * since 0.1.4
+     * since 0.2.0
      * @access public
      * @param string $config (default: array()) 配置
      * @return
@@ -108,7 +110,7 @@ class Cache {
         if (strpos($type, '\\')) {
             $_class = $type;
         } else {
-            $_class = 'ginkgo\\cache\\driver\\' . String::ucwords($type, '_');
+            $_class = 'ginkgo\\cache\\driver\\' . Strings::ucwords($type, '_');
         }
 
         // 初始化驱动类

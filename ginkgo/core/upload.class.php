@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access Denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 上传类
 class Upload {
@@ -65,7 +67,7 @@ class Upload {
     }
 
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public function config($config = array()) {
         $_arr_config   = Config::get('upload', 'var_extra');
 

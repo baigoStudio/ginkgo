@@ -156,44 +156,44 @@ function rand( [ $length = 32 ] )
 
 #### `strtotime()` 日期时间字符串转时间戳
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#toTime) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#toTime) 类，并将逐步弃用
 
 ----------
 
 #### `ucwords()` 将字符串中每个单词的首字母转换为大写
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#ucwords) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#ucwords) 类，并将逐步弃用
 
 ----------
 
 #### `toHump()` 以指定的分隔符将字符串转换为驼峰写法
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#toHump) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#toHump) 类，并将逐步弃用
 
 ----------
 
 #### `toLine()` 将驼峰写法的字符串转换为小写加分隔符
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#toLine) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#toLine) 类，并将逐步弃用
 
 ----------
 
 #### `sizeFormat()` 文件大小格式化
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#sizeFormat) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#sizeFormat) 类，并将逐步弃用
 
 ----------
 
 #### `numFormat()` 格式化数字
 
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#numFormat) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#numFormat) 类，并将逐步弃用
 
 ----------
 
 #### `strSecret()` 隐藏敏感信息，用于敏感字符的隐藏，如手机号码：`139 **** 8888`
 
 `0.1.1` 新增
-`0.2.0` 起迁移至 [`ginkgo/String`](../data/string.md#secrecy) 类，并将逐步弃用
+`0.2.0` 起迁移至 [`ginkgo/Strings`](../data/strings.md#secrecy) 类，并将逐步弃用
 
 ----------
 

@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access Denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 图片处理类
 class Image {
@@ -100,7 +102,7 @@ class Image {
     }
 
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public function config($imageMimes = array()) {
         $_arr_imageMimes    = Config::get('image'); // 取得图片配置
         $_arr_imageMimesDo  = array_replace_recursive($this->imageMimesThis, $this->imageMimes, $imageMimes); // 合并配置
@@ -135,7 +137,7 @@ class Image {
     }
 
 
-    // 水印 since 0.1.4
+    // 水印 since 0.2.0
     public function stamp($stamp, $font = false, $size = false, $posi = false, $angle = 0, $pct = 100) {
         if (is_resource($this->res_imgDst)) { // 如果目的图片资源存在, 则处理
             $_res_imgDst = $this->res_imgDst;
@@ -639,7 +641,7 @@ class Image {
     }
 
 
-    // 打开图片处理 since 0.1.4
+    // 打开图片处理 since 0.2.0
     private function openProcess($path) {
         if (!File::fileHas($path)) { // 如果不是文件
             $this->error = 'Source image not found';
@@ -802,7 +804,7 @@ class Image {
     }
 
 
-    // 图片类型检测处理 since 0.1.4
+    // 图片类型检测处理 since 0.2.0
     private function imgSizeProcess($path) {
         $_arr_info = array(
             'width'    => '',
@@ -834,7 +836,7 @@ class Image {
     }
 
 
-    // 文字水印初始化 since 0.1.4
+    // 文字水印初始化 since 0.2.0
     private function txtStampInit($font, $string) {
         $_arr_stamp = array();
 
@@ -866,7 +868,7 @@ class Image {
     }
 
 
-    // 水印尺寸处理 since 0.1.4
+    // 水印尺寸处理 since 0.2.0
     private function stampSizeProcess($size, $stamp) {
         $_arr_size = array();
 
@@ -912,7 +914,7 @@ class Image {
     }
 
 
-    // 水印位置处理 since 0.1.4
+    // 水印位置处理 since 0.2.0
     private function stampPosiProcess($posi, $imgDst) {
         $_arr_posi = array();
 

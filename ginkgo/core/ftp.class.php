@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access Denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // FTP操作类
 class Ftp {
@@ -182,7 +184,7 @@ class Ftp {
     }
 
 
-    // 设置被动模式 since 0.1.4
+    // 设置被动模式 since 0.2.0
     public function pasv($pasv = true) {
         if ($pasv === true || $pasv === 'true') {
             $pasv = true;
@@ -194,7 +196,7 @@ class Ftp {
     }
 
 
-    // 设置端口 since 0.1.4
+    // 设置端口 since 0.2.0
     public function port($port = '') {
         $this->config['port'] = $port;
     }
@@ -221,7 +223,7 @@ class Ftp {
         return $this->errno;
     }
 
-    // 设置 since 0.1.4
+    // 设置 since 0.2.0
     private function optProcess($opts) {
         $_arr_optDo = array(
             CURLOPT_CONNECTTIMEOUT          => $this->config['timeout'], // 超时
@@ -247,7 +249,7 @@ class Ftp {
         curl_setopt_array($this->res_curl, $_arr_opt);
     }
 
-    // url 处理 since 0.1.4
+    // url 处理 since 0.2.0
     private function urlProcess() {
         if (!stristr($this->config['host'], '://')) {
             $this->config['host'] = 'ftp://' . $this->config['host'];
@@ -315,7 +317,7 @@ class Ftp {
         return true;
     }
 
-    // 销毁 since 0.1.4
+    // 销毁 since 0.2.0
     function __destruct() {
         if ($this->res_curl != null) {
             curl_close($this->res_curl);

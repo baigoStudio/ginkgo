@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 验证码
 class Captcha {
@@ -58,7 +60,7 @@ class Captcha {
 
     /** 设置
      * set function.
-     * since 0.1.4
+     * since 0.2.0
      * @access public
      * @param int $font_size (default: 20) 字号
      * @param int $length (default: 4) 长度

@@ -10,7 +10,9 @@ use ginkgo\Func;
 use ginkgo\Config;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 驱动抽象类
 abstract class Driver {
@@ -53,7 +55,7 @@ abstract class Driver {
         return self::$instance;
     }
 
-    // since 0.1.4
+    // since 0.2.0
     public function config($config = array()) {
         $_arr_config   = Config::get('cache'); // 获取缓存配置
 

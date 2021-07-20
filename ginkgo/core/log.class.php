@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 日志管理类
 class Log {
@@ -43,7 +45,7 @@ class Log {
 
     /** 配置
      * prefix function.
-     * since 0.1.4
+     * since 0.2.0
      * @access public
      * @param string $config (default: array()) 配置
      * @return

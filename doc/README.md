@@ -174,7 +174,7 @@
 
 数据处理
 
-* [字符串处理](./data/string.md)
+* [字符串处理](./data/strings.md)
 * [数组处理](./misc/arrays.md)
 * [签名](./data/sign.md)
 * [加密](./misc/crypt.md)

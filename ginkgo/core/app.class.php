@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 应用调度
 class App {
@@ -104,7 +106,7 @@ class App {
     }
 
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public static function config($config = array()) {
         $_arr_config   = Config::get('var_default'); // 取得配置
 

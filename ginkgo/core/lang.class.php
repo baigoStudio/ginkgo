@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 语言处理类
 class Lang {
@@ -50,9 +52,9 @@ class Lang {
     }
 
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public function config($config = array()) {
-        $_arr_config    = Config::get('lang'); // 取得图片配置
+        $_arr_config   = Config::get('lang'); // 取得图片配置
 
         $_arr_configDo = $this->configThis;
 

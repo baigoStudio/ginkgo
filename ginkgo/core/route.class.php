@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 路由处理
 class Route {
@@ -47,7 +49,7 @@ class Route {
     private static $init; // 是否初始化标志
 
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public static function config($config = array()) {
         $_arr_config   = Config::get('route'); // 取得配置
 
@@ -355,7 +357,7 @@ class Route {
         $_arr_route['act']  = str_replace('_', '-', $_arr_route['act']);
 
         // 转换为下划线分隔的驼峰命名
-        $_arr_route['act']  = String::toHump($_arr_route['act'], '-', true);
+        $_arr_route['act']  = Strings::toHump($_arr_route['act'], '-', true);
 
         // 合并路由
         self::$route = array_replace_recursive(self::$route, $_arr_route);
@@ -447,7 +449,7 @@ class Route {
     }
 
 
-    // 静态规则处理 since 0.1.4
+    // 静态规则处理 since 0.2.0
     private static function staticRuleProcess($rule, $value) {
         $_str_pathInfo = Func::fixDs(self::$pathInfo, '/');
         $rule          = Func::fixDs($rule, '/');
@@ -462,7 +464,7 @@ class Route {
     }
 
 
-    // 静态规则处理 since 0.1.4
+    // 静态规则处理 since 0.2.0
     private static function activeRuleProcess($rule, $value) {
         $_str_pathInfo = Func::fixDs(self::$pathInfo, '/');
 
@@ -513,7 +515,7 @@ class Route {
     }
 
 
-    // 正则规则处理 since 0.1.4
+    // 正则规则处理 since 0.2.0
     private static function regexRuleProcess($pathArr, $value, $param) {
         $_str_param = '';
 

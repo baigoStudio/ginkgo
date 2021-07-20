@@ -7,7 +7,9 @@
 namespace ginkgo;
 
 // 不能非法包含或直接执行
-defined('IN_GINKGO') or exit('Access denied');
+if (!defined('IN_GINKGO')) {
+    return 'Access denied';
+}
 
 // 邮件发送类
 class Smtp {
@@ -73,7 +75,7 @@ class Smtp {
         return self::$instance;
     }
 
-    // 配置 since 0.1.4
+    // 配置 since 0.2.0
     public function config($config = array()) {
         $_arr_config   = Config::get('smtp', 'var_extra'); // 取得配置
 
