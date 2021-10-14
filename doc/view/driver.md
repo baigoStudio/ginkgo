@@ -1,6 +1,6 @@
 ## 视图驱动
 
-关于 [模板](../view/index.md) 与 `视图` 之间的关系描述如下：
+关于 [模板](../template/index.md) 与 `视图` 之间的关系描述如下：
 
 1. ginkgo 的输出依赖 [视图](../view/index.md) 以及 [视图驱动](../view/driver.md)，而非模板引擎，例如：[Smarty](https://www.smarty.net) 之类的。
 2. `视图驱动` 是用来连接视图和模板引擎的桥梁，即本章节所表述的内容。

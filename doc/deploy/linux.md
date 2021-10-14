@@ -13,8 +13,8 @@
     Warning: require(/home/wwwroot/ginkgo/boot.php): failed to open stream: Operation not permitted in /home/wwwroot/public/index.php on line 20
 
     Fatal error: require(): Failed opening required '/home/wwwroot/public/../ginkgo/boot.php' (include_path='.:/www/server/php/56/lib/php') in /home/wwwroot/public/index.php on line 20
-    
-    
+
+
 ----------
 
 ##### php.ini 修改方法
@@ -39,7 +39,7 @@ php.ini 文件通常是在 `/usr/local/php/etc` 目录中，当然了这取决�
 
 ##### Apache 修改方法
 
-Apache 需要修改 `httpd.conf` 或者同目录下的 `vhost` 目录下 `域名.conf` 文件，如果你的生成环境是 LAMP 一键安装包配置那么多半就是直接修改 `域名.conf` 文件
+Apache 需要修改 `httpd.conf` 或者同目录下的 `vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LAMP 一键安装包配置，那么多半就是直接修改 `域名.conf` 文件
 
     apache
     +-- vhost
@@ -67,7 +67,7 @@ php_admin_value open_basedir "/home/wwwroot/www.baigo.net/:/tmp/:/var/tmp/:/proc
 
 ##### Nginx / Tengine 修改方法
 
-Nginx 需要修改 `nginx.conf` 或者 `conf/vhost` 目录下 `域名.conf` 文件，如果你的生成环境是 LNMP / LTMP 一键安装包配置那么多半就是直接修改 `域名.conf` 文件
+Nginx 需要修改 `nginx.conf` 或者 `conf/vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LNMP / LTMP 一键安装包配置那么多半就是直接修改 `域名.conf` 文件
 
     nginx
     +-- conf

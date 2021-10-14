@@ -1,13 +1,13 @@
 ## 字符串处理
 
+字符串处理功能由 `ginkgo\Strings` 类完成，大部分为原 `ginkgo\Func` 类迁移而来，全部为静态方法，如：
+
 `0.2.0` 新增 `ginkgo\String`
 
 `0.2.1` 更名为 `ginkgo\Strings`
 
-字符串处理功能由 `ginkgo\Strings` 类完成，大部分为原 `ginkgo\Func` 类迁移而来，全部为静态方法，如：
-
 ``` php
-use ginkgo\String;
+use ginkgo\Strings;
 
 $str = '2014-05-06';
 

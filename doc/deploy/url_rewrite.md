@@ -70,12 +70,12 @@ location / { // …..省略部分代码
 
 其实内部是转发到了 ginkgo 提供的兼容 URL，利用这种方式，可以解决其他不支持 PATHINFO 的 WEB 服务器环境。
 
-如果你的应用安装在二级目录，Nginx 的伪静态方法设置如下，其中 youdomain 是所在的目录名称。
+如果你的应用安装在二级目录，Nginx 的伪静态方法设置如下，其中 domain 是所在的目录名称。
 
 ``` clike
-location /youdomain/ {
+location /domain/ {
     if (!-e $request_filename){
-        rewrite  ^/youdomain/(.*)$  /youdomain/index.php?pathname=/$1  last;
+        rewrite  ^/domain/(.*)$  /domain/index.php?pathname=/$1  last;
     }
 }
 ```

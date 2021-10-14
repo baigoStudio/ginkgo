@@ -47,31 +47,31 @@ ginkgo 大部分情况异常都是自动抛出和捕获的，你也可以手动�
 
 ``` php
 // 使用 ginkgo 自带异常类抛出异常
-throw new ginkgo\Exception('异常消息', 10006);
+throw new ginkgo\Except('异常消息', 10006);
 ```
 
 还可以通过 `setData()` 方法设置一些自定义的消息
 
 ``` php
 // 使用 ginkgo 自带异常类抛出异常
-$exce = new ginkgo\Exception('异常消息', 10006);
+$exce = new ginkgo\Except('异常消息', 10006);
 $exce->setData('name', $value);
 throw $exce;
 ```
 
-`ginkgo\Exception` 类还提供 `getData()` 方法在需要的地方调用，如：
+`ginkgo\Except` 类还提供 `getData()` 方法在需要的地方调用，如：
 
 ``` php
 try {
     // 这里是主体代码
-} catch (ginkgo\Exception $e) {
+} catch (ginkgo\Except $e) {
     // 这是进行异常捕获
     return $e->getData('name');
 }
 
 try {
     // 这里是主体代码
-} catch (ginkgo\Exception $e) {
+} catch (ginkgo\Except $e) {
     // 这是进行异常捕获
     return $e->getData(); //获取所有 data
 }
@@ -82,7 +82,7 @@ try {
 ``` php
 try {
     // 这里是主体代码
-} catch (ginkgo\Exception $e) {
+} catch (ginkgo\Except $e) {
     // 这是进行异常捕获
     return $e->getMessage();
 }

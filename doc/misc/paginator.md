@@ -1,8 +1,8 @@
 ## 分页
 
-`0.1.3` 新增
-
 分页功能由 `ginkgo\Paginator` 完成。
+
+`0.1.3` 新增
 
 另外，[数据库 -> 分页](../database/pagination.md)、[数据库 -> 链式操作](../database/chain_paginate.md) 中已内置快捷分页方法，详情请查看这些章节。
 

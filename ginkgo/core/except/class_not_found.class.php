@@ -4,16 +4,16 @@
 以下为系统文件，请勿修改
 -----------------------------------------------------------------*/
 
-namespace ginkgo\validate\rule;
+namespace ginkgo\except;
 
-use ginkgo\validate\Rule;
+use ginkgo\Func;
 
 // 不能非法包含或直接执行
 if (!defined('IN_GINKGO')) {
-    return 'Access denied';
+  return 'Access denied';
 }
 
-// 验证规则
-class Ginkgo extends Rule {
+// 异常处理
+class Class_Not_Found extends Runtime_Except { // 继承
 
 }

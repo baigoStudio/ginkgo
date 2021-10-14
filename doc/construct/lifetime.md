@@ -61,7 +61,7 @@ require(__DIR__ . '/../ginkgo/boot.php');
 
 * 应用关闭方法：`ginkgo\Error::appShutdown()`
 * 错误处理方法：`ginkgo\Error::appError()`
-* 异常处理方法：`ginkgo\Error::appException()`
+* 异常处理方法：`ginkgo\Error::appExcept()`
 
 注册应用关闭方法是为了便于拦截一些系统错误。
 

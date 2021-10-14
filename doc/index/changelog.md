@@ -1,3 +1,17 @@
+##### v0.2.2
+
+* 修复 `ginkgo\Auth` 类中，部分数字运算过程中的错误
+* 完善了异常处理机制
+* 改善了数据库 PDO 异常捕获的处理
+* 改善了异常抛出模板，不再依赖静态文件
+* 为 `ginkgo\Model` 类增加了 `pk` 属性，用于指定主键，并设置自动获取主键
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getFields` 方法，用于获取字段信息
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTableInfo` 方法，用于获取表信息
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTables` 方法，用于获取表列表
+* 修复了表单输入内容未经完全安全过滤的问题
+
+----------
+
 ##### v0.2.1
 
 * 修复 `ginkgo\Db\Connector\Mysql` 类中，`fetchSql()` 方法无法完整获取真实 SQL 语句的错误

@@ -19,19 +19,19 @@
 查询数据，按系统配置分页，如：
 
 ``` php
-Db::table('article')->pagination()->select();
+Db::table('article')->paginate()->select();
 ```
 
 查询数据，每页 10 条记录，如：
 
 ``` php
-Db::table('article')->pagination(10)->select();
+Db::table('article')->paginate(10)->select();
 ```
 
 查询数据，还可以支持其他链式操作，如：
 
 ``` php
-Db::table('user')->where('score', '>', 0)->pagination()->select();
+Db::table('user')->where('score', '>', 0)->paginate()->select();
 ```
 
 ----------

@@ -1,8 +1,8 @@
 ## 数组
 
-`0.2.0` 新增
-
 数组处理功能由 `ginkgo\Arrays` 类完成，大部分为原 `ginkgo\Func` 类迁移而来，全部为静态方法，如：
+
+`0.2.0` 新增
 
 ``` php
 use ginkgo\Arrays;
