@@ -16,15 +16,15 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'email' => array(
-            'format'  => 'email',
-        ),
-        'captcha' => array(
-            'require' => true,
-            'captcha' => true,
-        ),
-    );
+  protected $rule = array(
+    'email' => array(
+      'format'  => 'email',
+    ),
+    'captcha' => array(
+      'require' => true,
+      'captcha' => true,
+    ),
+  );
 
 }
 ```
@@ -40,12 +40,12 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'captcha' => array(
-            'require' => true,
-            'captcha' => 'captcha_id',
-        ),
-    );
+  protected $rule = array(
+    'captcha' => array(
+      'require' => true,
+      'captcha' => 'captcha_id',
+    ),
+  );
 
 }
 ```

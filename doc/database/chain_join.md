@@ -19,66 +19,66 @@ function join( $join [, $condition = '' [, $type = 'INNER' ]] )
 
 * `join` 关联
 
-    支持两种类型：字符串、数组，为数组时表示批量 JOIN
+  支持两种类型：字符串、数组，为数组时表示批量 JOIN
 
 * `condition` 条件
 
-    当 `join` 为数组时自动忽略。
+  当 `join` 为数组时自动忽略。
 
-    支持两种类型：字符串、数组
+  支持两种类型：字符串、数组
 
 * `type` 关联类型
 
-    当 `join` 为数组时自动忽略。
+  当 `join` 为数组时自动忽略。
 
-    可以为：INNER (默认)、LEFT、RIGHT、FULL，不区分大小写。
+  可以为：INNER (默认)、LEFT、RIGHT、FULL，不区分大小写。
 
 举例，以下三种写法的效果一样
 
 ``` php
 $select = array(
-    array('work', 'id'),
-    array('artist', 'artist_id'),
+  array('work', 'id'),
+  array('artist', 'artist_id'),
 );
 
 Db::table('artist')
-    ->join('work', 'artist.id = work.artist_id')
-    ->select($select);
+  ->join('work', 'artist.id = work.artist_id')
+  ->select($select);
 
 $join = array('artist.id', '=', 'work.artist_id');
 Db::table('artist')
-    ->join($join)
-    ->select($select);
+  ->join($join)
+  ->select($select);
 
 $join = array('work', 'artist.id = work.artist_id', 'RIGHT');
 
 Db::table('artist')
-    ->join($join)
-    ->select($select);
+  ->join($join)
+  ->select($select);
 ```
 
 如果要关联多个表，可以这样写：
 
 ``` php
 $join = array(
-    array('work', 'artist.id = work.artist_id', 'LEFT'),
-    array('card', 'card.id = work.card_id', 'LEFT'),
+  array('work', 'artist.id = work.artist_id', 'LEFT'),
+  array('card', 'card.id = work.card_id', 'LEFT'),
 );
 
 Db::table('artist')
-    ->join($join)
-    ->select($select);
+  ->join($join)
+  ->select($select);
 ```
 
 默认采用 INNER JOIN 方式，如果需要用其他的 JOIN 方式，可以改成
 
 ``` php
 Db::table('artist')
-    ->join('work', 'artist.id = work.artist_id', 'RIGHT')
-    ->select($select);
+  ->join('work', 'artist.id = work.artist_id', 'RIGHT')
+  ->select($select);
 
 $join = array('artist.id', '=', 'work.artist_id', 'RIGHT');
 Db::table('artist')
-    ->join($join)
-    ->select($select);
+  ->join($join)
+  ->select($select);
 ```

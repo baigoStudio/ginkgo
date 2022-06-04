@@ -15,12 +15,11 @@ use ginkgo\Captcha;
 
 class Index {
 
-	public function verify() {
-        $captcha = Captcha::instance();
-        $captcha->set();
-        return $captcha->create();
-    }
-
+public function verify() {
+    $captcha = Captcha::instance();
+    $captcha->set();
+    return $captcha->create();
+  }
 }
 ```
 
@@ -43,12 +42,11 @@ use ginkgo\Captcha;
 
 class Index {
 
-	public function verify() {
-        $captcha = Captcha::instance();
-        $captcha->set();
-        return $captcha->create(1);
-    }
-
+public function verify() {
+    $captcha = Captcha::instance();
+    $captcha->set();
+    return $captcha->create(1);
+  }
 }
 ```
 
@@ -56,7 +54,7 @@ class Index {
 
 ``` php
 if (!$captcha->check($value)) {
-    // 验证失败
+  // 验证失败
 }
 ```
 
@@ -66,7 +64,7 @@ if (!$captcha->check($value)) {
 $value 为用户输入的验证码，$id 为验证码标识
 
 if (!$captcha->check($value, $id)) {
-    // 验证失败
+  // 验证失败
 }
 ```
 
@@ -89,22 +87,22 @@ if (!$captcha->check($value, $id)) {
 
 * 实例化传入参数：
 
-    ``` php
-    $config = array(
-        'font_size' => 30, // 验证码字体大小
-        'length'    => 3, // 验证码位数
-        'noise'     => false, // 关闭验证码杂点
-    );
-    $captcha = Captcha::instance($config);
-    ```
+  ``` php
+  $config = array(
+    'font_size' => 30, // 验证码字体大小
+    'length'    => 3, // 验证码位数
+    'noise'     => false, // 关闭验证码杂点
+  );
+  $captcha = Captcha::instance($config);
+  ```
 
 * 验证码字体
 
-    默认情况下，验证码的字体是随机使用 `ginkgo/captcha/font` 目录下面的字体文件，我们可以指定验证码的字体，例如：
+  默认情况下，验证码的字体是随机使用 `ginkgo/captcha/font` 目录下面的字体文件，我们可以指定验证码的字体，例如：
 
-    ``` php
-    $config = array(
-        'font_file' => GK_PATH_CORE . 'captcha/font/5.ttf', // 验证码字体路径
-    );
-    $captcha = Captcha::instance($config);
-    ```
+  ``` php
+  $config = array(
+    'font_file' => GK_PATH_CORE . 'captcha/font/5.ttf', // 验证码字体路径
+  );
+  $captcha = Captcha::instance($config);
+  ```

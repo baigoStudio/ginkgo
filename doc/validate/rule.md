@@ -8,26 +8,25 @@
 
 属性定义方式仅限于验证器，通常使用如下方式：
 
-
 ``` php
 namespace app\index\validate;
 
 use ginkgo\Validate;
 
 class User extends Validate {
-    protected $rule = array(
-        'name'  => array(
-            'require' => true,
-            'max'     => 25,
-        ),
-        'age'   => array(
-            'between' => '1,120',
-            'format'  => 'number',
-        ),
-        'email' => array(
-            'format'  => 'email',
-        ),
-    );
+  protected $rule = array(
+    'name'  => array(
+      'require' => true,
+      'max'     => 25,
+    ),
+    'age'   => array(
+      'between' => '1,120',
+      'format'  => 'number',
+    ),
+    'email' => array(
+      'format'  => 'email',
+    ),
+  );
 }
 ```
 
@@ -45,31 +44,31 @@ class User extends Validate {
 $validate = ginkgo\Validate::instance();
 
 $name = array(
-    'require' => true,
-    'max'     => 25,
+  'require' => true,
+  'max'     => 25,
 );
 
 $validate->rule('name', $name);
 
 $rule = array(
-    'age'   => array(
-        'between' => '1,120',
-        'format'  => 'number',
-    ),
-    'email' => array(
-        'format'  => 'email',
-    ),
+  'age'   => array(
+    'between' => '1,120',
+    'format'  => 'number',
+  ),
+  'email' => array(
+    'format'  => 'email',
+  ),
 );
 
 $validate->rule($rule);
 
 $data = array(
-    'name'  => 'ginkgo',
-    'email' => 'ginkgo@qq.com'
+  'name'  => 'ginkgo',
+  'email' => 'ginkgo@qq.com'
 );
 
 if (!$validate->verify($data)) {
-    print_r($validate->getMessage());
+  print_r($validate->getMessage());
 }
 ```
 
@@ -83,8 +82,8 @@ function rule( $rule [, $value = array()] )
 
 * `rule` 规则
 
-    支持两种类型: 为字符串时表示规则名，为数组时表示批量设置规则
+  支持两种类型: 为字符串时表示规则名，为数组时表示批量设置规则
 
 * `value` 规则值
 
-    当 `rule` 为字符串时为必须，当 `rule` 为数组时自动忽略。
+  当 `rule` 为字符串时为必须，当 `rule` 为数组时自动忽略。

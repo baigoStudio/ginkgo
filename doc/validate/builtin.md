@@ -22,9 +22,9 @@
 
 ``` php
 $rule = array(
-    'name' => array(
-        'require' => true,
-    ),
+  'name' => array(
+    'require' => true,
+  ),
 );
 ```
 
@@ -34,9 +34,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'accepted' => true,
-    ),
+  'name' => array(
+    'accepted' => true,
+  ),
 );
 ```
 
@@ -52,9 +52,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'in' => '1,2,3',
-    ),
+  'name' => array(
+    'in' => '1,2,3',
+  ),
 );
 ```
 
@@ -64,9 +64,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'not_in' => '1,2,3',
-    ),
+  'name' => array(
+    'not_in' => '1,2,3',
+  ),
 );
 ```
 
@@ -76,9 +76,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'between' => '25,60',
-    ),
+  'name' => array(
+    'between' => '25,60',
+  ),
 );
 ```
 
@@ -88,9 +88,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'not_between' => '20,30',
-    ),
+  'name' => array(
+    'not_between' => '20,30',
+  ),
 );
 ```
 
@@ -100,9 +100,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'length' => '4,25',
-    ),
+  'name' => array(
+    'length' => '4,25',
+  ),
 );
 ```
 
@@ -112,9 +112,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'min' => 4,
-    ),
+  'name' => array(
+    'min' => 4,
+  ),
 );
 ```
 
@@ -124,9 +124,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'max' => 25,
-    ),
+  'name' => array(
+    'max' => 25,
+  ),
 );
 ```
 
@@ -136,9 +136,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'after' => '2016-3-18',
-    ),
+  'name' => array(
+    'after' => '2016-3-18',
+  ),
 );
 ```
 
@@ -148,9 +148,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'before' => '2016-3-18',
-    ),
+  'name' => array(
+    'before' => '2016-3-18',
+  ),
 );
 ```
 
@@ -160,9 +160,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'expire' => '2016-2-1,2016-10-01',
-    ),
+  'name' => array(
+    'expire' => '2016-2-1,2016-10-01',
+  ),
 );
 ```
 
@@ -178,12 +178,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'password' => array(
-        'require' => true,
-    ),
-    'password_confirm' => array(
-        'confirm' => true,
-    ),
+  'password' => array(
+    'require' => true,
+  ),
+  'password_confirm' => array(
+    'confirm' => true,
+  ),
 );
 ```
 
@@ -193,12 +193,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'password' => array(
-        'require' => true,
-    ),
-    'repassword' => array(
-        'confirm' => 'password',
-    ),
+  'password' => array(
+    'require' => true,
+  ),
+  'repassword' => array(
+    'confirm' => 'password',
+  ),
 );
 ```
 
@@ -208,12 +208,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'account' => array(
-        'require' => true,
-    ),
-    'account_different' => array(
-        'different' => true,
-    ),
+  'account' => array(
+    'require' => true,
+  ),
+  'account_different' => array(
+    'different' => true,
+  ),
 );
 ```
 
@@ -221,12 +221,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'account' => array(
-        'require' => true,
-    ),
-    'reaccount' => array(
-        'different' => 'account',
-    ),
+  'account' => array(
+    'require' => true,
+  ),
+  'reaccount' => array(
+    'different' => 'account',
+  ),
 );
 ```
 
@@ -236,12 +236,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'gt' => 100,
-    ),
-    'num' => array(
-        '>' => 100,
-    ),
+  'score' => array(
+    'gt' => 100,
+  ),
+  'num' => array(
+    '>' => 100,
+  ),
 );
 ```
 
@@ -251,12 +251,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'egt' => 100,
-    ),
-    'num' => array(
-        '>=' => 100,
-    ),
+  'score' => array(
+    'egt' => 100,
+  ),
+  'num' => array(
+    '>=' => 100,
+  ),
 );
 ```
 
@@ -266,12 +266,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'lt' => 100,
-    ),
-    'num' => array(
-        '<' => 100,
-    ),
+  'score' => array(
+    'lt' => 100,
+  ),
+  'num' => array(
+    '<' => 100,
+  ),
 );
 ```
 
@@ -281,12 +281,12 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'elt' => 100,
-    ),
-    'num' => array(
-        '<=' => 100,
-    ),
+  'score' => array(
+    'elt' => 100,
+  ),
+  'num' => array(
+    '<=' => 100,
+  ),
 );
 ```
 
@@ -296,15 +296,15 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'eq' => 100,
-    ),
-    'num' => array(
-        '=' => 100,
-    ),
-    'num' => array(
-        'same' => 100,
-    ),
+  'score' => array(
+    'eq' => 100,
+  ),
+  'num' => array(
+    '=' => 100,
+  ),
+  'num' => array(
+    'same' => 100,
+  ),
 );
 ```
 
@@ -314,18 +314,17 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'score' => array(
-        'neq' => 100,
-    ),
-    'num' => array(
-        '<>' => 100,
-    ),
-    'num' => array(
-        '!=' => 100,
-    ),
+  'score' => array(
+    'neq' => 100,
+  ),
+  'num' => array(
+    '<>' => 100,
+  ),
+  'num' => array(
+    '!=' => 100,
+  ),
 );
 ```
-
 
 ----------
 
@@ -337,9 +336,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'name' => array(
-        'format' => 'number',
-    ),
+  'name' => array(
+    'format' => 'number',
+  ),
 );
 ```
 
@@ -366,7 +365,6 @@ format 参数可选如下值
 | url | URL 地址 | |
 | ip | IP 地址 | 含 `IPv4` 与 `IPv6` |
 
-
 ----------
 
 <span id="special"></span>
@@ -381,16 +379,15 @@ format 参数可选如下值
 
 表单输入值为 `19-05-06` 或 `May. 6, 2019` 验证不通过
 
-
 > date_format
 
 验证某个属性的值是否为指定格式的日期，例如：
 
 ``` php
 $rule = array(
-    'create_time' => array(
-        'date_format' => 'Y-m-d',
-    ),
+  'create_time' => array(
+    'date_format' => 'Y-m-d',
+  ),
 );
 ```
 
@@ -400,9 +397,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'create_time' => array(
-        'time_format' => 'H:i:s',
-    ),
+  'create_time' => array(
+    'time_format' => 'H:i:s',
+  ),
 );
 ```
 
@@ -412,9 +409,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'create_time' => array(
-        'date_time_format' => 'Y-m-d H:i:s',
-    ),
+  'create_time' => array(
+    'date_time_format' => 'Y-m-d H:i:s',
+  ),
 );
 ```
 
@@ -428,9 +425,9 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'ip' => array(
-        'filter' => FILTER_VALIDATE_IP,
-    ),
+  'ip' => array(
+    'filter' => FILTER_VALIDATE_IP,
+  ),
 );
 ```
 
@@ -444,8 +441,8 @@ $rule = array(
 
 ``` php
 $rule = array(
-    'zip' => array(
-        'regex' => '\d{6}',
-    ),
+  'zip' => array(
+    'regex' => '\d{6}',
+  ),
 );
 ```

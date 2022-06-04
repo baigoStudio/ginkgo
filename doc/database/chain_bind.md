@@ -7,23 +7,26 @@
 ``` php
 // 用于查询
 $bind = array('id', 10, 'int');
+
 Db::table('user')
-    ->where('id', '=', ':id')
-    ->bind($bind)
-    ->select();
+  ->where('id', '=', ':id')
+  ->bind($bind)
+  ->select();
 
 // 用于写入
 $bind = array(
-    array('id', 10, 'int'),
-    array('name', 'baigo'),
-    array('email', 'baigo@qq.com'),
+  array('id', 10, 'int'),
+  array('name', 'baigo'),
+  array('email', 'baigo@qq.com'),
 );
+
 $update = array(
-    'name'  => 'baigo',
-    'email' => 'baigo@qq.com',
+  'name'  => 'baigo',
+  'email' => 'baigo@qq.com',
 );
+
 Db::table('user')
-    ->bind($bind)
-    ->where('id', '=', ':id')
-    ->update($update);
+  ->bind($bind)
+  ->where('id', '=', ':id')
+  ->update($update);
 ```

@@ -11,17 +11,17 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function c_init() {
-        echo 'init<br>';
-    }
+  public function c_init() {
+    echo 'init<br>';
+  }
 
-    public function hello() {
-        return 'hello';
-    }
+  public function hello() {
+    return 'hello';
+  }
 
-    public function data() {
-        return 'data';
-    }
+  public function data() {
+    return 'data';
+  }
 }
 ```
 
@@ -31,8 +31,8 @@ class Index extends Ctrl {
 
 会输出
 
-    init
-    hello
+  init
+  hello
 
 如果访问
 
@@ -40,5 +40,5 @@ class Index extends Ctrl {
 
 会输出
 
-    init
-    data
+  init
+  data

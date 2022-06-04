@@ -8,12 +8,11 @@
 
 如果错误信息如下那么很有可能就是因为 `open_basedir` 的问题。
 
-    Warning: require(): open_basedir restriction in effect. File(/home/wwwroot/ginkgo/boot.php) is not within the allowed path(s): (/home/wwwroot/public/:/tmp/:/proc/) in /home/wwwroot/public/index.php on line 20
+  Warning: require(): open_basedir restriction in effect. File(/home/wwwroot/ginkgo/boot.php) is not within the allowed path(s): (/home/wwwroot/public/:/tmp/:/proc/) in /home/wwwroot/public/index.php on line 20
 
-    Warning: require(/home/wwwroot/ginkgo/boot.php): failed to open stream: Operation not permitted in /home/wwwroot/public/index.php on line 20
+  Warning: require(/home/wwwroot/ginkgo/boot.php): failed to open stream: Operation not permitted in /home/wwwroot/public/index.php on line 20
 
-    Fatal error: require(): Failed opening required '/home/wwwroot/public/../ginkgo/boot.php' (include_path='.:/www/server/php/56/lib/php') in /home/wwwroot/public/index.php on line 20
-
+  Fatal error: require(): Failed opening required '/home/wwwroot/public/../ginkgo/boot.php' (include_path='.:/www/server/php/56/lib/php') in /home/wwwroot/public/index.php on line 20
 
 ----------
 
@@ -41,11 +40,11 @@ php.ini 文件通常是在 `/usr/local/php/etc` 目录中，当然了这取决�
 
 Apache 需要修改 `httpd.conf` 或者同目录下的 `vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LAMP 一键安装包配置，那么多半就是直接修改 `域名.conf` 文件
 
-    apache
-    +-- vhost
-    |   +-- www.baigo.net.conf
-    |   +--  ...
-    +-- httpd.conf
+  apache
+  +-- vhost
+  |   +-- www.baigo.net.conf
+  |   +--  ...
+  +-- httpd.conf
 
 打开 `域名.conf` 文件，搜索 `open_basedir`,把
 
@@ -69,13 +68,13 @@ php_admin_value open_basedir "/home/wwwroot/www.baigo.net/:/tmp/:/var/tmp/:/proc
 
 Nginx 需要修改 `nginx.conf` 或者 `conf/vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LNMP / LTMP 一键安装包配置那么多半就是直接修改 `域名.conf` 文件
 
-    nginx
-    +-- conf
-    |   +-- vhost
-    |   |   +-- www.baigo.net.conf
-    |   +-- nginx.conf
-    |   +--  ...
-    +-- nginx.conf
+  nginx
+  +-- conf
+  |   +-- vhost
+  |   |   +-- www.baigo.net.conf
+  |   +-- nginx.conf
+  |   +--  ...
+  +-- nginx.conf
 
 打开 `域名.conf` 文件，搜索 `open_basedir`，把
 

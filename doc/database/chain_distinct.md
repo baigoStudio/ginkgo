@@ -23,11 +23,11 @@ SELECT DISTINCT `name` FROM user
 
 ``` php
 array(2) {
-    [0] => array(1) {
-        ["name"] => string(5) "hujun"
-    }
-    [1] => array(1) {
-        ["name"] => string(5) "admin"
-    }
+  [0] => array(1) {
+    ["name"] => string(5) "hujun"
+  }
+  [1] => array(1) {
+    ["name"] => string(5) "admin"
+  }
 }
 ```

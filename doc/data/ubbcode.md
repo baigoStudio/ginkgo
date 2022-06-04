@@ -102,8 +102,8 @@ Ubbcode::addReplace('head2', 'h2');
 
 // 或者批量添加
 $rule = array(
-    'head1' => 'h1',
-    'head2' => 'h2',
+  'head1' => 'h1',
+  'head2' => 'h2',
 );
 Ubbcode::addReplace($rule);
 
@@ -128,8 +128,8 @@ Ubbcode::addPreg('/\[url\](.+?)\[\/url\]/i', '<a href="$1">$1</a>');
 
 // 或者批量添加
 $rule = array(
-    '/\[iframe\](.+?)\[\/iframe\]/i' => '<iframe src="$1"></iframe>',
-    '/\[url\](.+?)\[\/url\]/i' => '<a href="$1">$1</a>',
+  '/\[iframe\](.+?)\[\/iframe\]/i' => '<iframe src="$1"></iframe>',
+  '/\[url\](.+?)\[\/url\]/i' => '<a href="$1">$1</a>',
 );
 Ubbcode::addPreg($rule);
 
@@ -161,7 +161,6 @@ iFrame网址
 
 > 特别注意：[img] 标签将被全部移除，包括图片地址。
 
-
 ----------
 
 #### `getImages()` 取得所有图片路径
@@ -180,21 +179,20 @@ echo Ubbcode::getImages('[img]/www/htdocs/index.html[/img][img=/www/htdocs/123.j
 
 ``` php
 array(
-    0 => array(
-        'dirname'   => '/www/htdocs',
-        'basename'  => 'index.html',
-        'extension' => 'html',
-        'filename'  => 'index',
-    ),
-    1 => array(
-        'dirname'   => '/www/htdocs',
-        'basename'  => '123.jpg',
-        'extension' => 'jpg',
-        'filename'  => '123',
-    ),
+  0 => array(
+    'dirname'   => '/www/htdocs',
+    'basename'  => 'index.html',
+    'extension' => 'html',
+    'filename'  => 'index',
+  ),
+  1 => array(
+    'dirname'   => '/www/htdocs',
+    'basename'  => '123.jpg',
+    'extension' => 'jpg',
+    'filename'  => '123',
+  ),
 );
 ```
-
 
 ``` php
 // 获取
@@ -204,8 +202,8 @@ echo Ubbcode::getImages('[img]/www/htdocs/index.html[/img][img=/www/htdocs/123.j
 
 ``` php
 array(
-    0 => index.html',
-    1 => '123.jpg',
+  0 => index.html',
+  1 => '123.jpg',
 );
 ```
 
@@ -221,22 +219,22 @@ function getImages( $string [, $options = '' [, $filter = '' [, $stristr = '' ]]
 
 * `options` 返回类型
 
-    如果没有指定，默认是返回全部的单元，可能的值如下：
+  如果没有指定，默认是返回全部的单元，可能的值如下：
 
-    | 名称 | 类型 | 描述 |
-    | - | - | - |
-    | PATHINFO_DIRNAME | 预定义常量 | 目录 |
-    | PATHINFO_BASENAME | 预定义常量 | 文件名（包含扩展名） |
-    | PATHINFO_EXTENSION | 预定义常量 | 扩展名 |
-    | PATHINFO_FILENAME | 预定义常量 | 文件名（无扩展名） |
+  | 名称 | 类型 | 描述 |
+  | - | - | - |
+  | PATHINFO_DIRNAME | 预定义常量 | 目录 |
+  | PATHINFO_BASENAME | 预定义常量 | 文件名（包含扩展名） |
+  | PATHINFO_EXTENSION | 预定义常量 | 扩展名 |
+  | PATHINFO_FILENAME | 预定义常量 | 文件名（无扩展名） |
 
 * `filter` 过滤
 
-    可以为字符串或一维数组，含有指定的字符的图片将被过滤
+  可以为字符串或一维数组，含有指定的字符的图片将被过滤
 
 * `stristr` 包含
 
-    可以为字符串或一维数组，必须含有指定的字符的图片才被获取
+  可以为字符串或一维数组，必须含有指定的字符的图片才被获取
 
 返回
 

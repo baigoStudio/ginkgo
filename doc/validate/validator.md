@@ -11,16 +11,16 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'user_id' => array(
-            'require' => true,
-            'format'  => 'int',
-        ),
-        'user_name' => array(
-            'length' => '1,30',
-            'format' => 'alpha_dash',
-        ),
-    );
+  protected $rule = array(
+    'user_id' => array(
+      'require' => true,
+      'format'  => 'int',
+    ),
+    'user_name' => array(
+      'length' => '1,30',
+      'format' => 'alpha_dash',
+    ),
+  );
 
 }
 ```
@@ -29,14 +29,14 @@ class User extends Validate {
 
 ``` php
 $data = array(
-    'name'  => 'baigo',
-    'email' => 'baigo@qq.com'
+  'name'  => 'baigo',
+  'email' => 'baigo@qq.com'
 );
 
 $validate = Loader::validate('User');
 
 if(!$validate->verify($data)){
-    print_r($validate->getMessage());
+  print_r($validate->getMessage());
 }
 ```
 
@@ -44,8 +44,8 @@ if(!$validate->verify($data)){
 
 ``` php
 class Validate {
-    // ginkgo\Lang 的实例
-    protected $obj_lang;
+  // ginkgo\Lang 的实例
+  protected $obj_lang;
 }
 ```
 
@@ -62,10 +62,10 @@ use ginkgo\Validate;
 
 class Index extends Validate {
 
-    //自定义初始化
-    function v_init() {
+  //自定义初始化
+  function v_init() {
 
-    }
+  }
 }
 ```
 
@@ -83,9 +83,9 @@ namespace app\ctrl\index;
 use ginkgo\Loader;
 
 class User {
-    function __construct() { //构造函数
-        $this->vld_user = Loader::validate('User');
-    }
+  function __construct() { //构造函数
+    $this->vld_user = Loader::validate('User');
+  }
 }
 ```
 

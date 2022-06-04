@@ -15,9 +15,9 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function read($id) {        
-        $user = $this->where('id', '=', $id)->find();
-    }
+  function read($id) {
+    $user = $this->where('id', '=', $id)->find();
+  }
 
 }
 ```
@@ -31,14 +31,13 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function lists($status) {        
-        $select = array(
-            'user_id',
-            'user_name',    
-        );
-        $users = $this->where('status', '=', $status)->select($select);
-    }
-    
+  function lists($status) {
+    $select = array(
+      'user_id',
+      'user_name',
+    );
+    $users = $this->where('status', '=', $status)->select($select);
+  }
 }
 ```
 
@@ -55,14 +54,14 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function insert() {        
-        $data = array(
-            'foo' => 'bar',
-            'bar' => 'foo',
-        );
-        $userId = $this->insert($data);
-    }
-    
+  function insert() {
+    $data = array(
+      'foo' => 'bar',
+      'bar' => 'foo',
+    );
+    $userId = $this->insert($data);
+  }
+
 }
 ```
 
@@ -79,14 +78,14 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function update($id) {        
-        $data = array(
-            'foo' => 'bar',
-            'bar' => 'foo',
-        );
-        $count = $this->where('id', '=', $id)->update($data);
-    }
-    
+  function update($id) {
+    $data = array(
+      'foo' => 'bar',
+      'bar' => 'foo',
+    );
+    $count = $this->where('id', '=', $id)->update($data);
+  }
+
 }
 ```
 
@@ -103,10 +102,10 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function delete($id) {        
-        $count = $this->where('id', '=', $id)->delete();
-    }
-    
+  function delete($id) {
+    $count = $this->where('id', '=', $id)->delete();
+  }
+
 }
 ```
 

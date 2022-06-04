@@ -4,11 +4,11 @@ ginkgo 支持返回 PHP 数组进行配置。
 
 ``` php
 //项目配置
-return array(        
-    'default_mod'   => 'index', // 默认模块名        
-    'default_ctrl'  => 'index', // 默认控制器名
-    'default_act'   => 'index', // 默认动作名
-    // ... 更多配置参数
+return array(
+  'default_mod'   => 'index', // 默认模块名
+  'default_ctrl'  => 'index', // 默认控制器名
+  'default_act'   => 'index', // 默认动作名
+  // ... 更多配置参数
 );
 ```
 
@@ -16,14 +16,14 @@ return array(
 
 ``` php
 //项目配置
-return array(        
-    'default_mod'   => 'index',
-    'cache'         => array( 
-        'type'   => 'file',
-        'path'   => GK_PATH_CACHE,
-        'prefix' => '',
-        'expire' => 0,
-    ),
+return array(
+  'default_mod'   => 'index',
+  'cache'         => array(
+    'type'   => 'file',
+    'path'   => GK_PATH_CACHE,
+    'prefix' => '',
+    'expire' => 0,
+  ),
 );
 ```
 
@@ -36,16 +36,16 @@ return array(
 配置支持作用域，利用作用域，可以定义二级甚至三级配置，例如：
 
 ``` php
-$config = array( 
-    'user'  =>  array(
-        'type'  =>  1,
-        'name'  =>  'ginkgo',
-    ),
-    'db'    =>  array(
-        'type'      =>  'mysql',
-        'user'      =>  'root',
-        'password'  =>  '',
-    ),
+$config = array(
+  'user'  =>  array(
+    'type'  =>  1,
+    'name'  =>  'ginkgo',
+  ),
+  'db'    =>  array(
+    'type'      =>  'mysql',
+    'user'      =>  'root',
+    'password'  =>  '',
+  ),
 ];
 
 Config::set($config); // 设置配置参数

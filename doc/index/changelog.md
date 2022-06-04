@@ -1,3 +1,20 @@
+##### v0.2.4
+
+* `ginkgo\Arrays` 类的 `filter()` 方法更改为 `unique()`
+* 修复 `ginkgo\Paginator` 类在生成分页是无法清空前一个结果的错误
+* 为 `ginkgo\Ubbcode` 类增加部分对齐代码
+* 改善了部分类的错误处理过程
+
+----------
+
+##### v0.2.3
+
+* 对路由进行安全过滤
+* 为 `ginkgo\App` 类增加了 `header` 属性和 `header()` 方法，用于指定 HTTP 头信息
+* 为 `ginkgo\Arrays` 类的 `each()` 方法更改为 `map()`
+
+----------
+
 ##### v0.2.2
 
 * 修复 `ginkgo\Auth` 类中，部分数字运算过程中的错误
@@ -5,9 +22,9 @@
 * 改善了数据库 PDO 异常捕获的处理
 * 改善了异常抛出模板，不再依赖静态文件
 * 为 `ginkgo\Model` 类增加了 `pk` 属性，用于指定主键，并设置自动获取主键
-* 为 `ginkgo\db\connector\Mysql` 类增加了 `getFields` 方法，用于获取字段信息
-* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTableInfo` 方法，用于获取表信息
-* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTables` 方法，用于获取表列表
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getFields()` 方法，用于获取字段信息
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTableInfo()` 方法，用于获取表信息
+* 为 `ginkgo\db\connector\Mysql` 类增加了 `getTables()` 方法，用于获取表列表
 * 修复了表单输入内容未经完全安全过滤的问题
 
 ----------

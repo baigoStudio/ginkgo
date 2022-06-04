@@ -11,21 +11,21 @@
 ``` php
 
 Db::table('user')
-    ->where('status', '=', 1)
-    ->limit(10)
-    ->select();
+  ->where('status', '=', 1)
+  ->limit(10)
+  ->select();
 ```
 
 `limit()` 方法也可以用于写操作，例如更新满足要求的3条数据：
 
 ``` php
 $update = array(
-    'level' => 'A'
+  'level' => 'A'
 );
 Db::table('user')
-    ->where('score', '=', 100)
-    ->limit(3)
-    ->update($update);
+  ->where('score', '=', 100)
+  ->limit(3)
+  ->update($update);
 ```
 
 ----------

@@ -6,8 +6,8 @@ ginkgo 还可以直接写入配置文件，如：
 
 ``` php
 $arr_config = array(
-    'title' => 'Ginkgo',
-    'name'  => 'baigo',
+  'title' => 'Ginkgo',
+  'name'  => 'baigo',
 );
 
 Config::write(GK_PATH_APP . 'config/config.inc.php', $arr_config);
@@ -17,8 +17,8 @@ Config::write(GK_PATH_APP . 'config/config.inc.php', $arr_config);
 
 ``` php
 <?php return array(
-    'title' => 'Ginkgo',
-    'name'  => 'baigo',
+  'title' => 'Ginkgo',
+  'name'  => 'baigo',
 );
 ```
 

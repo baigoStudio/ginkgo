@@ -9,20 +9,20 @@
 
 ``` php
 'route' => array(
-    'route_rule'    => array( //路由规则
-        //静态例子 规则 => 地址
-        'index/article/index' => 'index/article/show',
+  'route_rule'    => array( //路由规则
+    //静态例子 规则 => 地址
+    'index/article/index' => 'index/article/show',
 
-        //动态例子 array(规则, 地址)
-        array('article/:year/:month/:id', 'index/article/index'),
-        'article/:year/:month/:id' => 'index/article/index', // 0.2.0 新增
+    //动态例子 array(规则, 地址)
+    array('article/:year/:month/:id', 'index/article/index'),
+    'article/:year/:month/:id' => 'index/article/index', // 0.2.0 新增
 
-        //正则例子 array(规则, 地址, 参数)
-        array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'),
-        '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 0.2.0 新增
+    //正则例子 array(规则, 地址, 参数)
+    array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'),
+    '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 0.2.0 新增
 
-        ... // 更多规则
-    ),
+    ... // 更多规则
+  ),
 ),
 ```
 
@@ -34,18 +34,18 @@
 
 ``` php
 'route_rule' => array( // 路由规则
-    'article/show' => 'index/article/show', // 规则 => 地址
-    ... // 更多规则
+  'article/show' => 'index/article/show', // 规则 => 地址
+  ... // 更多规则
 ),
 ```
 
 * 访问 __http://server/index.php/`article/show`__
 
-    会自动路由到 __http://server/index.php/index/article/show__
+  会自动路由到 __http://server/index.php/index/article/show__
 
 * 系统会忽略规则外的 URL 部分，还是以上述规则为例，访问 __http://server/index.php/`article/show`/test__
 
-    会自动路由到 __http://server/index.php/index/article/show__
+  会自动路由到 __http://server/index.php/index/article/show__
 
 ----------
 
@@ -59,19 +59,19 @@
 
 ``` php
 'route_rule' => array( // 路由规则
-    array('article/:year/:month/:id', 'index/article/index'), // array(规则, 地址)
-    'article/:year/:month/:id' => 'index/article/index', // 规则 => 地址 0.2.0 新增
-    ... // 更多规则
+  array('article/:year/:month/:id', 'index/article/index'), // array(规则, 地址)
+  'article/:year/:month/:id' => 'index/article/index', // 规则 => 地址 0.2.0 新增
+  ... // 更多规则
 ),
 ```
 
 * 访问 __http://server/index.php/`article/2015/06/234325`__
 
-    会自动路由到 __http://server/index.php/index/article/show/year/2015/month/06/id/234325__
+  会自动路由到 __http://server/index.php/index/article/show/year/2015/month/06/id/234325__
 
 * 系统会忽略规则外的 URL 部分，还是以上述规则为例，访问 __http://server/index.php/`article/2015/06/234325`/status/public__
 
-    会自动路由到 __http://server/index.php/index/article/show/year/2015/month/06/id/234325/status/public__
+  会自动路由到 __http://server/index.php/index/article/show/year/2015/month/06/id/234325/status/public__
 
 每个参数中以 <kbd>:</kbd> 开头的参数都表示动态变量，并且会自动绑定到动作的对应参数。
 
@@ -89,35 +89,34 @@
 
 ``` php
 'route_rule' => array( // 路由规则
-    array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'), // array(规则, 地址, 参数)
-    '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 规则 => array(地址, 参数) 0.2.0 新增
-    ... // 更多规则
+  array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'), // array(规则, 地址, 参数)
+  '/^cate[\/\S+]+\/(\d+)+\S*$/i' => array('index/cate/index', 'id') // 规则 => array(地址, 参数) 0.2.0 新增
+  ... // 更多规则
 ),
 ```
 
 * 访问 __http://server/index.php/`cate/234325`__
 
-    会自动路由到 __http://server/index.php/index/cate/index/id/234325__
+  会自动路由到 __http://server/index.php/index/cate/index/id/234325__
 
 * 系统会忽略规则外的 URL 部分，还是以上述规则为例，访问 __http://server/index.php/`cate/234325`/status/public__
 
-    会自动路由到 __http://server/index.php/index/cate/index/id/234325/status/public__
-
+  会自动路由到 __http://server/index.php/index/cate/index/id/234325/status/public__
 
 ``` php
 'route_rule' => array( // 路由规则
-    array('/^cate[\/\x{4e00}-\x{9fa5}a-zA-Z0-9\_\-]+\/id\/(\d+)+(\/page\/(\d+))?.*$/ui', 'index/cate/index', array('id', '', 'page')), //正则例子 array(规则, 地址, 参数)
-    ... // 更多规则
+  array('/^cate[\/\x{4e00}-\x{9fa5}a-zA-Z0-9\_\-]+\/id\/(\d+)+(\/page\/(\d+))?.*$/ui', 'index/cate/index', array('id', '', 'page')), //正则例子 array(规则, 地址, 参数)
+  ... // 更多规则
 ),
 ```
 
 * 访问 __http://server/index.php/`cate/news/art/id/234325/page/2`__
 
-    会自动路由到 __http://server/index.php/index/cate/index/id/234325/page/2__
+  会自动路由到 __http://server/index.php/index/cate/index/id/234325/page/2__
 
 * 系统会忽略规则外的 URL 部分，还是以上述规则为例，访问 __http://server/index.php/`cate/news/art/id/234325/page/2`/status/public__
 
-    会自动路由到 __http://server/index.php/index/cate/index/id/234325/page/2/status/public__
+  会自动路由到 __http://server/index.php/index/cate/index/id/234325/page/2/status/public__
 
 ----------
 
@@ -147,8 +146,8 @@
 namespace app\ctrl\mod_index;
 
 class Ctrl_Index {
-    public function helloWorld() {
-        return 'hello_world';
-    }
+public function helloWorld() {
+      return 'hello_world';
+  }
 }
 ```

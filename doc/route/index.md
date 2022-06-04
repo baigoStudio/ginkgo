@@ -18,15 +18,15 @@ ginkgo 的路由支持三种方式的 URL 解析规则。
 
 ``` php
 'route' => array(
-    'route_rule'    => array( //路由规则
-        //静态例子 规则 => 地址
-        'index/article/index' => 'index/article/show', 
-        
-        //动态例子 array(规则, 地址)
-        array('article/:year/:month/:id', 'index/article/index'), 
-        
-        //正则例子 array(规则, 地址, 参数)
-        array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'), 
-    ),
+  'route_rule'    => array( //路由规则
+    //静态例子 规则 => 地址
+    'index/article/index' => 'index/article/show',
+
+    //动态例子 array(规则, 地址)
+    array('article/:year/:month/:id', 'index/article/index'),
+
+    //正则例子 array(规则, 地址, 参数)
+    array('/^cate[\/\S+]+\/(\d+)+\S*$/i', 'index/cate/index', 'id'),
+  ),
 ),
 ```

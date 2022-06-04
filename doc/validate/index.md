@@ -6,24 +6,23 @@
 $validate = Validate::instance();
 
 $rule = array(
-    'user_id' => array(
-        'require' => true,
-        'format'  => 'int',
-    ),
-    'user_name' => array(
-        'length' => '1,30',
-        'format' => 'alpha_dash',
-    ),
+  'user_id' => array(
+    'require' => true,
+    'format'  => 'int',
+  ),
+  'user_name' => array(
+    'length' => '1,30',
+    'format' => 'alpha_dash',
+  ),
 );
 
 $validate->rule($rule);
 
 $data = [
-    'name'  => 'baigo',
-    'email' => 'baigo@qq.com'
+  'name'  => 'baigo',
+  'email' => 'baigo@qq.com'
 ];
 if (!$validate->verify($data)) {
-    print_r($validate->getMessage());
+  print_r($validate->getMessage());
 }
 ```
-

@@ -18,7 +18,7 @@
 
 ``` php
 'tpl_sys' => array( // 系统模板
-    'path'      => '', // 默认模板路径
+  'path'      => '', // 默认模板路径
 ),
 ```
 
@@ -63,17 +63,17 @@ throw $exce;
 
 ``` php
 try {
-    // 这里是主体代码
+  // 这里是主体代码
 } catch (ginkgo\Except $e) {
-    // 这是进行异常捕获
-    return $e->getData('name');
+  // 这是进行异常捕获
+  return $e->getData('name');
 }
 
 try {
-    // 这里是主体代码
+  // 这里是主体代码
 } catch (ginkgo\Except $e) {
-    // 这是进行异常捕获
-    return $e->getData(); //获取所有 data
+  // 这是进行异常捕获
+  return $e->getData(); //获取所有 data
 }
 ```
 
@@ -81,9 +81,9 @@ try {
 
 ``` php
 try {
-    // 这里是主体代码
+  // 这里是主体代码
 } catch (ginkgo\Except $e) {
-    // 这是进行异常捕获
-    return $e->getMessage();
+  // 这是进行异常捕获
+  return $e->getMessage();
 }
 ```

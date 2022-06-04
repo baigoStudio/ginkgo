@@ -16,20 +16,20 @@ $user = Loader::modal('User');
 
 // 从表单取得数据
 $inputSubmit = array(
-    'user_name' => $_POST['user_name'],
-    'user_pass' => $_POST['user_pass'],
+  'user_name' => $_POST['user_name'],
+  'user_pass' => $_POST['user_pass'],
 );
 
 // 从数据库读取用户信息
 $userRow = $user->read($inputSubmit['user_name'], 'user_name');
 if (!$userRow) {
-    return '用户不存在';
+  return '用户不存在';
 }
 
 // 验证密码
 $cryptString = Crypt::crypt($inputSubmit['user_pass'], $userRow['user_rand']);
 if ($cryptString != $userRow['user_pass']) {
-    return '密码错误';
+  return '密码错误';
 }
 
 // 写入认证信息
@@ -55,15 +55,15 @@ $remember = $authRow['remember'];
 // 从数据库读取用户信息
 $userRow = $user->read($session['user_id']); // 用会话数据读取
 if (!$userRow) { // 如不存在则用记住信息读取 (相当于自动登录)
-    $userRow = $user->read($remember['user_id']);
-    if (!$userRow) { // 如不存在则直接报错
-        return '用户不存在';
-    }
+  $userRow = $user->read($remember['user_id']);
+  if (!$userRow) { // 如不存在则直接报错
+    return '用户不存在';
+  }
 }
 
 // 检测认证
 if (!$auth->check($userRow) {
-    return $auth->getError();
+  return $auth->getError();
 }
 
 ... // 继续其他操作
@@ -77,8 +77,8 @@ if (!$auth->check($userRow) {
 
 ``` php
 $config = array(
-    'session_expire'    => 20 * GK_MINUTE, // 认证过期时间
-    'remember_expire'   => 30 * GK_DAY, // 记住密码过期时间
+  'session_expire'    => 20 * GK_MINUTE, // 认证过期时间
+  'remember_expire'   => 30 * GK_DAY, // 记住密码过期时间
 );
 $auth = Auth::instance($config);
 ```
@@ -87,8 +87,8 @@ $auth = Auth::instance($config);
 
 ``` php
 'auth' => array(
-    'session_expire'    => 20 * GK_MINUTE, // 认证过期时间
-    'remember_expire'   => 30 * GK_DAY, // 记住密码过期时间
+  'session_expire'    => 20 * GK_MINUTE, // 认证过期时间
+  'remember_expire'   => 30 * GK_DAY, // 记住密码过期时间
 ),
 ```
 
@@ -111,7 +111,6 @@ $auth = Auth::instance($config);
 $auth = Auth::instance(array(), 'user');
 ```
 
-
 通过 `$prefix` 属性设置，如：
 
 ``` php
@@ -119,7 +118,6 @@ $auth = Auth::instance();
 
 $auth->prefix = 'user';
 ```
-
 
 通过 `prefix()` 方法设置，如：
 
@@ -151,18 +149,16 @@ echo $auth->prefix;
 | cookie | 是否开启 cookie，如果开启，系统将同时通过 cookie 来验证 | true |
 | remember | 是否开启记住用户，如果开启，系统可以实现自动登录 | false |
 
-
 通过 `$options` 属性来设置选项，如：
 
 ``` php
 $auth = Auth::instance();
 
 $auth->options = array(
-    'cookie'    => true,
-    'remember'  => false,
+  'cookie'    => true,
+  'remember'  => false,
 );
 ```
-
 
 通过 `setOptions()` 方法设置，如：
 
@@ -172,13 +168,12 @@ $auth = Auth::instance();
 $auth->setOptions('cookie', true); // 单个设置
 
 $options = array(
-    'cookie'    => true,
-    'remember'  => false,
+  'cookie'    => true,
+  'remember'  => false,
 );
 
 $auth->setOptions($options); // 批量设置
 ```
-
 
 用 `$options` 属性和 `getOptions()` 方法还可以取得当前前缀，如：
 
@@ -195,10 +190,10 @@ echo $auth->getOptions();
 
 ``` php
 $userRow = array(
-    'user_id'           => 2,
-    'user_name'         => 'test',
-    'user_time_login'   => 568445,
-    'user_ip'           => '127.0.0.1',
+  'user_id'           => 2,
+  'user_name'         => 'test',
+  'user_time_login'   => 568445,
+  'user_ip'           => '127.0.0.1',
 );
 
 $auth->prefix = 'user'; // 注意与 userRow 数组的名称对应
@@ -216,31 +211,30 @@ function write( $userRow [, $regen = false [, $loginType = 'form' [, $remember =
 
 * `userRow` 用户信息：
 
-    必须为数组，结构如下：
+  必须为数组，结构如下：
 
-    | 名称 | 类型 | 必需 | 描述 |
-    | - | - | - | - |
-    | 前缀_id | int | true | ID |
-    | 前缀_name | string | true | 用户名 |
-    | 前缀_time_login | int | true | 最后登录时间（UNIX 时间戳） |
-    | 前缀_ip | string | true | IP 地址 |
-
+  | 名称 | 类型 | 必需 | 描述 |
+  | - | - | - | - |
+  | 前缀_id | int | true | ID |
+  | 前缀_name | string | true | 用户名 |
+  | 前缀_time_login | int | true | 最后登录时间（UNIX 时间戳） |
+  | 前缀_ip | string | true | IP 地址 |
 
 * `regen` 使用新生成的会话 ID 更新现有会话 ID
 
-    布尔值，默认为 false
+  布尔值，默认为 false
 
 * `loginType` 登录类型
 
-    字符串，默认为 form，表示从表单登录，开发者可以根据实际情况自行命名，如：auto 等等
+  字符串，默认为 form，表示从表单登录，开发者可以根据实际情况自行命名，如：auto 等等
 
 * `remember` 记住登录状态
 
-    字符串，默认为空，要记住登录状态，必须将本参数设置为 `remember`，`0.2.0` 起可以为 `true`
+  字符串，默认为空，要记住登录状态，必须将本参数设置为 `remember`，`0.2.0` 起可以为 `true`
 
 * `pathCookie` Cookie 保存路径
 
-    字符串或数组，默认 /
+  字符串或数组，默认 /
 
 返回
 
@@ -264,27 +258,27 @@ $authinfo = $auth->read();
 
     ``` php
     array(
-        'session' => array( // 会话
-            '前缀_id'           => 2, // 用户 ID
-            '前缀_name'         => 'username', // 用户名
-            '前缀_hash'         => 'dfekeiEjiweerw', // 哈希值
-            '前缀_time'         => 54684857, // 保存时间
-            '前缀_time_expire'  => 46744874, // 过期时间
-        ),
-        'cookie' => array( // Cookie
-            '前缀_id'           => 2,
-            '前缀_name'         => 'username', // 用户名
-            '前缀_hash'         => 'dfekeiEjiweerw',
-            '前缀_time'         => 54684857,
-            '前缀_time_expire'  => 46744874,
-        ),
-        'remember' => array( // 记住的登录状态
-            '前缀_id'           => 2,
-            '前缀_name'         => 'username', // 用户名
-            '前缀_hash'         => 'dfekeiEjiweerw',
-            '前缀_time'         => 54684857,
-            '前缀_time_expire'  => 46744874,
-        ),
+      'session' => array( // 会话
+        '前缀_id'           => 2, // 用户 ID
+        '前缀_name'         => 'username', // 用户名
+        '前缀_hash'         => 'dfekeiEjiweerw', // 哈希值
+        '前缀_time'         => 54684857, // 保存时间
+        '前缀_time_expire'  => 46744874, // 过期时间
+      ),
+      'cookie' => array( // Cookie
+        '前缀_id'           => 2,
+        '前缀_name'         => 'username', // 用户名
+        '前缀_hash'         => 'dfekeiEjiweerw',
+        '前缀_time'         => 54684857,
+        '前缀_time_expire'  => 46744874,
+      ),
+      'remember' => array( // 记住的登录状态
+        '前缀_id'           => 2,
+        '前缀_name'         => 'username', // 用户名
+        '前缀_hash'         => 'dfekeiEjiweerw',
+        '前缀_time'         => 54684857,
+        '前缀_time_expire'  => 46744874,
+      ),
     );
     ```
 
@@ -306,18 +300,18 @@ function check( $userRow [, $pathCookie = '/' ] )
 
 * `userRow` 用户信息：
 
-    必须为数组，结构如下：
+  必须为数组，结构如下：
 
-    | 名称 | 类型 | 必需 | 描述 |
-    | - | - | - | - |
-    | 前缀_id | int | true | ID |
-    | 前缀_name | string | true | 用户名 |
-    | 前缀_time_login | int | true | 最后登录时间（UNIX 时间戳） |
-    | 前缀_ip | string | true | IP 地址 |
+  | 名称 | 类型 | 必需 | 描述 |
+  | - | - | - | - |
+  | 前缀_id | int | true | ID |
+  | 前缀_name | string | true | 用户名 |
+  | 前缀_time_login | int | true | 最后登录时间（UNIX 时间戳） |
+  | 前缀_ip | string | true | IP 地址 |
 
 * `pathCookie` Cookie 保存路径
 
-    字符串，默认 /
+  字符串，默认 /
 
 返回
 
@@ -333,7 +327,6 @@ function check( $userRow [, $pathCookie = '/' ] )
 $auth->end();
 ```
 ----------
-
 
 #### 获取错误信息
 

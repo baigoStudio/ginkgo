@@ -14,8 +14,8 @@ Db::table('user')->where('status', '=', 1)->order('id', 'DESC')->limit(5)->selec
 
 ``` php
 $order = array(
-    array('id', 'DESC'),
-    array('status),
+  array('id', 'DESC'),
+  array('status),
 );
 Db::table('user')->where('status', '=', 1)->order($order)->limit(5)->select();
 ```

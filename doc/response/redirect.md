@@ -9,9 +9,9 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function hello() {
-        return $this->redirect('http://www.baigo.net');
-    }
+  public function hello() {
+    return $this->redirect('https://www.baigo.net');
+  }
 
 }
 ```
@@ -30,7 +30,7 @@ $this->redirect('/index/index/hello/name/baigo');
 
 ``` php
 $param = array(
-    'name' => 'baigo'
+  'name' => 'baigo'
 );
 $this->redirect('/index/index/hello')->param($param);
 ```
@@ -53,32 +53,32 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        // 判断session完成标记是否存在
-        if (Session::get('complete')) {
-            // 删除session
-            Session::set('complete', null);
-            return '重定向完成，回到原点!';
-        } else {
-            // 记住当前地址并重定向
-            $redirect = $this->redirect('index/index/hello');
-            $redirect->remember();
+  public function index() {
+    // 判断session完成标记是否存在
+    if (Session::get('complete')) {
+      // 删除session
+      Session::set('complete', null);
+      return '重定向完成，回到原点!';
+    } else {
+      // 记住当前地址并重定向
+      $redirect = $this->redirect('index/index/hello');
+      $redirect->remember();
 
-            return $redirect;
-        }
+      return $redirect;
     }
+  }
 
-    public function hello() {
-        $name = Session::get('name');
-        return 'hello, ' . $name . '! <br><a href="/index/index/restore">点击回到来源地址</a>';
-    }
+  public function hello() {
+    $name = Session::get('name');
+    return 'hello, ' . $name . '! <br><a href="/index/index/restore">点击回到来源地址</a>';
+  }
 
-    public function restore() {
-        // 设置session标记完成
-        Session::set('complete', true);
-        // 跳回之前的来源地址
-        return $this->redirect()->restore();
-    }
+  public function restore() {
+    // 设置session标记完成
+    Session::set('complete', true);
+    // 跳回之前的来源地址
+    return $this->redirect()->restore();
+  }
 
 }
 ```

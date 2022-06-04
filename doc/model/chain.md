@@ -6,7 +6,7 @@
 
 ``` php
 $this->where('status', '=', 1)
-    ->order('create_time')
-    ->limit(10)
-    ->select();
+  ->order('create_time')
+  ->limit(10)
+  ->select();
 ```

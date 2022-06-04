@@ -23,12 +23,12 @@ http://server/index.php/模块/控制器/动作/参数-1/值-1/参数-2/值-2...
 
 ``` clike
 <IfModule mod_rewrite.c>
-    Options +FollowSymlinks -Multiviews
-    RewriteEngine on
-    
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine on
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
 </IfModule>
 ```
 
@@ -62,8 +62,8 @@ http://server/index.php/模块/控制器/动作/参数-1/值-1/参数-2/值-2...
 namespace app\ctrl\mod_index;
 
 class Ctrl_Index {
-    public function helloWorld() {
-        return 'hello_world';
-    }
+  public function helloWorld() {
+    return 'hello_world';
+  }
 }
 ```

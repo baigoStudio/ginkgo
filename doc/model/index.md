@@ -19,8 +19,8 @@ class User extends Model {
 
 ``` php
 class Model {
-    // ginkgo\Request 的实例
-    protected $obj_request;
+  // ginkgo\Request 的实例
+  protected $obj_request;
 }
 ```
 
@@ -34,26 +34,26 @@ class Model {
 namespace app\model\index;
 
 class User extends ginkgo\Model {
-    protected $config = array(
-        // 数据库类型
-        'type'    => 'mysql',
-        // 服务器地址
-        'host'    => '127.0.0.1',
-        // 数据库名
-        'name'    => 'baigo',
-        // 数据库用户名
-        'user'    => 'root',
-        // 数据库密码
-        'pass'    => '',
-        // 数据库连接端口
-        'port'    => '',
-        // 数据库编码默认采用 utf8
-        'charset' => 'utf8',
-        // 数据库表前缀
-        'prefix'  => 'baigo_',
-        // 数据库调试模式
-        'debug'   => false,
-    );
+  protected $config = array(
+    // 数据库类型
+    'type'    => 'mysql',
+    // 服务器地址
+    'host'    => '127.0.0.1',
+    // 数据库名
+    'name'    => 'baigo',
+    // 数据库用户名
+    'user'    => 'root',
+    // 数据库密码
+    'pass'    => '',
+    // 数据库连接端口
+    'port'    => '',
+    // 数据库编码默认采用 utf8
+    'charset' => 'utf8',
+    // 数据库表前缀
+    'prefix'  => 'baigo_',
+    // 数据库调试模式
+    'debug'   => false,
+  );
 }
 ```
 
@@ -69,7 +69,7 @@ class User extends ginkgo\Model {
 
 假设前缀是 `baigo_`
 
-| 模型名	| 约定对应数据表 |
+| 模型名 | 约定对应数据表 |
 | - | - |
 | User | baigo_user |
 | User_Type | baigo_user_type |
@@ -82,8 +82,8 @@ class User extends ginkgo\Model {
 namespace app\model\index;
 
 class User extends ginkgo\Model {
-    // 设置数据表名
-    protected $table = 'user';
+  // 设置数据表名
+  protected $table = 'user';
 }
 ```
 

@@ -1,6 +1,5 @@
 # ginkgo 开发文档
 
-
 ----------
 
 概况
@@ -9,7 +8,6 @@
 * [开发规范](./index/spec.md)
 * [目录](./index/dir.md)
 * [更新日志](./index/changelog.md)
-
 
 ----------
 
@@ -20,7 +18,6 @@
 * [入口文件](./construct/entry.md)
 * [URL 访问](./construct/url.md)
 * [模块设计](./construct/module.md)
-
 
 ----------
 
@@ -36,7 +33,6 @@
 * [配置作用域](./config/range.md)
 * [常量配置](./config/const.md)
 
-
 ----------
 
 路由
@@ -45,7 +41,6 @@
 * [路由定义](./route/define.md)
 * [路由规则](./route/rules.md)
 * [路由绑定](./route/bind.md)
-
 
 ----------
 
@@ -57,7 +52,6 @@
 * [空控制器](./ctrl/c_empty.md)
 * [分层控制器](./ctrl/layer.md)
 
-
 ----------
 
 请求
@@ -67,7 +61,6 @@
 * [请求类型](./request/type.md)
 * [HTTP 头信息](./request/header.md)
 
-
 ----------
 
 响应
@@ -76,7 +69,6 @@
 * [响应参数](./response/param.md)
 * [重定向](./response/redirect.md)
 * [输出替换](./response/replace.md)
-
 
 ----------
 
@@ -93,7 +85,6 @@
 * [子查询](./database/subquery.md)
 * [原生查询](./database/native.md)
 
-
 ----------
 
 模型
@@ -105,7 +96,6 @@
 * [聚合查询](./model/aggregate.md)
 * [分层模型](./model/layer.md)
 
-
 ----------
 
 视图
@@ -116,7 +106,6 @@
 * [输出替换](./view/replace.md)
 * [视图驱动](./view/driver.md)
 
-
 ----------
 
 错误和日志
@@ -124,14 +113,12 @@
 * [异常处理](./err_log/index.md)
 * [日志处理](./err_log/log.md)
 
-
 ----------
 
 调试
 
 * [概况](./debug/index.md)
 * [Trace 调试](./debug/trace.md)
-
 
 ----------
 
@@ -141,7 +128,6 @@
 * [变量输出](./template/variable.md)
 * [系统变量](./template/system.md)
 * [请求参数](./template/request.md)
-
 
 ----------
 
@@ -159,7 +145,6 @@
 * [表单令牌](./validate/token.md)
 * [验证码](./validate/captcha.md)
 
-
 ----------
 
 文件处理
@@ -168,7 +153,6 @@
 * [图像处理](./file/image.md)
 * [上传文件](./file/upload.md)
 * [FTP](./file/ftp.md)
-
 
 ----------
 
@@ -181,7 +165,6 @@
 * [UBBCODE](./misc/ubbcode.md)
 * [Base64 处理](./data/base64.md)
 * [JSON 处理](./data/json.md)
-
 
 ----------
 
@@ -198,7 +181,6 @@
 * [SMTP](./misc/smtp.md)
 * [HTTP 请求](./misc/http.md)
 
-
 ----------
 
 扩展
@@ -206,7 +188,6 @@
 * [函数](./extend/index.md)
 * [类库](./extend/class.md)
 * [插件](./extend/plugin.md)
-
 
 ----------
 

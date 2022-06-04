@@ -10,7 +10,7 @@
 
 ``` php
 $data = array(
-    'Hello', 'world!',
+  'Hello', 'world!',
 );
 
 $response = Response::instance();
@@ -21,7 +21,7 @@ $response->setContent($data);
 
 ``` php
 $data = array(
-    'Hello', 'world!',
+  'Hello', 'world!',
 );
 
 $response = Response::instance();
@@ -41,7 +41,7 @@ $response->setType('json');
 
 ``` php
 $data = array(
-    'Hello', 'world!',
+  'Hello', 'world!',
 );
 
 $response = Response::instance();
@@ -61,7 +61,7 @@ $response->setStatusCode(201);
 
 ``` php
 $data = array(
-    'Hello', 'world!',
+  'Hello', 'world!',
 );
 
 $response = Response::instance();
@@ -77,8 +77,8 @@ $response->setHeader('Cache-control', 'no-cache,must-revalidate');
 // 批量设置
 
 $header = array(
-    'Cache-control' => 'no-cache,must-revalidate',
-    'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
+  'Cache-control' => 'no-cache,must-revalidate',
+  'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
 );
 $response->setHeader($header);
 ```

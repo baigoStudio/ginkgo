@@ -14,23 +14,22 @@ function fetch( [ $tpl = '' [, $assign = '' [, $value = '' ]]] )
 
 * `tpl` 模板
 
-    支持如下几种写法：
+  支持如下几种写法：
 
-    | 用法 | 描述 | 规则 |
-    | - | - | - |
-    | 不带任何参数	 | 自动定位 | app/tpl/`当前模块/当前控制器/当前动作`.tpl.php |
-    | 动作 | 常用写法 | app/tpl/当前模块/当前控制器/`动作`.tpl.php |
-    | 控制器/动作 | 常用写法 | app/tpl/当前模块/`控制器/动作`.tpl.php |
-    | 完整的模板路径 | 必须包含模板后缀 | 模板后缀必须与配置一致，详情请查看 [配置 -> 常量配置](../config/const.md) |
+  | 用法 | 描述 | 规则 |
+  | - | - | - |
+  | 不带任何参数 | 自动定位 | app/tpl/`当前模块/当前控制器/当前动作`.tpl.php |
+  | 动作 | 常用写法 | app/tpl/当前模块/当前控制器/`动作`.tpl.php |
+  | 控制器/动作 | 常用写法 | app/tpl/当前模块/`控制器/动作`.tpl.php |
+  | 完整的模板路径 | 必须包含模板后缀 | 模板后缀必须与配置一致，详情请查看 [配置 -> 常量配置](../config/const.md) |
 
 * `assign` 变量
 
-    支持两种类型：为字符串时表示变量名，为数组时表示批量传输
+  支持两种类型：为字符串时表示变量名，为数组时表示批量传输
 
 * `value` 变量值
 
-    当 `assign` 为字符串时为必须，当 `assign` 为数组时自动忽略。
-
+  当 `assign` 为字符串时为必须，当 `assign` 为数组时自动忽略。
 
 下面是一个最典型的用法，不带任何参数：
 
@@ -41,10 +40,10 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        // 不带任何参数 自动定位当前动作的模板文件
-        return $this->fetch();
-    }
+  public function index() {
+    // 不带任何参数 自动定位当前动作的模板文件
+    return $this->fetch();
+  }
 
 }
 ```
@@ -58,9 +57,9 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function cateList() {
-        return $this->fetch();
-    }
+  public function cateList() {
+    return $this->fetch();
+  }
 
 }
 ```
@@ -123,9 +122,9 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function cateList() {
-        return $this->fetch();
-    }
+  public function cateList() {
+    return $this->fetch();
+  }
 
 }
 ```
@@ -150,8 +149,8 @@ return $this->fetch('index/cate_list');
 
 ``` php
 'tpl' => array(
-    'path'   => 'default', // 定义模板目录
-    ...
+  'path'   => 'default', // 定义模板目录
+  ...
 );
 ```
 
@@ -161,8 +160,8 @@ return $this->fetch('index/cate_list');
 
 ``` php
 'tpl' => array(
-    'path'   => '/web/app/tpl/', // 定义模板根目录
-    ...
+  'path'   => '/web/app/tpl/', // 定义模板根目录
+  ...
 );
 ```
 
@@ -183,14 +182,14 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        // 直接渲染内容
-        $content = '\<?php echo $name; ?\> - \<?php echo $email; ?\>';
-        $data = array(
-            'name'  => 'ginkgo',
-            'email' => 'ginkgo@qq.com'
-        );
-        return $this->display($content, $data);
-    }
+  public function index() {
+    // 直接渲染内容
+    $content = '\<?php echo $name; ?\> - \<?php echo $email; ?\>';
+    $data = array(
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@qq.com'
+    );
+    return $this->display($content, $data);
+  }
 }
 ```

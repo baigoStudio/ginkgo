@@ -14,12 +14,12 @@ Arrays::toJson($arr);
 
 ----------
 
-<span id="filter"></span>
+<span id="unique"></span>
 
-#### `filter()` 过滤数组中的重复内容
+#### `unique()` 过滤数组中的重复内容
 
 ``` php
-function filter( $arr [, $pop_false = true ] )
+function unique( $arr [, $pop_false = true ] )
 ```
 
 参数
@@ -33,12 +33,12 @@ function filter( $arr [, $pop_false = true ] )
 
 ----------
 
-<span id="each"></span>
+<span id="map"></span>
 
-#### `each()` 遍历数组，对键值进行安全过滤，并用指定的方式对键值进行编码
+#### `map()` 遍历数组，对键值进行安全过滤，并用指定的方式对键值进行编码
 
 ``` php
-function each( $arr [, $encode = '' ] )
+function map( $arr [, $encode = '' ] )
 ```
 
 参数
@@ -46,14 +46,14 @@ function each( $arr [, $encode = '' ] )
 * `arr` 数组
 * `encode` 编码方式
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | 空（默认值） | 不进行编码 |
-    | urlencode | URL 编码 |
-    | json_safe | 用 JSON 安全的 URL 编码 |
-    | md5 | md5 编码 |
+  | 值 | 描述 |
+  | - | - |
+  | 空（默认值） | 不进行编码 |
+  | urlencode | URL 编码 |
+  | json_safe | 用 JSON 安全的 URL 编码 |
+  | md5 | md5 编码 |
 
 返回
 
@@ -74,14 +74,14 @@ function toJson( $arr [, $encode = false ] )
 * `arr` 数组
 * `encode` 编码方式，对待编码的数组用指定的方式对键值进行编码
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | 空（默认值） | 不进行编码 |
-    | urlencode | URL 编码 |
-    | json_safe | 用 JSON 安全的 URL 编码 |
-    | md5 | md5 编码 |
+  | 值 | 描述 |
+  | - | - |
+  | 空（默认值） | 不进行编码 |
+  | urlencode | URL 编码 |
+  | json_safe | 用 JSON 安全的 URL 编码 |
+  | md5 | md5 编码 |
 
 返回
 
@@ -101,12 +101,12 @@ function fromJson( $json [, $assoc = true ] )
 
 * `json` JSON 字符串
 * `assoc` 是否返回 array
-    当该参数为 true 时，将返回 array 否则为 object
+
+  当该参数为 true 时，将返回 array 否则为 object
 
 返回
 
 * array / object
-
 
 ----------
 

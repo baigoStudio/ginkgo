@@ -15,36 +15,36 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'user_name' => array(
-            'length' => '1,30',
-            'format' => 'alpha_dash',
-        ),
-        'user_mail' => array(
-            'max'    => 300,
-            'format' => 'email',
-        ),
-        'user_ids' => array(
-            'require' => true,
-        ),
-        'act' => array(
-            'require' => true,
-        ),
-    );
+  protected $rule = array(
+    'user_name' => array(
+      'length' => '1,30',
+      'format' => 'alpha_dash',
+    ),
+    'user_mail' => array(
+      'max'    => 300,
+      'format' => 'email',
+    ),
+    'user_ids' => array(
+      'require' => true,
+    ),
+    'act' => array(
+      'require' => true,
+    ),
+  );
 
-    protected $scene = array(
-        'submit' => array(
-            'user_name',
-            'user_mail',
-        ),
-        'status' => array(
-            'user_ids',
-            'act',
-        ),
-        'delete' => array(
-            'user_ids',
-        ),
-    );
+  protected $scene = array(
+    'submit' => array(
+      'user_name',
+      'user_mail',
+    ),
+    'status' => array(
+      'user_ids',
+      'act',
+    ),
+    'delete' => array(
+      'user_ids',
+    ),
+  );
 
 }
 ```
@@ -58,41 +58,40 @@ class User extends Validate {
 ``` php
 class User extends Validate {
 
-    protected $rule = array(
-        'user_name' => array(
-            'length' => '1,30',
-            'format' => 'alpha_dash',
-        ),
-        'user_mail' => array(
-            'max'    => 300,
-            'format' => 'email',
-        ),
-        'user_ids' => array(
-            'require' => true,
-        ),
-        'act' => array(
-            'require' => true,
-        ),
+  protected $rule = array(
+    'user_name' => array(
+      'length' => '1,30',
+      'format' => 'alpha_dash',
+    ),
+    'user_mail' => array(
+      'max'    => 300,
+      'format' => 'email',
+    ),
+    'user_ids' => array(
+      'require' => true,
+    ),
+    'act' => array(
+      'require' => true,
+    ),
+  );
+
+  function __construct() { //构造函数
+    $scene = array(
+      'submit' => array(
+        'user_name',
+        'user_mail',
+      ),
+      'status' => array(
+        'user_ids',
+        'act',
+      ),
+      'delete' => array(
+        'user_ids',
+      ),
     );
 
-
-    function __construct() { //构造函数
-        $scene = array(
-            'submit' => array(
-                'user_name',
-                'user_mail',
-            ),
-            'status' => array(
-                'user_ids',
-                'act',
-            ),
-            'delete' => array(
-                'user_ids',
-            ),
-        );
-
-        $this->setScene($scene);
-    }
+    $this->setScene($scene);
+  }
 
 }
 ```
@@ -107,11 +106,11 @@ function setScene( $scene [, $value = array()] )
 
 * `scene` 场景
 
-    支持两种类型: 为字符串表示场景名，为数组时表示批量设置场景
+  支持两种类型: 为字符串表示场景名，为数组时表示批量设置场景
 
 * `value` 场景值
 
-    当 `scene` 为字符串时为必须，当 `scene` 为数组时自动忽略。
+  当 `scene` 为字符串时为必须，当 `scene` 为数组时自动忽略。
 
 ----------
 
@@ -121,8 +120,8 @@ function setScene( $scene [, $value = array()] )
 
 ``` php
 $data = array(
-    'user_name'  => 'ginkgo',
-    'user_mail'  => 121,
+  'user_name'  => 'ginkgo',
+  'user_mail'  => 121,
 );
 
 $validate = Loader::validate('User');
@@ -130,7 +129,7 @@ $validate = Loader::validate('User');
 $result = $validate->scene('submit')->verify($data);
 
 if(!$result){
-    print_r($validate->getMessage());
+  print_r($validate->getMessage());
 }
 ```
 

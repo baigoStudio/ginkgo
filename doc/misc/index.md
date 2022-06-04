@@ -91,9 +91,10 @@ function fillUrl( $url, $baseUrl )
 返回
 
 * 完整的 URL，如：
-URL 为 ./image/logo.png，
-基本 URL 为 http://www.baigo.net，
-补充完整后为 http://www.baigo.net/image/logo.png
+
+  URL 为 ./image/logo.png，
+  基本 URL 为 https://www.baigo.net，
+  补充完整后为 https://www.baigo.net/image/logo.png
 
 ----------
 
@@ -115,8 +116,8 @@ function getRegex( $string, $regex [, $wild = false ] )
 
 * 数组
 
-    * result 匹配结果（布尔值）
-    * matches 搜索结果
+  * result 匹配结果（布尔值）
+  * matches 搜索结果
 
 ----------
 

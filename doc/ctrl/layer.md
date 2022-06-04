@@ -12,17 +12,17 @@ URL 解析和路由后，会把当前的 URL 地址解析到 **【模块 / 控�
 namespace app\ctrl\index;
 
 class Blog {
-    public function index() {
-        return 'index';
-    }
+  public function index() {
+    return 'index';
+  }
 
-    public function add() {
-        return 'add';
-    }
+  public function add() {
+    return 'add';
+  }
 
-    public function edit($param) {
-        return 'edit: ' . $param['id'];
-    }
+  public function edit($param) {
+    return 'edit: ' . $param['id'];
+  }
 }
 ```
 
@@ -38,9 +38,9 @@ class Blog {
 
 输出如下：
 
-    index
-    add
-    edit:5
+  index
+  add
+  edit:5
 
 ----------
 
@@ -54,17 +54,17 @@ class Blog {
 namespace app\ctrl\index\event;
 
 class Blog {
-    public function insert() {
-        return 'insert';
-    }
+  public function insert() {
+    return 'insert';
+  }
 
-    public function update($param) {
-        return 'update: ' . $param['id'];
-    }
+  public function update($param) {
+    return 'update: ' . $param['id'];
+  }
 
-    public function delete($param) {
-        return 'delete: ' . $param['id'];
-    }
+  public function delete($param) {
+    return 'delete: ' . $param['id'];
+  }
 }
 ```
 
@@ -84,8 +84,8 @@ echo $event->delete(5);
 
 输出如下：
 
-    update:5
-    delete:5
+  update:5
+  delete:5
 
 ----------
 
@@ -106,7 +106,7 @@ echo $event->update(5);
 
 输出如下：
 
-    update:5
+  update:5
 
 表示实例化 admin 模块的 Blog 控制器类，并执行 `update()` 方法。
 
@@ -123,6 +123,6 @@ echo $event->update(5);
 
 输出如下：
 
-    update:5
+  update:5
 
 表示实例化 admin 模块的 event 层下的 Blog 控制器类，并执行 `update()` 方法。

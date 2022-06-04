@@ -8,9 +8,9 @@
 
 ``` javascript
 {
-    "name": "Hello",
-    "class": "Hello",
-    ...
+  "name": "Hello",
+  "class": "Hello",
+  ...
 }
 ```
 
@@ -25,29 +25,29 @@ use ginkgo\Plugin;
 
 if (!class_exists('extend\plugin\hello\Hello')) { // 防止类重复
 
-    class Hello {
+  class Hello {
 
-        public $config = array();
-        public $opts = array();
+    public $config = array();
+    public $opts = array();
 
-        function __construct() {
-            // 定义动作
-            // 第一个参数是 钩子 的名称
-            // 第二个参数是 对象名 必须为本类
-            // 第三个是插件所执行的 方法（函数）
-            Plugin::add('action_console_menu_plugin', $this, 'sayHello');
-        }
-
-        //参数由 listen 侦听方法所传递过来
-        function sayHello($param) {
-            //echo '<div>test</div>';
-
-            $param = str_ireplace('__baigo__', 'BAIGO', $param);
-
-            return $param;
-        }
-
+    function __construct() {
+      // 定义动作
+      // 第一个参数是 钩子 的名称
+      // 第二个参数是 对象名 必须为本类
+      // 第三个是插件所执行的 方法（函数）
+      Plugin::add('action_console_menu_plugin', $this, 'sayHello');
     }
+
+    //参数由 listen 侦听方法所传递过来
+    function sayHello($param) {
+      //echo '<div>test</div>';
+
+      $param = str_ireplace('__baigo__', 'BAIGO', $param);
+
+      return $param;
+    }
+
+  }
 
 }
 ```
@@ -65,23 +65,23 @@ use ginkgo\Plugin;
 
 class Hello {
 
-    function __construct() {
-        Plugin::add('action_console_menu_plugin', $this, 'sayHello'); // 单个定义
-        Plugin::add('action_console_menu_plugin', $this, array('doHello', 'testHello')); // 批量定义
-    }
+  function __construct() {
+    Plugin::add('action_console_menu_plugin', $this, 'sayHello'); // 单个定义
+    Plugin::add('action_console_menu_plugin', $this, array('doHello', 'testHello')); // 批量定义
+  }
 
-    function sayHello($param) {
-        $param = str_replace('a', 'A', $param);
-        return $param;
-    }
+  function sayHello($param) {
+    $param = str_replace('a', 'A', $param);
+    return $param;
+  }
 
-    function doHello($param) {
-        return $param;
-    }
+  function doHello($param) {
+    return $param;
+  }
 
-    function testHello($param) {
-        return $param;
-    }
+  function testHello($param) {
+    return $param;
+  }
 
 }
 ```
@@ -101,16 +101,16 @@ use ginkgo\Plugin;
 
 class Hello {
 
-    public $config;
-    public $opts;
+  public $config;
+  public $opts;
 
-    function __construct() {
-        Plugin::add('action_console_menu_plugin', $this, 'sayHello'); // 单个定义
-    }
+  function __construct() {
+    Plugin::add('action_console_menu_plugin', $this, 'sayHello'); // 单个定义
+  }
 
-    function sayHello($param) {
-        print_r($this->config);
-    }
+  function sayHello($param) {
+    print_r($this->config);
+  }
 
 }
 ```
@@ -125,13 +125,13 @@ class Hello {
 
 ``` javascript
 {
-    "name": "Hello",
-    "class": "Hello",
-    "version": "1.0",
-    "author": "Baigo",
-    "plugin_url": "http://www.baigo.net/cms/plugin/hello",
-    "detail": "本插件为一个开发示例",
-    "author_url": "http://www.baigo.net"
+  "name": "Hello",
+  "class": "Hello",
+  "version": "1.0",
+  "author": "Baigo",
+  "plugin_url": "https://www.baigo.net/cms/plugin/hello",
+  "detail": "本插件为一个开发示例",
+  "author_url": "https://www.baigo.net"
 }
 ```
 

@@ -10,23 +10,23 @@ use ginkgo\View;
 
 class Index extends Ctrl {
 
-    public function index() {
-        $view = View::instance();
-        
-        // 单个设置
-        $view->setReplace('name', 'ginkgo');
-        $view->setReplace('email', 'ginkgo@qq.com');
+  public function index() {
+    $view = View::instance();
 
-        // 批量设置
-        $replace = array(
-            'name'  => 'ginkgo',
-            'email' => 'ginkgo@qq.com',
-        );
-        
-        $view->setReplace($replace);
-        
-        return $this->fetch();
-    }
+    // 单个设置
+    $view->setReplace('name', 'ginkgo');
+    $view->setReplace('email', 'ginkgo@qq.com');
+
+    // 批量设置
+    $replace = array(
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@qq.com',
+    );
+
+    $view->setReplace($replace);
+
+    return $this->fetch();
+  }
 
 }
 ```
@@ -48,6 +48,5 @@ class Index extends Ctrl {
 | {\:DIR_STATIC} | 静态文件目录 | |
 | {\:ROUTE_ROOT} | 根路径 | |
 | {\:ROUTE_PAGE} | 分页用的基本路径 | |
-
 
 > 与 `响应 -> 输出替换` 不同的是，视图输出替换只对 `{:变量名}` 形式的字符有效，而响应输出替换对所有字符有效。

@@ -42,9 +42,8 @@ require './ginkgo/boot.php';
 
 这样最终的应用目录结构如下：
 
-    +-- www  WEB部署目录（或者子目录）
-    |   +-- index.php       应用入口文件
-    |   +-- apps            应用目录
-    |   +-- ginkgo          框架目录
-    |
-    
+  +-- www  WEB部署目录（或者子目录）
+  |   +-- index.php       应用入口文件
+  |   +-- apps            应用目录
+  |   +-- ginkgo          框架目录
+  |

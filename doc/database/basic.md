@@ -36,8 +36,8 @@ Db::execute();
 Db::prepare('insert into user (id, name) values (?, ?)');
 
 $bind = array(
-    array(1, 8),
-    array(2, 'baigo'),
+  array(1, 8),
+  array(2, 'baigo'),
 );
 
 Db::bind($bind);
@@ -47,8 +47,8 @@ Db::execute();
 Db::prepare('insert into user (id, name) values (:id, :name)');
 
 $bind = array(
-    array('id', 8),
-    array('name', 'baigo'),
+  array('id', 8),
+  array('name', 'baigo'),
 );
 
 Db::bind($bind);

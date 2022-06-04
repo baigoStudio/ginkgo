@@ -12,9 +12,9 @@
 
 ``` php
 $subQuery = Db::table('user')
-    ->where('id', '>', 10)
-    ->fetchSql(true)
-    ->select('id');
+  ->where('id', '>', 10)
+  ->fetchSql(true)
+  ->select('id');
 ```
 
 生成的 subQuery 结果为：
@@ -27,9 +27,9 @@ SELECT `id`,`name` FROM `user` WHERE `id` > 10
 
 ``` php
 Db::table('user')
-    ->where('id', 'NOT IN', $subQuery)
-    ->order('id', 'desc')
-    ->select();
+  ->where('id', 'NOT IN', $subQuery)
+  ->order('id', 'desc')
+  ->select();
 ```
 
 生成的SQL语句为：
@@ -46,8 +46,8 @@ SELECT * FROM `user` WHERE `id` NOT IN (SELECT `id` FROM `user` WHERE `id` > 10)
 
 ``` php
 $where = array(
-    array('name', 'LIKE', '%baigo', 'key', 'str'),
-    array('title', 'LIKE', '%baigo', 'key', 'str'),
+  array('name', 'LIKE', '%baigo', 'key', 'str'),
+  array('title', 'LIKE', '%baigo', 'key', 'str'),
 );
 
 $subQuery = Db::where($where)->buildSql();
@@ -65,10 +65,10 @@ $subQuery = Db::where($where)->buildSql();
 $field = array('id', 'name');
 
 Db::table('user')
-    ->where('id', '>', 10)
-    ->whereAnd($subQuery)
-    ->order('id', 'desc')
-    ->select($field);
+  ->where('id', '>', 10)
+  ->whereAnd($subQuery)
+  ->order('id', 'desc')
+  ->select($field);
 ```
 
 生成的SQL语句为：

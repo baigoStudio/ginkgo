@@ -12,7 +12,7 @@ echo Html::encode($html);
 
 输出结果
 
-    &lt;div&gt;test&lt;/div&gt;
+  &lt;div&gt;test&lt;/div&gt;
 
 ----------
 
@@ -68,10 +68,10 @@ function fillImg( $content, $baseUrl )
 返回
 
 * 图片具备完整的 URL 的 HTML 内容，如：
-    HTML 为 &lt;div&gt;&lt;img src=&quot;./image/logo.png&quot;&gt;&lt;/div&gt;
-    基本 URL 为 http://www.baigo.net，
-    补充完整后为 &lt;div&gt;&lt;img src=&quot;http://www.baigo.net/image/logo.png&quot;&gt;&lt;/div&gt;
 
+  HTML 为 &lt;div&gt;&lt;img src=&quot;./image/logo.png&quot;&gt;&lt;/div&gt;
+  基本 URL 为 https://www.baigo.net，
+  补充完整后为 &lt;div&gt;&lt;img src=&quot;https://www.baigo.net/image/logo.png&quot;&gt;&lt;/div&gt;
 
 ----------
 
@@ -166,8 +166,8 @@ use ginkgo\Html;
 $html = Html::instance();
 
 $attrExcept = array(
-    'a'    => array('href', 'class'), //保留 a 标签的 href、class 属性
-    'span' => array('class')          //保留 span 标签的 class 属性
+  'a'    => array('href', 'class'), //保留 a 标签的 href、class 属性
+  'span' => array('class')          //保留 span 标签的 class 属性
 );
 
 $html->setAttrExcept($attrExcept);

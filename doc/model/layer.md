@@ -10,9 +10,9 @@ namespace app\ctrl\index;
 use ginkgo\Loader;
 
 class User {
-    function __construct() { //构造函数
-        $this->mdl_user = Loader::model('User');
-    }
+  function __construct() { //构造函数
+    $this->mdl_user = Loader::model('User');
+  }
 }
 ```
 
@@ -28,6 +28,7 @@ namespace app\model\index;
 use ginkgo\Model;
 
 class User extends Model {
+
 }
 ```
 
@@ -116,6 +117,7 @@ namespace app\model;
 use ginkgo\Model;
 
 class User extends Model { // 继承模型类
+
 }
 ```
 
@@ -129,6 +131,7 @@ namespace app\model\console;
 use app\model\User as User_Base; // 继承基本模型
 
 class User extends User_Base {
+
 }
 ```
 
@@ -142,6 +145,7 @@ namespace app\model\console\event;
 use app\model\console\User as User_Console; // 继承 console/User 模型
 
 class User extends User_Console {
+
 }
 ```
 
@@ -155,6 +159,7 @@ namespace app\model\api;
 use app\model\User as User_Base;
 
 class User extends User_Base { // 继承基本模型
+
 }
 ```
 
@@ -183,7 +188,6 @@ $this->mdl_user = Loader::model('User', '', 'api');
 模型的实际位置
 
 > app\model\api\user.mdl.php
-
 
 ``` php
 $this->mdl_user = Loader::model('User', '', false);

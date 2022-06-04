@@ -12,9 +12,9 @@ ginkgo 的控制器定义比较灵活，无需继承任何基础类，也可以�
 namespace app\ctrl\index;
 
 class Index {
-    public function index() {
-        return 'index';
-    }
+  public function index() {
+    return 'index';
+  }
 }
 ```
 
@@ -32,26 +32,26 @@ namespace app\ctrl\index;
 use ginkgo\View;
 
 class Index {
-    public function index() {
-        $view = View::instance();
+  public function index() {
+    $view = View::instance();
 
-        return $view->fetch('index');
-    }
+    return $view->fetch('index');
+  }
 }
 ```
 
 如果继承了 `ginkgo\Ctrl` 类，可以直接调用如下类的实例：
- 
+
 ``` php
 class Ctrl {
-    // ginkgo\Request 的实例
-    protected $obj_request;
+  // ginkgo\Request 的实例
+  protected $obj_request;
 
-    // ginkgo\View 的实例
-    protected $obj_view;
+  // ginkgo\View 的实例
+  protected $obj_view;
 
-    // ginkgo\Lang 的实例
-    protected $obj_lang;
+  // ginkgo\Lang 的实例
+  protected $obj_lang;
 }
 ```
 
@@ -63,12 +63,12 @@ namespace app\ctrl\index;
 use ginkgo\Ctrl;
 
 class Index extends Ctrl {
-    public function index() {
-        // 获取包含域名的完整 URL 地址
-        $this->assign('domain', $this->obj_request->root(true));
+  public function index() {
+    // 获取包含域名的完整 URL 地址
+    $this->assign('domain', $this->obj_request->root(true));
 
-        return $this->fetch('index');
-    }
+    return $this->fetch('index');
+  }
 }
 ```
 
@@ -82,19 +82,19 @@ class Index extends Ctrl {
 namespace app\ctrl\index;
 
 class Index {
-    public function hello() {
-        return 'hello, world!';
-    }
-    
-    public function json() {
-        return json_encode($data);
-    }
-    
-    public function read() {
-        $view = View::instance();
+  public function hello() {
+    return 'hello, world!';
+  }
 
-        return $view->fetch('index');
-    }
+  public function json() {
+    return json_encode($data);
+  }
+
+  public function read() {
+    $view = View::instance();
+
+    return $view->fetch('index');
+  }
 }
 ```
 
@@ -128,8 +128,8 @@ class Index {
 namespace app\ctrl\mod_index;
 
 class Ctrl_Index {
-    public function helloWorld() {
-        return 'hello_world';
-    }
+  public function helloWorld() {
+    return 'hello_world';
+  }
 }
 ```

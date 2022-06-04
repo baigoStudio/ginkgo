@@ -10,9 +10,9 @@
 
 ``` php
 $config = array(
-    'type'      => 'file', // 缓存类型为 file
-    'life_time' => 0, // 缓存生命周期为永久有效
-    'prefix'    => 'ginkgo', //缓存前缀
+  'type'      => 'file', // 缓存类型为 file
+  'life_time' => 0, // 缓存生命周期为永久有效
+  'prefix'    => 'ginkgo', //缓存前缀
 );
 $cache = Cache::instance('file', $config);
 ```
@@ -21,9 +21,9 @@ $cache = Cache::instance('file', $config);
 
 ``` php
 'cache' => array(
-    'type'      => 'file', // 缓存类型为 file
-    'life_time' => 0, // 缓存生命周期为永久有效
-    'prefix'    => 'ginkgo', //缓存前缀
+  'type'      => 'file', // 缓存类型为 file
+  'life_time' => 0, // 缓存生命周期为永久有效
+  'prefix'    => 'ginkgo', //缓存前缀
 ),
 ```
 
@@ -37,13 +37,12 @@ $cache = Cache::instance('file', $config);
 | life_time | 缓存有效期 （单位为 秒） | 86400 |
 | prefix | 缓存前缀 | ginkgo |
 
-
 `type` 参数支持完整命名空间定义，默认采用 `ginkgo\cache\driver` 作为命名空间，如果使用自己扩展的缓存驱动，可以配置为：
 
 ``` php
 'cache' => array(
-    'type'   => 'org\cache\File',
-    ...
+  'type'   => 'org\cache\File',
+  ...
 );
 ```
 
@@ -64,30 +63,30 @@ $cache->driver('org\cache\file')->read('name');
 
 * 写入缓存
 
-    ``` php
-    $cache->write('name', $value);
-    $cache->write('name', $value, 3600); // 有效期一个小时
-    ```
+  ``` php
+  $cache->write('name', $value);
+  $cache->write('name', $value, 3600); // 有效期一个小时
+  ```
 
-    返回写入字节数
+  返回写入字节数
 
 * 读取缓存
 
-    ``` php
-    $cache->read('name');
-    ```
+  ``` php
+  $cache->read('name');
+  ```
 
-    如果 name 值不存在，则默认返回空。
+  如果 name 值不存在，则默认返回空。
 
 * 删除缓存
 
-    ``` php
-    $cache->delete('name');
-    ```
+  ``` php
+  $cache->delete('name');
+  ```
 
 * 检测缓存
 
-    ``` php
-    $cache->check('name'); // 检测缓存是否存在
-    $cache->check('name', true); // 检测缓存是否过期
-    ```
+  ``` php
+  $cache->check('name'); // 检测缓存是否存在
+  $cache->check('name', true); // 检测缓存是否过期
+  ```

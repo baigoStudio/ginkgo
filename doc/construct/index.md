@@ -46,9 +46,9 @@ http://server/index.php/模块/控制器/动作/参数-1/值-1/参数-2/值-2...
 namespace app\ctrl\index;
 
 class Index {
-    public function index() {
-        return 'hello, world!';
-    }
+  public function index() {
+    return 'hello, world!';
+  }
 }
 ```
 
@@ -64,13 +64,13 @@ class Index {
 namespace app\ctrl\index;
 
 class Index {
-    public function index() {
-        return 'hello, world!';
-    }
+  public function index() {
+    return 'hello, world!';
+  }
 
-    public function hello($name) {
-        return 'Hello, ' . $name;
-    }
+  public function hello($name) {
+    return 'Hello, ' . $name;
+  }
 }
 ```
 

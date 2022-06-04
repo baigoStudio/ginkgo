@@ -14,9 +14,9 @@
 
 ``` php
 $config = array(
-    'perpage'   => 30, // 每页记录数
-    'pergroup'  => 10, // 每组页数
-    'pageparam' => 'page', // 分页参数名
+  'perpage'   => 30, // 每页记录数
+  'pergroup'  => 10, // 每组页数
+  'pageparam' => 'page', // 分页参数名
 );
 
 $paginator = Paginator::instance($config);
@@ -26,9 +26,9 @@ $paginator = Paginator::instance($config);
 
 ``` php
 'var_default' => array(
-    'perpage'   => 30, // 每页记录数
-    'pergroup'  => 10, // 每组页数
-    'pageparam' => 'page', // 分页参数名
+  'perpage'   => 30, // 每页记录数
+  'pergroup'  => 10, // 每组页数
+  'pageparam' => 'page', // 分页参数名
 ),
 ```
 
@@ -39,7 +39,6 @@ $paginator = Paginator::instance($config);
 | perpage | 每页记录数 | 30 |
 | pergroup | 每组页数 | 10 |
 | pageparam | 分页参数名 | page |
-
 
 ----------
 
@@ -55,15 +54,15 @@ function make( $current = 'get' )
 
 * `current` 当前页码：
 
-    混合型，默认为 get
+  混合型，默认为 get
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | get | 用 get 方法获取页码 |
-    | post | 用 post 方法获取页码 |
-    | 整数 | 当前页码 |
+  | 值 | 描述 |
+  | - | - |
+  | get | 用 get 方法获取页码 |
+  | post | 用 post 方法获取页码 |
+  | 整数 | 当前页码 |
 
 返回
 
@@ -71,23 +70,22 @@ function make( $current = 'get' )
 
 ``` php
 array(
-    'page'          => 3, // 当前页码
-    'count'         => 300, // 总记录数
-    'offset'        => 20, // 记录数偏移
-    'first'         => 1, // 首页页码
-    'final'         => 30, // 末页页码
-    'total'         => 30, // 总页数
-    'prev'          => 2, // 上一页
-    'next'          => 4, // 下一页
-    'group_begin'   => 1, // 当前组开始
-    'group_end'     => 10, // 当前组结束
-    'group_prev'    => false, // 上一组
-    'group_next'    => 11, // 下一组
+  'page'          => 3, // 当前页码
+  'count'         => 300, // 总记录数
+  'offset'        => 20, // 记录数偏移
+  'first'         => 1, // 首页页码
+  'final'         => 30, // 末页页码
+  'total'         => 30, // 总页数
+  'prev'          => 2, // 上一页
+  'next'          => 4, // 下一页
+  'group_begin'   => 1, // 当前组开始
+  'group_end'     => 10, // 当前组结束
+  'group_prev'    => false, // 上一组
+  'group_next'    => 11, // 下一组
 );
 ```
 
 返回数组中的值为 false 时，代表没有这个参数，开发者可以此来判断是否显示相关链接。
-
 
 ----------
 
@@ -133,7 +131,6 @@ echo $paginator->count;
 | pageparam | 方法 | 分页参数名 |
 | pageparam | 属性 | 分页参数名 |
 
-
 ----------
 
 #### 设置、获取当前页
@@ -150,20 +147,19 @@ $paginator->current(3);
 
 * `current` 当前页码：
 
-    混合型，默认为 get
+  混合型，默认为 get
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | get | 用 get 方法获取页码 |
-    | post | 用 post 方法获取页码 |
-    | 整数 | 当前页码 |
+  | 值 | 描述 |
+  | - | - |
+  | get | 用 get 方法获取页码 |
+  | post | 用 post 方法获取页码 |
+  | 整数 | 当前页码 |
 
 返回
 
 * 无
-
 
 用 `$current` 属性可以取得当前页码，如：
 
@@ -172,7 +168,6 @@ $paginator = Paginator::instance();
 
 echo $paginator->current;
 ```
-
 
 ----------
 
@@ -188,6 +183,6 @@ http://server/index.php/index/article/index/`page/12`
 
 ``` markup
 <form action="http://server/index.php/index/article/index/" method="post">
-    <input type="hidden" name="page" value="12">
+  <input type="hidden" name="page" value="12">
 </form>
 ```

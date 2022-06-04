@@ -19,25 +19,25 @@ function bind( $bind [, $value = '' [, $type = '' ]] )
 
 * `bind` 名称
 
-    支持两种类型：为字符串时表示占位符，为数组时表示批量绑定
+  支持两种类型：为字符串时表示占位符，为数组时表示批量绑定
 
 * `value` 值
 
-    当 `bind` 为字符串时为必须，当 `bind` 为数组时自动忽略。
+  当 `bind` 为字符串时为必须，当 `bind` 为数组时自动忽略。
 
 * `type` 类型
 
-    为空时自动识别类型，当 `bind` 为数组时自动忽略。
+  为空时自动识别类型，当 `bind` 为数组时自动忽略。
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | str（默认值） | 字符串 |
-    | int | 整数 |
-    | float | 浮点数 |
-    | double | 数字 |
-    | bool | 布尔值 |
+  | 值 | 描述 |
+  | - | - |
+  | str（默认值） | 字符串 |
+  | int | 整数 |
+  | float | 浮点数 |
+  | double | 数字 |
+  | bool | 布尔值 |
 
 ----------
 
@@ -47,9 +47,9 @@ function bind( $bind [, $value = '' [, $type = '' ]] )
 
 ``` php
 $bind = array(
-    // array('名称', '值', '类型'),
-    array('id', 8),
-    array('name', 'baigo'),
+  // array('名称', '值', '类型'),
+  array('id', 8),
+  array('name', 'baigo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)');
@@ -65,8 +65,8 @@ Db::execute();
 
 ``` php
 $bind = array(
-    array('id', 8),
-    array('name', 'baigo'),
+  array('id', 8),
+  array('name', 'baigo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)');
@@ -82,8 +82,8 @@ Db::execute();
 
 // 批量绑定
 $bind = array(
-    array('id', 8),
-    array('name', 'baigo'),
+  array('id', 8),
+  array('name', 'baigo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)', $bind);

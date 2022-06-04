@@ -23,9 +23,9 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function count() {        
-        return $this->count();
-    }
+  function count() {
+    return $this->count();
+  }
 
 }
 ```
@@ -39,9 +39,9 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    function count($field) {        
-        return $this->count($field);
-    }
+  function count($field) {
+    return $this->count($field);
+  }
 
 }
 ```

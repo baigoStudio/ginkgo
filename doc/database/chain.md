@@ -6,32 +6,32 @@
 
 ``` php
 Db::table('user')
-    ->where('status', '=', 1)
-    ->order('create_time')
-    ->limit(10)
-    ->select();
+  ->where('status', '=', 1)
+  ->order('create_time')
+  ->limit(10)
+  ->select();
 ```
 
 这里的 `where()`、`order()` 和 `limit()` 方法就被称之为链式操作方法，除了 `select()` 方法必须放到最后一个外（因为 `select()` 方法并不是链式操作方法），链式操作的方法调用顺序没有先后，例如，下面的代码和上面的等效：
 
 ``` php
 Db::table('user')
-    ->order('create_time')
-    ->limit(10)
-    ->where('status', '=', 1)
-    ->select();
+  ->order('create_time')
+  ->limit(10)
+  ->where('status', '=', 1)
+  ->select();
 ```
 
 其实不仅仅是查询方法可以使用链式操作，包括所有的 CURD 方法都可以使用，例如：
 
 ``` php
 Db::table('user')
-    ->where('id', '=', 1)
-    ->find(array('id', 'name', 'email'));
+  ->where('id', '=', 1)
+  ->find(array('id', 'name', 'email'));
 
 Db::table('user')
-    ->where('status', '=', 1)
-    ->delete();
+  ->where('status', '=', 1)
+  ->delete();
 ```
 
 链式操作在完成查询后会自动清空链式操作的所有传值。简而言之，链式操作的结果不会带入后面的其它查询。

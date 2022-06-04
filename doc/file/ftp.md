@@ -10,15 +10,15 @@ FTP 功能由 `ginkgo\Ftp` 类完成，FTP 全称 File Transfer Protocol，即�
 
 ``` php
 'var_extra' => array(
-    'ftp' => array(
-        'host'   => '', // 服务器
-        'port'   => 21, // 端口
-        'user'   => '', // 用户名
-        'pass'   => '', // 密码
-        'path'   => '', // 远程路径
-        'pasv'   => 'off', // 被动模式
-    ),
-    ...
+  'ftp' => array(
+    'host'   => '', // 服务器
+    'port'   => 21, // 端口
+    'user'   => '', // 用户名
+    'pass'   => '', // 密码
+    'path'   => '', // 远程路径
+    'pasv'   => 'off', // 被动模式
+  ),
+  ...
 ),
 ```
 
@@ -26,12 +26,12 @@ FTP 功能由 `ginkgo\Ftp` 类完成，FTP 全称 File Transfer Protocol，即�
 
 ``` php
 $config = array(
-    'host'   => '', // 服务器
-    'port'   => 21, // 端口
-    'user'   => '', // 用户名
-    'pass'   => '', // 密码
-    'path'   => '', // 远程路径
-    'pasv'   => 'off', // 被动模式
+  'host'   => '', // 服务器
+  'port'   => 21, // 端口
+  'user'   => '', // 用户名
+  'pass'   => '', // 密码
+  'path'   => '', // 远程路径
+  'pasv'   => 'off', // 被动模式
 );
 
 $ftp = Ftp::instance($config);
@@ -71,38 +71,37 @@ $ftp->login();
 
 * 列出文件和目录 `0.2.0` 起废弃
 
-    ``` php
-    $ftp = Ftp::instance();
+  ``` php
+  $ftp = Ftp::instance();
 
-    $lists = $ftp->dirList('./image', $abs);
-    ```
+  $lists = $ftp->dirList('./image', $abs);
+  ```
 
 * 创建文件夹 `0.2.0` 起废弃
 
-    ``` php
-    $ftp->dirMk('./image', $abs);
-    ```
+  ``` php
+  $ftp->dirMk('./image', $abs);
+  ```
 
 * 删除目录 `0.2.0` 起废弃
 
-    ``` php
-    $ftp->dirDelete('./dir', $abs);
-    ```
+  ``` php
+  $ftp->dirDelete('./dir', $abs);
+  ```
 
 * 上传文件
 
-    ``` php
-    $ftp->fileUpload($local, $remote, $abs, $mod);
-    ```
+  ``` php
+  $ftp->fileUpload($local, $remote, $abs, $mod);
+  ```
 
-    1. local 本地服务器路径
-    2. remote 远程服务器路径
-    3. abs 是否绝对路径
-    4. mod 传输模式，只能为 FTP_ASCII（文本模式）或 FTP_BINARY（二进制模式）
-
+  1. local 本地服务器路径
+  2. remote 远程服务器路径
+  3. abs 是否绝对路径
+  4. mod 传输模式，只能为 FTP_ASCII（文本模式）或 FTP_BINARY（二进制模式）
 
 * 删除文件
 
-    ``` php
-    $ftp->fileDelete('./src.txt', $abs);
-    ```
+  ``` php
+  $ftp->fileDelete('./src.txt', $abs);
+  ```

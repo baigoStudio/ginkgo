@@ -9,9 +9,9 @@ use ginkgo\Model;
 
 class Index extends Model {
 
-    //自定义初始化
-    function m_init() {
+  //自定义初始化
+  function m_init() {
 
-    }
+  }
 }
 ```

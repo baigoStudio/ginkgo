@@ -20,22 +20,22 @@ namespace app\ctrl\index;
 use ginkgo\Request;
 
 class C_Empty {
-    public function index() {
-        // 获取原始路由
-        $routeOrig = Request::instance()->routeOrig();
+  public function index() {
+    // 获取原始路由
+    $routeOrig = Request::instance()->routeOrig();
 
-        // 取得原始控制器名
-        $name = $routeOrig['ctrl']
+    // 取得原始控制器名
+    $name = $routeOrig['ctrl']
 
-        // 根据当前控制器名来判断要执行那个城市的动作
-        return $this->showCity($name);
-    }
+    // 根据当前控制器名来判断要执行那个城市的动作
+    return $this->showCity($name);
+  }
 
-    // 注意 showCity() 方法 本身是 protected 方法
-    protected function showCity($name) {
-        // 和 $name 这个城市相关的处理
-        return '当前城市：' . $name;
-    }
+  // 注意 showCity() 方法 本身是 protected 方法
+  protected function showCity($name) {
+    // 和 $name 这个城市相关的处理
+    return '当前城市：' . $name;
+  }
 }
 ```
 
@@ -51,8 +51,8 @@ class C_Empty {
 
 由于系统并不存在 beijing、shanghai 或者shenzhen 控制器，因此会定位到空控制器 `C_Empty` 去执行，会看到依次输出的结果是：
 
-    当前城市：beijing
-    当前城市：shanghai
-    当前城市：shenzhen
+  当前城市：beijing
+  当前城市：shanghai
+  当前城市：shenzhen
 
 空控制器和空动作还可以同时使用，用以完成更加复杂的动作。

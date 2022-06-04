@@ -12,12 +12,12 @@
 
 ``` clike
 <IfModule mod_rewrite.c>
-    Options +FollowSymlinks -Multiviews
-    RewriteEngine on
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine on
 
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
 </IfModule>
 ```
 
@@ -37,17 +37,17 @@ RewriteRule (.*)$ /index\.php\?pathname=$1 [I]
 
 ``` markup
 <rewrite>
-    <rules>
-        <rule name="OrgPage" stopProcessing="true">
-            <match url="^(.*)$" />
-            <conditions logicalGrouping="MatchAll">
-                <add input="{HTTP_HOST}" pattern="^(.*)$" />
-                <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
-                <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
-            </conditions>
-            <action type="Rewrite" url="index.php/{R:1}" />
-        </rule>
-    </rules>
+  <rules>
+    <rule name="OrgPage" stopProcessing="true">
+      <match url="^(.*)$" />
+      <conditions logicalGrouping="MatchAll">
+        <add input="{HTTP_HOST}" pattern="^(.*)$" />
+        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+      </conditions>
+      <action type="Rewrite" url="index.php/{R:1}" />
+    </rule>
+  </rules>
 </rewrite>
 ```
 
@@ -61,10 +61,10 @@ RewriteRule (.*)$ /index\.php\?pathname=$1 [I]
 
 ``` clike
 location / { // …..省略部分代码
-    if (!-e $request_filename) {
-        rewrite  ^(.*)$  /index.php?pathname=/$1  last;
-        break;
-    }
+  if (!-e $request_filename) {
+    rewrite  ^(.*)$  /index.php?pathname=/$1  last;
+    break;
+  }
 }
 ```
 
@@ -74,9 +74,9 @@ location / { // …..省略部分代码
 
 ``` clike
 location /domain/ {
-    if (!-e $request_filename){
-        rewrite  ^/domain/(.*)$  /domain/index.php?pathname=/$1  last;
-    }
+  if (!-e $request_filename){
+    rewrite  ^/domain/(.*)$  /domain/index.php?pathname=/$1  last;
+  }
 }
 ```
 

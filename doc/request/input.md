@@ -39,31 +39,31 @@ function get( [ $name = true [, $type = 'str' [, $default = '' ]]] )
 
 * `name` 变量名
 
-    支持三种类型
+  支持三种类型
 
-    布尔值：true (默认)，取得所有被过滤的变量，false，取得所有原始变量
+  布尔值：true (默认)，取得所有被过滤的变量，false，取得所有原始变量
 
-    字符串：取得指定变量
+  字符串：取得指定变量
 
-    数组：取得数组指定的变量，如不存在或为空，则自动用空值补全。
+  数组：取得数组指定的变量，如不存在或为空，则自动用空值补全。
 
 * `type` 类型
 
-    当 `name` 为数组时自动忽略。
+  当 `name` 为数组时自动忽略。
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | str（默认值） | 字符串 |
-    | int | 整数 |
-    | float | 浮点数 |
-    | num | 数字 |
-    | arr | 数组 |
+  | 值 | 描述 |
+  | - | - |
+  | str（默认值） | 字符串 |
+  | int | 整数 |
+  | float | 浮点数 |
+  | num | 数字 |
+  | arr | 数组 |
 
 * `default` 默认值
 
-    当 `name` 为数组时自动忽略。
+  当 `name` 为数组时自动忽略。
 
 说明：当变量不存在或者类型不符合时，会用默认值填充变量。
 
@@ -73,17 +73,17 @@ $request = Request::instance();
 $id = $request->get('id' 'int', 0);
 ```
 
- 变量名为多维数组时：
+变量名为多维数组时：
 
 ``` php
 $inputParam = array(
-    // '变量名'      => array('类型', '默认值'),
-    'admin_id'      => array('int', 0),
-    'admin_name'    => array('txt', ''),
-    'admin_pass'    => array('txt', ''),
-    'admin_note'    => array('txt', ''),
-    'admin_status'  => array('txt', ''),
-    'admin_type'    => array('txt', ''),
+  // '变量名'      => array('类型', '默认值'),
+  'admin_id'      => array('int', 0),
+  'admin_name'    => array('txt', ''),
+  'admin_pass'    => array('txt', ''),
+  'admin_note'    => array('txt', ''),
+  'admin_status'  => array('txt', ''),
+  'admin_type'    => array('txt', ''),
 );
 
 $submitInput = $this->obj_request->get($inputParam);

@@ -16,8 +16,8 @@ Db::table('user')->where('id', '=', 1)->find();
 
 ``` php
 $select = array(
-    'user_id',
-    'user_name',
+  'user_id',
+  'user_name',
 );
 Db::table('user')->where('status', '=', 'enable')->select($select);
 ```
@@ -38,7 +38,7 @@ Db::table('`user`');
 
 ``` php
 $select = array(
-    'DISTINCT FROM_UNIXTIME(`attach_time`, \'%Y\') AS `attach_year`',
+  'DISTINCT FROM_UNIXTIME(`attach_time`, \'%Y\') AS `attach_year`',
 );
 Db::table('attach')->where('status', '=', 'enable')->select($select);
 ```
@@ -49,8 +49,8 @@ Db::table('attach')->where('status', '=', 'enable')->select($select);
 
 ``` php
 $data = array(
-    'foo' => 'bar',
-    'bar' => 'foo',
+  'foo' => 'bar',
+  'bar' => 'foo',
 );
 Db::table('user')->insert($data);
 ```
@@ -65,8 +65,8 @@ Db::table('user')->insert($data);
 
 ``` php
 $data = array(
-    'foo' => 'bar',
-    'bar' => 'foo',
+  'foo' => 'bar',
+  'bar' => 'foo',
 );
 Db::table('user')->where('id', '=', 1)->update($data);
 ```

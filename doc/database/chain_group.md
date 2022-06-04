@@ -8,8 +8,8 @@
 
 ``` php
 Db::table('user')
-    ->group('user_id')
-    ->select('user_id,username,MAX(score)');
+  ->group('user_id')
+  ->select('user_id,username,MAX(score)');
 ```
 
 生成的 SQL 语句是：
@@ -22,11 +22,11 @@ SELECT user_id,username,MAX(score) FROM score GROUP BY user_id
 
 ``` php
 $group = array(
-    'user_id', 'test_time'
+  'user_id', 'test_time'
 );
 Db::table('user')
-    ->group($group)
-    ->select('user_id,username,MAX(score)');
+  ->group($group)
+  ->select('user_id,username,MAX(score)');
 ```
 
 生成的 SQL 语句是：

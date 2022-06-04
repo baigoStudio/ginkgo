@@ -9,23 +9,23 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        $json = $this->json()
-        
-        // 单个设置
-        $json->setReplace('name', 'ginkgo');
-        $json->setReplace('email', 'ginkgo@qq.com');
+  public function index() {
+    $json = $this->json()
 
-        // 批量设置
-        $replace = array(
-            'name'  => 'ginkgo',
-            'email' => 'ginkgo@qq.com',
-        );
-        
-        $json->setReplace($replace);
-        
-        return $json;
-    }
+    // 单个设置
+    $json->setReplace('name', 'ginkgo');
+    $json->setReplace('email', 'ginkgo@qq.com');
+
+    // 批量设置
+    $replace = array(
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@qq.com',
+    );
+
+    $json->setReplace($replace);
+
+    return $json;
+  }
 
 }
 ```

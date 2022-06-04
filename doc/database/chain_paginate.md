@@ -10,9 +10,9 @@
 
 ``` php
 'var_default' => array(
-    'perpage'   => 30, // 每页记录数
-    'pergroup'  => 10, // 每组页数
-    'pageparam' => 'page', // 分页参数名
+  'perpage'   => 30, // 每页记录数
+  'pergroup'  => 10, // 每组页数
+  'pageparam' => 'page', // 分页参数名
 ),
 ```
 
@@ -46,27 +46,27 @@ function paginate( [ $perpage = 0 [, $current = 'get' [, $pageparam = 'page' [, 
 
 * `perpage` 每页记录数：
 
-    数值型，为 0 表示采用系统默认设置
+  数值型，为 0 表示采用系统默认设置
 
 * `current` 当前页码：
 
-    混合型，默认为 get
+  混合型，默认为 get
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | get | 用 get 方法获取页码 |
-    | post | 用 post 方法获取页码 |
-    | 整数 | 当前页码 |
+  | 值 | 描述 |
+  | - | - |
+  | get | 用 get 方法获取页码 |
+  | post | 用 post 方法获取页码 |
+  | 整数 | 当前页码 |
 
 * `pageparam` 分页参数名：
 
-    字符型
+  字符型
 
 * `pergroup` 每组页数
 
-    数值型
+  数值型
 
 返回
 

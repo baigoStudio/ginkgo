@@ -27,9 +27,8 @@ require(__DIR__ . '/../ginkgo/boot.php');
 
 * 访问 __http://server/index.php/`article/show`__
 
-    会自动路由到 __http://server/index.php/index/article/show__
-
+  会自动路由到 __http://server/index.php/index/article/show__
 
 * 访问 __http://server/index.php/`admin/article/show`__
 
-    会自动路由到 __http://server/index.php/index/admin/article__
+  会自动路由到 __http://server/index.php/index/admin/article__

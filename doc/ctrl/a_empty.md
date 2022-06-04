@@ -12,22 +12,22 @@ namespace app\ctrl\index;
 use ginkgo\Request;
 
 class City {
-    public function a_empty() {
-        // 获取原始路由
-        $routeOrig = Request::instance()->routeOrig();
+  public function a_empty() {
+    // 获取原始路由
+    $routeOrig = Request::instance()->routeOrig();
 
-        // 取得原始动作名
-        $name = $routeOrig['act']
+    // 取得原始动作名
+    $name = $routeOrig['act']
 
-        // 把所有城市的动作解析到 showCity() 方法
-        return $this->showCity($name);
-    }
+    // 把所有城市的动作解析到 showCity() 方法
+    return $this->showCity($name);
+  }
 
-    // 注意 showCity() 方法 本身是 protected 方法
-    protected function showCity($name) {
-        // 和 $name 这个城市相关的处理
-        return '当前城市：' . $name;
-    }
+  // 注意 showCity() 方法 本身是 protected 方法
+  protected function showCity($name) {
+    // 和 $name 这个城市相关的处理
+    return '当前城市：' . $name;
+  }
 }
 ```
 
@@ -43,6 +43,6 @@ class City {
 
 由于 City 并没有定义 beijing、shanghai 或者 shenzhen 动作，因此系统会定位到空动作 `a_empty()` 中去解析，`a_empty()` 方法的参数就是当前 URL 里面的动作名，因此会看到依次输出的结果是：
 
-    当前城市：beijing
-    当前城市：shanghai
-    当前城市：shenzhen
+  当前城市：beijing
+  当前城市：shanghai
+  当前城市：shenzhen

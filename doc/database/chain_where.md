@@ -10,9 +10,9 @@
 
 ``` php
 Db::table('user')
-    ->where('id', '>', 1)
-    ->whereOr('name', '=', 'baigo')
-    ->select();
+  ->where('id', '>', 1)
+  ->whereOr('name', '=', 'baigo')
+  ->select();
 ```
 ----------
 
@@ -26,8 +26,8 @@ $map = array('id', '>', 1);
 Db::table('user')->where($map)->select();
 
 $map = array(
-    array('id', '>', 1),
-    array('mail', 'like', '%baigo@qq.com%'),
+  array('id', '>', 1),
+  array('mail', 'like', '%baigo@qq.com%'),
 );
 
 Db::table('user')->where($map)->select();
@@ -53,8 +53,8 @@ SELECT * FROM `user` WHERE `type`=1 AND `status`=1
 
 ``` php
 $bind = array(
-    array('id', 1, 'int'),
-    array('name', 'baigo'),
+  array('id', 1, 'int'),
+  array('name', 'baigo'),
 );
 Db::table('user')->where('`id`=:id AND `username`=:name')->bind($bind)->select();
 ```

@@ -10,13 +10,13 @@ Cookie 功能由 `ginkgo\Cookie` 完成。
 
 ``` php
 'cookie' => array(
-    'prefix'    => '', // cookie 名称前缀
-    'expire'    => 0, // cookie 保存时间
-    'path'      => '/', // cookie 保存路径
-    'domain'    => '', // cookie 有效域名
-    'secure'    => false, //  cookie 启用安全传输
-    'httponly'  => false, // httponly 设置
-    'setcookie' => true, // 是否使用 setcookie
+  'prefix'    => '', // cookie 名称前缀
+  'expire'    => 0, // cookie 保存时间
+  'path'      => '/', // cookie 保存路径
+  'domain'    => '', // cookie 有效域名
+  'secure'    => false, //  cookie 启用安全传输
+  'httponly'  => false, // httponly 设置
+  'setcookie' => true, // 是否使用 setcookie
 ),
 ```
 
@@ -26,13 +26,13 @@ Cookie 功能由 `ginkgo\Cookie` 完成。
 
 ``` php
 $config = array(
-    'prefix'    => '', // cookie 名称前缀
-    'expire'    => 0, // cookie 保存时间
-    'path'      => '/', // cookie 保存路径
-    'domain'    => '', // cookie 有效域名
-    'secure'    => false, //  cookie 启用安全传输
-    'httponly'  => false, // httponly 设置
-    'setcookie' => true, // 是否使用 setcookie
+  'prefix'    => '', // cookie 名称前缀
+  'expire'    => 0, // cookie 保存时间
+  'path'      => '/', // cookie 保存路径
+  'domain'    => '', // cookie 有效域名
+  'secure'    => false, //  cookie 启用安全传输
+  'httponly'  => false, // httponly 设置
+  'setcookie' => true, // 是否使用 setcookie
 );
 
 // cookie初始化
@@ -47,38 +47,38 @@ Cookie::prefix('baigo_');
 
 * 设置
 
-    ``` php
-    Cookie::set('name', $value);
+  ``` php
+  Cookie::set('name', $value);
 
-    $config = array(
-        'prefix'    => '', // cookie 名称前缀
-        'expire'    => 0, // cookie 保存时间
-    );
+  $config = array(
+    'prefix'    => '', // cookie 名称前缀
+    'expire'    => 0, // cookie 保存时间
+  );
 
-    Cookie::set('name', $value, $config);
-    ```
+  Cookie::set('name', $value, $config);
+  ```
 
 * 取值
 
-    ``` php
-    Cookie::get('name');
-    // 获取指定前缀的cookie值
-    Cookie::get('name', 'baigo_');
-    ```
+  ``` php
+  Cookie::get('name');
+  // 获取指定前缀的cookie值
+  Cookie::get('name', 'baigo_');
+  ```
 
-    如果 name 值不存在，则默认返回空。
+  如果 name 值不存在，则默认返回空。
 
 * 删除
 
-    ``` php
-    Cookie::delete('name');
-    // 删除指定前缀的 cookie
-    Cookie::delete('name', 'baigo_');
-    ```
+  ``` php
+  Cookie::delete('name');
+  // 删除指定前缀的 cookie
+  Cookie::delete('name', 'baigo_');
+  ```
 
 * 前缀
 
-    ``` php
-    Cookie::prefix('prefix');
-    Cookie::prefix(); // 取得前缀
-    ```
+  ``` php
+  Cookie::prefix('prefix');
+  Cookie::prefix(); // 取得前缀
+  ```

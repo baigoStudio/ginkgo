@@ -4,25 +4,25 @@
 
 ``` php
 $data = array(
-    'name'  => 'baigo',
-    'email' => 'baigo@qq.com',
+  'name'  => 'baigo',
+  'email' => 'baigo@qq.com',
 );
 
 $rule = array(
-    'name'  => array(
-        'require' => true,
-        'max'     => 25,
-    ),
-    'email' => array(
-        'format'  => 'email',
-    ),
+  'name'  => array(
+    'require' => true,
+    'max'     => 25,
+  ),
+  'email' => array(
+    'format'  => 'email',
+  ),
 );
 
 $result = $this->validate($data, $rule);
 
 if($result !== true){
-    // 验证失败 输出错误信息
-    print_r($result);
+  // 验证失败 输出错误信息
+  print_r($result);
 }
 ```
 
@@ -34,25 +34,25 @@ namespace app\index\validate;
 use ginkgo\Validate;
 
 class User extends Validate {
-    protected $rule = array(
-        'name'  => array(
-            'require' => true,
-            'max'     => 25,
-        ),
-        'email' => array(
-            'format'  => 'email',
-        ),
-    );
+  protected $rule = array(
+    'name'  => array(
+      'require' => true,
+      'max'     => 25,
+    ),
+    'email' => array(
+      'format'  => 'email',
+    ),
+  );
 
-    protected $scene = array(
-        'add'   =>  array(
-            'name',
-            'email',
-        ),
-        'edit'  =>  array(
-            'email'
-        ),
-    );
+  protected $scene = array(
+    'add'   =>  array(
+      'name',
+      'email',
+    ),
+    'edit'  =>  array(
+      'email'
+    ),
+  );
 }
 ```
 
@@ -62,8 +62,8 @@ class User extends Validate {
 $result = $this->validate($data, 'user');
 
 if($result !== true){
-    // 验证失败 输出错误信息
-    print_r($result);
+  // 验证失败 输出错误信息
+  print_r($result);
 }
 ```
 
@@ -73,8 +73,8 @@ if($result !== true){
 $result = $this->validate($data, 'user', 'edit');
 
 if($result !== true){
-    // 验证失败 输出错误信息
-    print_r($result);
+  // 验证失败 输出错误信息
+  print_r($result);
 }
 ```
 
@@ -88,14 +88,14 @@ use ginkgo\Loader;
 
 class User extends Model {
 
-    function edit() {
-        $result = $this->validate($data);
+  function edit() {
+    $result = $this->validate($data);
 
-        if($result !== true){
-            // 验证失败 输出错误信息
-            print_r($result);
-        }
+    if($result !== true){
+      // 验证失败 输出错误信息
+      print_r($result);
     }
+  }
 
 }
 ```
@@ -109,14 +109,14 @@ use ginkgo\Loader;
 
 class User {
 
-    function edit() {
-        $result = $this->validate($data, '', 'edit');
+  function edit() {
+    $result = $this->validate($data, '', 'edit');
 
-        if($result !== true){
-            // 验证失败 输出错误信息
-            print_r($result);
-        }
+    if($result !== true){
+      // 验证失败 输出错误信息
+      print_r($result);
     }
+  }
 
 }
 ```

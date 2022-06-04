@@ -116,16 +116,16 @@ $image = Image::instance();
 $image->open('./image.png');
 
 $thumb = array(
-    array(
-        'thumb_width'   => 100,
-        'thumb_height'  => 100,
-        'thumb_type'    => 'ratio',
-    ),
-    array(
-        'thumb_width'   => 150,
-        'thumb_height'  => 200,
-        'thumb_type'    => 'crop',
-    ),
+  array(
+    'thumb_width'   => 100,
+    'thumb_height'  => 100,
+    'thumb_type'    => 'ratio',
+  ),
+  array(
+    'thumb_width'   => 150,
+    'thumb_height'  => 200,
+    'thumb_type'    => 'crop',
+  ),
 );
 $image->batThumb($thumb);
 ```
@@ -145,44 +145,42 @@ function save( [ $path = false [, $name = false [, $type = false [, $quality = 9
 function save( [ $path = false [, $name = false [, $quality = 90 [, $interlace = true ]]]] ) // 0.2.0 及以后
 ```
 
-
 参数
 
 * `path` 保存目录
 
-    此参数为 false 时，与原图片同目录。
+  此参数为 false 时，与原图片同目录。
 
 * `name` 文件名
 
-    此参数为 false 时，系统会自动生成。
+  此参数为 false 时，系统会自动生成。
 
 * `type` 保存类型 `0.2.0` 弃用
 
-    如 `name` 参数指定了扩展名，则系统将按照扩展名类型保存，此参数自动失效。
+  如 `name` 参数指定了扩展名，则系统将按照扩展名类型保存，此参数自动失效。
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | false（默认值） | 系原图片相同 |
-    | jpe | JPG 图片 |
-    | jpg | JPG 图片 |
-    | jpeg | JPG 图片 |
-    | pjpeg | JPG 图片 |
-    | gif | GIF 图片 |
-    | png | PNG 图片 |
-    | x-png | PNG 图片 |
-    | bmp | BMP 图片 |
-    | x-ms-bmp | BMP 图片 |
-    | x-windows-bmp | BMP 图片 |
-
+  | 值 | 描述 |
+  | - | - |
+  | false（默认值） | 系原图片相同 |
+  | jpe | JPG 图片 |
+  | jpg | JPG 图片 |
+  | jpeg | JPG 图片 |
+  | pjpeg | JPG 图片 |
+  | gif | GIF 图片 |
+  | png | PNG 图片 |
+  | x-png | PNG 图片 |
+  | bmp | BMP 图片 |
+  | x-ms-bmp | BMP 图片 |
+  | x-windows-bmp | BMP 图片 |
 
 * `quality` 图片质量
 
-    仅对 JPG 有效，默认为 90
+  仅对 JPG 有效，默认为 90
 
 * `interlace` 是否设置隔行扫描
 
-    仅对 JPG 有效，默认为 true
+  仅对 JPG 有效，默认为 true
 
 > 设置隔行扫描的情况下，浏览时是从上到下逐行显示，否则图片是由模糊到清晰整个显示。

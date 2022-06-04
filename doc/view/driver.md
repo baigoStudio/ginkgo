@@ -13,14 +13,14 @@
 
 ``` php
 'view' => array(
-    'type'   => 'Php', //默认驱动
-    ...
+  'type'   => 'Php', //默认驱动
+  ...
 );
 
 // 0.2.0 之前为
 'tpl' => array(
-    'type'   => 'Php',
-    ...
+  'type'   => 'Php',
+  ...
 );
 ```
 
@@ -28,14 +28,14 @@ type 参数支持完整命名空间定义，默认采用 `ginkgo\view\driver` �
 
 ``` php
 'view' => array(
-    'type'   => 'org\view\Tpl',
-    ...
+  'type'   => 'org\view\Tpl',
+  ...
 );
 
 // 0.2.0 之前为
 'tpl' => array(
-    'type'   => 'org\view\Tpl',
-    ...
+  'type'   => 'org\view\Tpl',
+  ...
 );
 ```
 

@@ -8,8 +8,8 @@
 
 ``` php
 'lang' => array(
-    'switch'    => false, //多语言切换
-    'default'   => 'zh_CN', //默认语言
+  'switch'    => false, //多语言切换
+  'default'   => 'zh_CN', //默认语言
 ),
 ```
 
@@ -24,7 +24,6 @@ $lang = Lang::instance();
 ----------
 
 #### 获取当前语言
-
 
 ``` php
 echo $lang->getCurrent();
@@ -68,7 +67,6 @@ function get( $name [, $range = '' [, $replace = array() [, $show_src = true ]]]
 
 * `show_src` 是否返回变量名
 
-
 模板中已内置 `$lang` 实例，可以直接使用，如：
 
 ``` php
@@ -80,8 +78,8 @@ function get( $name [, $range = '' [, $replace = array() [, $show_src = true ]]]
 
 ``` php
 class Ctrl {
-    // ginkgo\Lang 的实例
-    protected $obj_lang;
+  // ginkgo\Lang 的实例
+  protected $obj_lang;
 }
 ```
 
@@ -89,8 +87,8 @@ class Ctrl {
 
 ``` php
 class Validate {
-    // ginkgo\Lang 的实例
-    protected $obj_lang;
+  // ginkgo\Lang 的实例
+  protected $obj_lang;
 }
 ```
 
@@ -118,8 +116,8 @@ $lang->load(GK_APP_LANG . 'zh_CN.php');
 
 ``` php
 return array(
-     'Hello ginkgo'     => '欢迎使用 Ginkgo',
-     'data type error'  => '数据类型错误',
+  'Hello ginkgo'     => '欢迎使用 Ginkgo',
+  'data type error'  => '数据类型错误',
 );
 ```
 
@@ -143,15 +141,15 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        $replace = array(
-            'name'  => 'Ginkgo',
-            'email' => 'ginkgo@qq.com',
-        );
+  public function index() {
+    $replace = array(
+      'name'  => 'Ginkgo',
+      'email' => 'ginkgo@qq.com',
+    );
 
-        echo $this->obj_lang->get('Hello {:name}', '', $replace);
-        echo $this->obj_lang->get('Email: {:email} not found', '', $replace);
-    }
+    echo $this->obj_lang->get('Hello {:name}', '', $replace);
+    echo $this->obj_lang->get('Email: {:email} not found', '', $replace);
+  }
 
 }
 ```
@@ -160,8 +158,8 @@ class Index extends Ctrl {
 
 ``` php
 return array(
-     'Hello {:name}'                => '欢迎使用 {:name}',
-     'Email: {:email} not found'    => 'Email: {:email} 未找到',
+  'Hello {:name}'                => '欢迎使用 {:name}',
+  'Email: {:email} not found'    => 'Email: {:email} 未找到',
 );
 ```
 
@@ -174,7 +172,6 @@ return array(
 
 > * Hello Ginkgo
 > * Email: ginkgo@qq.com not found
-
 
 ----------
 

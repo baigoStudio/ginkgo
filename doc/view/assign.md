@@ -11,21 +11,21 @@ namespace app\ctrl\index;
 
 class Index extends ginkgo\Ctrl {
 
-    public function index() {
-        // 模板变量赋值
-        $this->assign('name', 'baigo');
-        $this->assign('email', 'baigo@qq.com');
+  public function index() {
+    // 模板变量赋值
+    $this->assign('name', 'baigo');
+    $this->assign('email', 'baigo@qq.com');
 
-        $data = array(
-            'name'  => 'baigo',
-            'email' => 'baigo@qq.com'
-        );
-        // 或者批量赋值
-        $this->assign($data);
+    $data = array(
+      'name'  => 'baigo',
+      'email' => 'baigo@qq.com'
+    );
+    // 或者批量赋值
+    $this->assign($data);
 
-        // 模板输出
-        return $this->fetch();
-    }
+    // 模板输出
+    return $this->fetch();
+  }
 
 }
 ```
@@ -41,31 +41,31 @@ namespace app\ctrl\index;
 
 class Index extends ginkgo\Ctrl {
 
-    public function name() {
-        return $this->fetch('name', 'name', 'baigo');
-    }
+  public function name() {
+    return $this->fetch('name', 'name', 'baigo');
+  }
 
-    public function email() {
-        $data = array(
-            'name'  => 'baigo',
-            'email' => 'baigo@qq.com'
-        );
+  public function email() {
+    $data = array(
+      'name'  => 'baigo',
+      'email' => 'baigo@qq.com'
+    );
 
-        return $this->fetch('email', $data);
-    }
+    return $this->fetch('email', $data);
+  }
 
-    public function test() {
-        return $this->display('test', 'name', 'baigo');
-    }
+  public function test() {
+    return $this->display('test', 'name', 'baigo');
+  }
 
-    public function abc() {
-        $data = array(
-            'name'  => 'baigo',
-            'email' => 'baigo@qq.com'
-        );
+  public function abc() {
+    $data = array(
+      'name'  => 'baigo',
+      'email' => 'baigo@qq.com'
+    );
 
-        return $this->display('abc', $data);
-    }
+    return $this->display('abc', $data);
+  }
 
 }
 ```

@@ -7,9 +7,9 @@ namespace app\ctrl\index;
 
 class Index {
 
-    public function hello($name = 'baigo') {
-        return 'Hello, ' . $name . '!';
-    }
+  public function hello($name = 'baigo') {
+    return 'Hello, ' . $name . '!';
+  }
 
 }
 ```
@@ -21,7 +21,7 @@ class Index {
 ``` php
 // 默认输出类型
 'var_default' => array(
-    'return_type' => 'json',
+  'return_type' => 'json',
 ),
 ```
 
@@ -49,14 +49,14 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function hello() {
-        $data = array(
-            'name'      => 'baigo',
-            'status'    => '1'
-        );
-        
-        return $this->json($data);
-    }
+  public function hello() {
+    $data = array(
+      'name'      => 'baigo',
+      'status'    => '1'
+    );
+
+    return $this->json($data);
+  }
 
 }
 ```
@@ -70,9 +70,9 @@ namespace app\ctrl\index;
 
 class Index {
 
-    public function hello() {
-        return 'Hello, baigo!';
-    }
+  public function hello() {
+    return 'Hello, baigo!';
+  }
 
 }
 ```

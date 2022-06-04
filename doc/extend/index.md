@@ -8,16 +8,15 @@
 
 先创建 app/function.php 文件，大致如下：
 
-
 ``` php
 // 增加一个新的 table 函数
 function table($table, $config = array()) {
-    return $table;
+  return $table;
 }
 
 // 增加一个新的 db 函数
 function db($name, $config = array()) {
-    return $name; 
+  return $name;
 }
 ```
 
@@ -25,7 +24,7 @@ function db($name, $config = array()) {
 
 ``` php
 'func_extra' => array(
-    GK_PATH_APP . 'function.php',
+  GK_PATH_APP . 'function.php',
 ),
 ```
 
@@ -33,7 +32,7 @@ function db($name, $config = array()) {
 
 ``` php
 'func_extra' => array(
-    GK_PATH_APP . 'function.php',
-    GK_PATH_APP . 'func/sys.php',
+  GK_PATH_APP . 'function.php',
+  GK_PATH_APP . 'func/sys.php',
 ),
 ```

@@ -6,8 +6,8 @@
 
 ``` markup
 <form action="/index/index/upload" enctype="multipart/form-data" method="post">
-    <input type="file" name="image"> <br>
-    <input type="submit" value="上传">
+  <input type="file" name="image"> <br>
+  <input type="submit" value="上传">
 </form>
 ```
 
@@ -20,24 +20,24 @@ use ginkgo\Upload;
 
 class Index {
 
-    public function upload() {
-        $upload = Upload::instance();
+  public function upload() {
+    $upload = Upload::instance();
 
-        // 获取表单上传文件 例如上传了 001.jpg
-        $file = $upload->create('image');
+    // 获取表单上传文件 例如上传了 001.jpg
+    $file = $upload->create('image');
 
-        if ($file) {
-            // 移动到框架应用根目录 /uploads/ 目录下
-            if ($upload->move('../uploads/', '001.jpg')) {
-                print_r($file);
-            } else {
-                echo $upload->getError();
-            }
-        } else {
-            // 上传失败获取错误信息
-            echo $upload->getError();
-        }
+    if ($file) {
+      // 移动到框架应用根目录 /uploads/ 目录下
+      if ($upload->move('../uploads/', '001.jpg')) {
+        print_r($file);
+      } else {
+        echo $upload->getError();
+      }
+    } else {
+        // 上传失败获取错误信息
+        echo $upload->getError();
     }
+  }
 
 }
 ```
@@ -46,11 +46,11 @@ class Index {
 
 ``` php
 array(
-    'name'      => '001.jpg', // 原始文件名
-    'tmp_name'  => '/tmp/php3zU3t5', // 临时文件
-    'ext'       => 'jpg', // 扩展名
-    'mime'      => 'image/jpeg', // MIME
-    'size'      => 31059, // 文件大小
+  'name'      => '001.jpg', // 原始文件名
+  'tmp_name'  => '/tmp/php3zU3t5', // 临时文件
+  'ext'       => 'jpg', // 扩展名
+  'mime'      => 'image/jpeg', // MIME
+  'size'      => 31059, // 文件大小
 );
 ```
 
@@ -68,21 +68,21 @@ function move( string $dir [, string $name = true [, bool $replace = false ]] )
 
 * `dir` 移动到指定目录
 
-    建议使用完整路径
+  建议使用完整路径
 
 * `name` 保存为指定文件名
 
-    可能的值
+  可能的值
 
-    | 值 | 描述 |
-    | - | - |
-    | true（默认值） | 自动生成 |
-    | false | 使用原文件名 |
-    | 字符串 | 指定文件名 |
+  | 值 | 描述 |
+  | - | - |
+  | true（默认值） | 自动生成 |
+  | false | 使用原文件名 |
+  | 字符串 | 指定文件名 |
 
 * `replace` 是否覆盖
 
-    如为 false，文件重名时将终止上传。
+  如为 false，文件重名时将终止上传。
 
 ----------
 
@@ -112,11 +112,11 @@ $upload->move('../uploads/', false);
 
 ``` php
 'var_extra' => array(
-    'upload' => array(
-        'limit_size'    => 200, // 上传尺寸
-        'limit_unit'    => 'kb', // 尺寸单位（kb、mb、gb）
-    ),
-    ...
+  'upload' => array(
+    'limit_size'    => 200, // 上传尺寸
+    'limit_unit'    => 'kb', // 尺寸单位（kb、mb、gb）
+  ),
+  ...
 ),
 ```
 
@@ -124,8 +124,8 @@ $upload->move('../uploads/', false);
 
 ``` php
 $config = array(
-    'limit_size'    => 200, // 上传尺寸
-    'limit_unit'    => 'kb', // 尺寸单位（kb、mb、gb）
+  'limit_size'    => 200, // 上传尺寸
+  'limit_unit'    => 'kb', // 尺寸单位（kb、mb、gb）
 );
 
 $upload = Upload::instance($config);
@@ -142,24 +142,24 @@ use ginkgo\Upload;
 
 class Index {
 
-    public function upload() {
-        $mime = array(
-            'gif' => array(
-                'image/gif',
-            ),
-            'jpg' => array(
-                'image/jpeg',
-                'image/pjpeg'
-            ),
-            'png' => array(
-                'image/png',
-                'image/x-png'
-            ),
-        );
+  public function upload() {
+    $mime = array(
+      'gif' => array(
+        'image/gif',
+      ),
+      'jpg' => array(
+        'image/jpeg',
+        'image/pjpeg'
+      ),
+      'png' => array(
+        'image/png',
+        'image/x-png'
+      ),
+    );
 
-        $upload = Upload::instance();
-        $upload->setMime($mime);
-    }
+    $upload = Upload::instance();
+    $upload->setMime($mime);
+  }
 
 }
 ```
@@ -173,10 +173,10 @@ use ginkgo\Upload;
 
 class Index {
 
-    public function upload() {
-        $upload = Upload::instance();
-        $upload->setLimit(10989);
-    }
+  public function upload() {
+    $upload = Upload::instance();
+    $upload->setLimit(10989);
+  }
 
 }
 ```

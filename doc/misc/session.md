@@ -10,13 +10,13 @@ Session 会在第一次调用 `Session` 类的时候按照配置参数自动初�
 
 ``` php
 'session' => array(
-    'autostart'     => true, //自动开始
-    'name'          => '', //Session ID 名称
-    'type'          => 'file', //类型 (可选 db,file)
-    'path'          => '', //保存路径 (默认为 /runtime/session)
-    'prefix'        => 'ginkgo_', //前缀
-    'cookie_domain' => '',
-    'life_time'     => 1200, // session 生存时间
+  'autostart'     => true, //自动开始
+  'name'          => '', //Session ID 名称
+  'type'          => 'file', //类型 (可选 db,file)
+  'path'          => '', //保存路径 (默认为 /runtime/session)
+  'prefix'        => 'ginkgo_', //前缀
+  'cookie_domain' => '',
+  'life_time'     => 1200, // session 生存时间
 ),
 ```
 
@@ -31,13 +31,13 @@ Session::get('name');
 
 ``` php
 $config = array(
-    'autostart'     => true, //自动开始
-    'name'          => '', //Session ID 名称
-    'type'          => 'file', //类型 (可选 db,file)
-    'path'          => '', //保存路径 (默认为 /runtime/session)
-    'prefix'        => 'ginkgo_', //前缀
-    'cookie_domain' => '',
-    'life_time'     => 1200, // session 生存时间
+  'autostart'     => true, //自动开始
+  'name'          => '', //Session ID 名称
+  'type'          => 'file', //类型 (可选 db,file)
+  'path'          => '', //保存路径 (默认为 /runtime/session)
+  'prefix'        => 'ginkgo_', //前缀
+  'cookie_domain' => '',
+  'life_time'     => 1200, // session 生存时间
 ),
 
 Session::init($config);
@@ -65,13 +65,12 @@ Session::config($config);
 | cookie_domain | cookie_domain |
 | life_time | 生命周期（单位为 秒） | 1200 |
 
-
 `type` 参数支持完整命名空间定义，默认采用 `ginkgo\session\driver` 作为命名空间，如果使用自己扩展的驱动，可以配置为：
 
 ``` php
 'session' => array(
-    'type'   => 'org\session\File',
-    ...
+  'type'   => 'org\session\File',
+  ...
 );
 ```
 
@@ -85,32 +84,32 @@ Session::config($config);
 
 * 赋值
 
-    ``` php
-    Session::set('name', $value);
-    Session::set('name', $value, 'prefix'); // 前缀为 prefix
-    ```
+  ``` php
+  Session::set('name', $value);
+  Session::set('name', $value, 'prefix'); // 前缀为 prefix
+  ```
 
 * 取值
 
-    ``` php
-    Session::get('name');
-    Session::get('name', 'prefix'); // 取得前缀为 prefix 的值
-    ```
+  ``` php
+  Session::get('name');
+  Session::get('name', 'prefix'); // 取得前缀为 prefix 的值
+  ```
 
-    如果 name 值不存在，则默认返回空。
+  如果 name 值不存在，则默认返回空。
 
 * 删除
 
-    ``` php
-    Session::delete('name');
-    ```
+  ``` php
+  Session::delete('name');
+  ```
 
 * 前缀
 
-    ``` php
-    Session::prefix('prefix');
-    Session::prefix(); // 取得前缀
-    ```
+  ``` php
+  Session::prefix('prefix');
+  Session::prefix(); // 取得前缀
+  ```
 
 ----------
 

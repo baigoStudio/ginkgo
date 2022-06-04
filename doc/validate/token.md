@@ -20,15 +20,15 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'email' => array(
-            'format'  => 'email',
-        ),
-        '__token__' => array(
-            'require' => true,
-            'token'   => true,
-        ),
-    );
+  protected $rule = array(
+    'email' => array(
+      'format'  => 'email',
+    ),
+    '__token__' => array(
+      'require' => true,
+      'token'   => true,
+    ),
+  );
 
 }
 ```
@@ -50,15 +50,15 @@ use ginkgo\Validate;
 
 class User extends Validate {
 
-    protected $rule = array(
-        'email' => array(
-            'format'  => 'email',
-        ),
-        '__hash__' => array(
-            'require' => true,
-            'token'   => true,
-        ),
-    );
+  protected $rule = array(
+    'email' => array(
+      'format'  => 'email',
+    ),
+    '__hash__' => array(
+      'require' => true,
+      'token'   => true,
+    ),
+  );
 
 }
 ```
@@ -72,17 +72,16 @@ use ginkgo\Ctrl;
 
 class Index extends Ctrl {
 
-    public function index() {
-        $token = $this->obj_request->token('__token__', 'sha1');
-        $this->assign('token', $token);
-        return $this->fetch();
-    }
+  public function index() {
+    $token = $this->obj_request->token('__token__', 'sha1');
+    $this->assign('token', $token);
+    return $this->fetch();
+  }
 
 }
 ```
 
 然后在模板表单中使用：
-
 
 ``` php
 <input type="hidden" name="<?php echo $token['name']; ?>" value="<?php echo $token['value']; ?>">
