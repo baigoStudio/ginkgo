@@ -11,14 +11,17 @@ if (!defined('IN_GINKGO')) {
 
 return array(
   'var_default' => array(
-    'site_name'             => 'ginkgo Framework', //站点名称
-    'timezone'              => 'Asia/Shanghai', //默认时区
-    'perpage'               => 30, //默认每页记录数
-    'pergroup'              => 10, //分页每组页数
-    'return_type'           => 'html', //默认 返回类型
-    'return_type_ajax'      => 'json', //默认 ajax 返回类型
-    'jsonp_callback'        => '', //默认 jsonp 处理方法
-    'jsonp_callback_param'  => '', //默认 jsonp 请求参数
+    'site_name'            => 'ginkgo Framework', //站点名称
+    'timezone'             => 'Asia/Shanghai', //默认时区
+    'perpage'              => 30, //默认每页记录数
+    'pergroup'             => 10, //分页每组页数
+    'return_type'          => 'html', //默认 返回类型
+    'return_type_ajax'     => 'json', //默认 ajax 返回类型
+    'jsonp_callback'       => '', //默认 jsonp 处理方法
+    'jsonp_callback_param' => '', //默认 jsonp 请求参数
+    'date'                 => 'Y-m-d', // 日期
+    'date_short'           => 'm-d', // 短日期
+    'time_short'           => 'H:i', // 短时间
   ),
   'header' => array(), //响应头 since 0.2.3
   'lang' => array( //语言
@@ -155,14 +158,14 @@ return array(
   'func_extra' => array(), //扩展函数
   'plugin' => array(), //插件
   'dbconfig' => array( //数据库
-    'type'      => 'mysql',
-    'host'      => '',
-    'name'      => '',
-    'user'      => '',
-    'pass'      => '',
-    'charset'   => 'utf8',
-    'prefix'    => 'ginkgo_',
-    'debug'     => false,
-    'port'      => 3306,
+    'type'        => 'mysql',
+    'host'        => '',
+    'dbname'      => '',
+    'user'        => '',
+    'pass'        => '',
+    'charset'     => 'utf8',
+    'prefix'      => 'ginkgo_',
+    'debug'       => false,
+    'port'        => 3306,
   ),
 );

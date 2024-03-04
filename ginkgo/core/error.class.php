@@ -243,6 +243,8 @@ class Error {
     }
 
     //print_r((memory_get_usage() - GK_START_MEM) / 1024 / 1024);
+
+    Log::save(); // 写入日志
   }
 
 

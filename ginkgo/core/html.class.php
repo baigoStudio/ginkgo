@@ -16,9 +16,11 @@ class Html {
 
   public $html          = ''; // 源字符串
   public $tagAllow      = array(); // 允许保留的 tag 例如: array('p', 'div')
+  public $tagIgnore     = array(); // 忽略过滤的标记 例如: array('span','img')
+  public $tagSingle     = array('meta', 'link', 'base', 'br', 'hr', 'input', 'img'); // 单闭合标签
+  public $tagInNest     = array(); // 嵌套模式时, 需要就近闭合的标签, 主要用于 fixTag since 0.3.1
   public $attrAllow     = array(); // 允许保留的属性 例如: array('id', 'class', 'title')
   public $attrExcept    = array(); // 特例 例如: array('a' => array('href', 'class'), 'span' => array('class'))
-  public $tagIgnore     = array(); // 忽略过滤的标记 例如: array('span','img')
 
   protected static $instance; //用静态属性保存实例
 
@@ -177,15 +179,21 @@ class Html {
    * @param string $html 待处理 html
    * @return 处理后的 html
    */
-  public function stripTag($html) {
-    $this->html = $html;
-
-    if (is_string($this->html) && Func::notEmpty($this->html)) { // 判断字符串
-      $_str_tagAllow  = $this->tagAllowProcess();
-      $this->html     = strip_tags($this->html, $_str_tagAllow);
+  public function stripTag($html = '') {
+    if (is_string($html) && Func::notEmpty($html)) {
+      $_str_html = $html;
+    } else {
+      $_str_html = $this->html;
     }
 
-    return $this->html;
+    if (is_string($_str_html) && Func::notEmpty($_str_html)) {
+      $_str_tagAllow = $this->tagAllowProcess();
+      $_str_html     = strip_tags($_str_html, $_str_tagAllow);
+    }
+
+    $this->html    = $_str_html;
+
+    return $_str_html;
   }
 
 
@@ -196,17 +204,20 @@ class Html {
    * @param string $html 待处理 html
    * @return 处理后的 html
    */
-  public function stripAttr($html) {
-    $this->html = $html;
-
-    if (is_string($this->html) && Func::notEmpty($this->html)) { // 判断字符串
-      $_mix_eleRows = $this->findEle();
-      if (is_string($_mix_eleRows)) {
-        return $_mix_eleRows;
-      }
-      $_arr_nodeRows = $this->findAttr($_mix_eleRows);
-      $this->removeAttr($_arr_nodeRows);
+  public function stripAttr($html = '') {
+    if (is_string($html) && Func::notEmpty($html)) {
+      $this->html = $html;
     }
+
+    $_mix_eleRows = $this->findEle();
+
+    if (is_string($_mix_eleRows)) {
+      return $_mix_eleRows;
+    }
+
+    $_arr_nodeRows = $this->findAttr($_mix_eleRows);
+
+    $this->removeAttr($_arr_nodeRows);
 
     return $this->html;
   }
@@ -277,6 +288,101 @@ class Html {
         $this->attrExcept[$tag][] = $attr;
       }
     }
+  }
+
+
+  /** 修复未正确闭合的 HTML since 0.3.1
+   * fixTag function.
+   *
+   * @access public
+   * @return html
+   */
+  function fixTag($html = '', $type = 'nest', $lowerTag = true) {
+    $_str_return    = ''; // 最终要返回的 html 代码
+
+    if (is_string($html) && Func::notEmpty($html)) {
+      $_str_html = $html;
+    } else {
+      $_str_html = $this->html;
+    }
+
+    if (is_string($_str_html) && Func::notEmpty($_str_html)) { // 判断字符串
+      $type           = strtolower($type);
+      $_arr_tagStack  = array(); // 标签栈, 用 array_push() 和 array_pop() 模拟实现
+      $_arr_mixedEle  = array(); // 用来存放标签与元素
+      $_bool_isClosed = true; // 闭合标记, 需要就近闭合, 成功匹配开始标签后其值为 false, 成功闭合后为 true
+      $_arr_tagInNest = array_map('strtolower', $this->tagInNest); // 转小写
+
+      // 将原标签和元素放到数组中
+      $_arr_mixedEle  = preg_split('/(<[^>]+?>)/si', $_str_html, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+
+      //print_r($_arr_mixedEle);
+
+      foreach ($_arr_mixedEle as $_key_ele=>$_value_ele) {
+        $_str_tagEnd   = end($_arr_tagStack);
+        $_arr_tagMatch = $this->matchTag($_value_ele, $lowerTag);
+
+        switch ($_arr_tagMatch['type']) {
+          case 'start': // 开始标签，如果是单标签则出栈
+            // 如果上一个标签没有闭合，并且上一个标签属于就近闭合类型则闭合之，上一个标签出栈
+            if ($_bool_isClosed === false) {
+              if ($type == 'close') { // 就近闭合模式, 直接就近闭合所有的标签
+                $_str_return   .= '</' . $_str_tagEnd . '>';
+                array_pop($_arr_tagStack);
+              } else { // 嵌套模式, 就近闭合参数提供的标签
+                if (in_array($_str_tagEnd, $_arr_tagInNest)) {
+                  $_str_return .= '</' . $_str_tagEnd . '>';
+                  array_pop($_arr_tagStack);
+                }
+              }
+            }
+
+            $_value_ele   = str_replace('<' . $_arr_tagMatch['tag_src'], '<' . $_arr_tagMatch['tag_dst'], $_value_ele);
+            // 开始新的标签组合
+            $_str_return .= $_value_ele;
+            array_push($_arr_tagStack, $_arr_tagMatch['tag_dst']);
+
+            // 合法单标签, 闭合并出栈
+            foreach ($this->tagSingle as $_key_single=>$_value_single) {
+              if (stripos($_value_ele, '<' . $_value_single) !== false) {
+                array_pop($_arr_tagStack);
+              }
+            }
+
+            // 就近闭合模式，状态变为未闭合
+            if ($type == 'close') {
+              $_bool_isClosed = false;
+            } else { // 默认的嵌套模式，如果标签位于提供的 $_arr_tagInNest 里，状态改为未闭合
+              if (in_array($_arr_tagMatch['tag_dst'], $_arr_tagInNest)) {
+                $_bool_isClosed = false;
+              }
+            }
+          break;
+
+          case 'close': // 闭合标签，如果匹配则出栈
+            if ($_str_tagEnd == $_arr_tagMatch['tag_dst']) {
+              $_bool_isClosed = true; // 匹配完成，标签闭合
+              $_value_ele     = str_replace('</' . $_arr_tagMatch['tag_src'], '</' . $_arr_tagMatch['tag_dst'], $_value_ele);
+              $_str_return   .= $_value_ele;
+              array_pop($_arr_tagStack);
+            }
+          break;
+
+          default: // 直接合成
+            $_str_return .= $_value_ele;
+          break;
+        }
+      }
+
+      // 如果还有将栈内的未闭合的标签连接到 $_str_return
+      while (Func::notEmpty($_arr_tagStack)) {
+        $_str_return .= '</' . array_pop($_arr_tagStack) . '>';
+      }
+    }
+
+    $this->html = $_str_return;
+
+    return $_str_return;
   }
 
 
@@ -357,7 +463,6 @@ class Html {
         $_value['attrs'] = null;
       }
       $_value['attrs'] = $_arr_attrs;
-      unset($_arr_attrs);
     }
     return $nodeRows;
   }
@@ -370,6 +475,8 @@ class Html {
    * @return void
    */
   private function removeAttr($nodeRows) {
+    $_str_html = $this->html;
+
     foreach ($nodeRows as $_key=>$_value) {
       $_str_nodeName = $_value['name'];
       $_str_newAttrs = '';
@@ -381,8 +488,10 @@ class Html {
         }
       }
       $_str_replace = ($_str_newAttrs) ? '<' . $_str_nodeName . ' ' . $_str_newAttrs . '>' : '<' . $_str_nodeName . '>';
-      $this->html   = preg_replace('/' . $this->protect($_value['literal']) . '/i', $_str_replace, $this->html);
+      $_str_html   = preg_replace('/' . $this->protect($_value['literal']) . '/i', $_str_replace, $_str_html);
     }
+
+    $this->html = $_str_html;
   }
 
   /** 判断是否特例
@@ -416,6 +525,32 @@ class Html {
     return $new_attrs;
   }
 
+  private function matchTag($ele = array(), $lowerTag = true) {
+    $_str_tagSrc  = '';
+    $_str_tagDst  = '';
+    $_str_tagType = '';
+
+    if (preg_match('/<(\w+)[^\/>]*?>/si', $ele, $_arr_match)) { // 开始标签
+      $_str_tagType = 'start';
+    } else if (preg_match('/<\/(\w+)[^\/>]*?>/si', $ele, $_arr_match)) { // 闭合标签
+      $_str_tagType = 'close';
+    }
+
+    if (isset($_arr_match[1])) {
+      $_str_tagSrc = $_arr_match[1];
+    }
+
+    // 如果参数 $lowerTag 为 true 则将标签名转为小写
+    if ($lowerTag === true) {
+      $_str_tagDst = strtolower($_str_tagSrc);
+    }
+
+    return array(
+      'tag_src' => $_str_tagSrc,
+      'tag_dst' => $_str_tagDst,
+      'type'    => $_str_tagType,
+    );
+  }
 
   /** 特殊字符转义
    * protect function.

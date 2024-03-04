@@ -65,16 +65,6 @@ class Auth {
    * @return 认证信息
    */
   public function read() {
-    $_sessionTime    = Session::get($this->prefix . '_time');
-
-    $_arr_session = array(
-      $this->prefix . '_id'     => Session::get($this->prefix . '_id'),
-      $this->prefix . '_name'   => Session::get($this->prefix . '_name'),
-      $this->prefix . '_hash'   => Session::get($this->prefix . '_hash'),
-      $this->prefix . '_time'   => $_sessionTime,
-      $this->prefix . '_expire' => $_sessionTime + $this->config['session_expire'],
-    );
-
     $_cookieTime    = (int)Cookie::get($this->prefix . '_time');
 
     $_arr_cookie = array(
@@ -93,6 +83,16 @@ class Auth {
       $this->prefix . '_hash'   => Cookie::get('remember_' . $this->prefix . '_hash'),
       $this->prefix . '_time'   => $_rememberTime,
       $this->prefix . '_expire' => $_rememberTime + $this->config['remember_expire'],
+    );
+
+    $_sessionTime    = (int)Session::get($this->prefix . '_time');
+
+    $_arr_session = array(
+      $this->prefix . '_id'     => Session::get($this->prefix . '_id'),
+      $this->prefix . '_name'   => Session::get($this->prefix . '_name'),
+      $this->prefix . '_hash'   => Session::get($this->prefix . '_hash'),
+      $this->prefix . '_time'   => $_sessionTime,
+      $this->prefix . '_expire' => $_sessionTime + $this->config['session_expire'],
     );
 
     $this->session  = $_arr_session;
@@ -123,24 +123,16 @@ class Auth {
       return false;
     }
 
-    if ($regen) {
-      session_regenerate_id(true); // 使用新生成的会话 ID 更新现有会话 ID
-    }
-
     $_arr_options = $this->options;
+
+    if ($remember === 'remember' || $remember === true || $remember === 'true') {
+      $_arr_options['remember'] = true;
+    }
 
     $_arr_optCookie = array(
       'expire'    => GK_NOW + 2592000, // Cookie 过期时间
       'path'      => $pathCookie,
     );
-
-    //print_r($authRow);
-
-    Session::set($this->prefix . '_id', $authRow[$this->prefix . '_id']);
-    Session::set($this->prefix . '_name', $authRow[$this->prefix . '_name']);
-    Session::set($this->prefix . '_time', GK_NOW);
-    Session::set($this->prefix . '_hash', $this->hashProcess($authRow));
-    Session::set($this->prefix . '_login_type', $loginType);
 
     if ($_arr_options['cookie'] === true || $_arr_options['cookie'] === 'true') {
       Cookie::set($this->prefix . '_id', $authRow[$this->prefix . '_id'], $_arr_optCookie);
@@ -148,10 +140,6 @@ class Auth {
       Cookie::set($this->prefix . '_time', GK_NOW, $_arr_optCookie);
       Cookie::set($this->prefix . '_hash', $this->hashProcess($authRow), $_arr_optCookie);
       Cookie::set($this->prefix . '_login_type', $loginType, $_arr_optCookie);
-    }
-
-    if ($remember === 'remember' || $remember === true || $remember === 'true') {
-      $_arr_options['remember'] = true;
     }
 
     if ($_arr_options['remember'] === true || $_arr_options['remember'] === 'true') {
@@ -162,6 +150,16 @@ class Auth {
       Cookie::set('remember_' . $this->prefix . '_hash', $this->hashProcess($authRow), $_arr_optCookie);
       Cookie::set('remember_' . $this->prefix . '_time', GK_NOW, $_arr_optCookie);
     }
+
+    if ($regen) {
+      session_regenerate_id(true); // 使用新生成的会话 ID 更新现有会话 ID
+    }
+
+    Session::set($this->prefix . '_id', $authRow[$this->prefix . '_id']);
+    Session::set($this->prefix . '_name', $authRow[$this->prefix . '_name']);
+    Session::set($this->prefix . '_time', GK_NOW);
+    Session::set($this->prefix . '_hash', $this->hashProcess($authRow));
+    Session::set($this->prefix . '_login_type', $loginType);
 
     $this->options = $_arr_options;
 
@@ -176,15 +174,11 @@ class Auth {
    * @param int $id (default: 0)
    * @return void
    */
-  public function end($regen = false, $pathCookie = '/') {
+  public function end($regen = false, $pathCookie = '/', $errMsg = '') {
     $_arr_optCookie = array(
       'path'      => $pathCookie,
     );
 
-    Session::delete($this->prefix . '_id');
-    Session::delete($this->prefix . '_name');
-    Session::delete($this->prefix . '_time');
-    Session::delete($this->prefix . '_hash');
     Cookie::delete($this->prefix . '_id', $_arr_optCookie);
     Cookie::delete($this->prefix . '_name', $_arr_optCookie);
     Cookie::delete($this->prefix . '_time', $_arr_optCookie);
@@ -193,6 +187,14 @@ class Auth {
     Cookie::delete('remember_' . $this->prefix . '_name', $_arr_optCookie);
     Cookie::delete('remember_' . $this->prefix . '_hash', $_arr_optCookie);
     Cookie::delete('remember_' . $this->prefix . '_time', $_arr_optCookie);
+    Session::delete($this->prefix . '_id');
+    Session::delete($this->prefix . '_name');
+    Session::delete($this->prefix . '_time');
+    Session::delete($this->prefix . '_hash');
+
+    if (Func::notEmpty($errMsg)) {
+      $this->errRecord($errMsg);
+    }
 
     if ($regen) {
       session_regenerate_id(true); // 使用新生成的会话 ID 更新现有会话 ID
@@ -216,46 +218,39 @@ class Auth {
     $_arr_options = $this->options;
 
     if (!$this->checkParam($authRow)) {
-      $this->end();
+      $this->end(false, $pathCookie);
       return false;
     }
 
     if ($this->haveSession()) {
       if ($authRow[$this->prefix . '_id'] != $_arr_session[$this->prefix . '_id']) {
-        $this->end();
-        $this->errRecord('Auth::check(), Session ID is incorrect: ' . $this->prefix . '_id');
-
+        $this->end(false, $pathCookie, 'Auth::check(), Session ID is incorrect: ' . $this->prefix . '_id');
         return false;
       }
 
       if ($authRow[$this->prefix . '_name'] != $_arr_session[$this->prefix . '_name']) {
-        $this->end();
-        $this->errRecord('Auth::check(), Session name is incorrect: ' . $this->prefix . '_name');
+        $this->end(false, $pathCookie, 'Auth::check(), Session name is incorrect: ' . $this->prefix . '_name');
         return false;
       }
 
       if ($this->hashProcess($authRow) != $_arr_session[$this->prefix . '_hash']) {
-        $this->end();
-        $this->errRecord('Auth::check(), Session hash is incorrect: ' . $this->prefix . '_hash');
+        $this->end(false, $pathCookie, 'Auth::check(), Session hash is incorrect: ' . $this->prefix . '_hash');
         return false;
       }
 
       if ($_arr_options['cookie'] === true || $_arr_options['cookie'] === 'true') {
         if ($authRow[$this->prefix . '_id'] != $_arr_cookie[$this->prefix . '_id']) {
-          $this->end();
-          $this->errRecord('Auth::check(), Cookie ID is incorrect: ' . $this->prefix . '_id');
+          $this->end(false, $pathCookie, 'Auth::check(), Cookie ID is incorrect: ' . $this->prefix . '_id');
           return false;
         }
 
         if ($authRow[$this->prefix . '_name'] != $_arr_cookie[$this->prefix . '_name']) {
-          $this->end();
-          $this->errRecord('Auth::check(), Cookie name is incorrect: ' . $this->prefix . '_name');
+          $this->end(false, $pathCookie, 'Auth::check(), Cookie name is incorrect: ' . $this->prefix . '_name');
           return false;
         }
 
         if ($this->hashProcess($authRow) != $_arr_cookie[$this->prefix . '_hash']){
-          $this->end();
-          $this->errRecord('Auth::check(), Cookie hash is incorrect: ' . $this->prefix . '_hash');
+          $this->end(false, $pathCookie, 'Auth::check(), Cookie hash is incorrect: ' . $this->prefix . '_hash');
           return false;
         }
       }
@@ -263,26 +258,23 @@ class Auth {
       $this->write($authRow, false, 'form', '', $pathCookie);
     } else if ($this->haveRemenber()) {
       if ($authRow[$this->prefix . '_id'] != $_arr_remember[$this->prefix . '_id']) {
-        $this->end();
-        $this->errRecord('Auth::check(), Remember ID is incorrect: ' . $this->prefix . '_id');
+        $this->end(false, $pathCookie, 'Auth::check(), Remember ID is incorrect: ' . $this->prefix . '_id');
         return false;
       }
 
       if ($authRow[$this->prefix . '_name'] != $_arr_remember[$this->prefix . '_name']) {
-        $this->end();
-        $this->errRecord('Auth::check(), Remember name is incorrect: ' . $this->prefix . '_name');
+        $this->end(false, $pathCookie, 'Auth::check(), Remember name is incorrect: ' . $this->prefix . '_name');
         return false;
       }
 
       if ($this->hashProcess($authRow) != $_arr_remember[$this->prefix . '_hash']){
-        $this->end();
-        $this->errRecord('Auth::check(), Remember hash is incorrect: ' . $this->prefix . '_hash');
+        $this->end(false, $pathCookie, 'Auth::check(), Remember hash is incorrect: ' . $this->prefix . '_hash');
         return false;
       }
 
       $this->write($authRow, false, 'auto', '', $pathCookie);
     } else {
-      $this->end();
+      $this->end(false, $pathCookie);
       return false;
     }
 
@@ -531,8 +523,8 @@ class Auth {
       }
     }
 
-    if ($_bool_debugDump) {
+    //if ($_bool_debugDump) {
       Log::record('type: ginkgo\Auth, msg: ' . $msg, 'log');
-    }
+    //}
   }
 }

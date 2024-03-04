@@ -258,7 +258,7 @@ class Ftp {
     $_arr_urlParsed = parse_url($this->config['host']); // 解析 url
 
     if (!isset($_arr_urlParsed['host']) || Func::isEmpty($_arr_urlParsed['host'])) {
-      $this->errRecord('Auth::urlProcess(), Missing HOST: ' . $_arr_urlParsed['host']);
+      $this->errRecord('Ftp::urlProcess(), Missing HOST: ' . $_arr_urlParsed['host']);
       return false;
     }
 

@@ -461,7 +461,7 @@ class Smtp {
     }
 
     if (!in_array($_str_code, $expect)) {
-      $this->errRecord('Smtp::sendCmd(), ' . $cmd . ': ' . $_str_code . ' - ' . $_str_detail;
+      $this->errRecord('Smtp::sendCmd(), ' . $cmd . ': ' . $_str_code . ' - ' . $_str_detail);
       return false;
     }
 

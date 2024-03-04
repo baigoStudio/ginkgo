@@ -6,27 +6,17 @@
 
 namespace ginkgo;
 
+use ginkgo\common\File_Sys;
+
 // 不能非法包含或直接执行
 if (!defined('IN_GINKGO')) {
   return 'Access denied';
 }
 
 // 上传类
-class Upload {
+class Upload extends File_Sys {
 
-  public $config    = array(); // 配置
   public $limitSize = 0; // 允许上传大小
-  public $error; // 错误
-  public $rule = 'md5'; // 生成文件名规则 (函数名)
-  public $mimeRows = array(); // mime 池
-
-  public $fileInfo = array(
-    'name'     => '',
-    'tmp_name' => '',
-    'ext'      => '',
-    'mime'     => '',
-    'size'     => 0,
-  );
 
   protected static $instance; // 当前实例
 
@@ -35,37 +25,20 @@ class Upload {
     'limit_unit'    => 'kb', //尺寸单位
   ); // 默认配置
 
-  private $obj_file; // 文件对象
-
-
-  /** 构造函数
-   * __construct function.
-   *
-   * @access protected
-   * @param string $config (default: '') 配置
-   * @return void
-   */
-  protected function __construct($config = array()) {
-    $this->config($config); // 初始化
-    $this->obj_file = File::instance();
-  }
-
-
-  /** 实例化
+  /** 初始化实例
    * instance function.
    *
    * @access public
    * @static
    * @return 当前类的实例
    */
-  public static function instance($config = array()) {
+  public static function instance() {
     if (Func::isEmpty(self::$instance)) {
-      self::$instance = new static($config);
+      self::$instance = new static();
     }
 
     return self::$instance;
   }
-
 
   // 配置 since 0.2.0
   public function config($config = array()) {
@@ -135,7 +108,7 @@ class Upload {
 
     // 上传文件校验
     if (!isset($_arr_fileInfo['tmp_name']) || !is_uploaded_file($_arr_fileInfo['tmp_name'])) {
-      $this->errRecord('Upload::create(), No files uploaded');
+      $this->errRecord('Upload::create(), is_upload, No files uploaded');
 
       return false;
     }
@@ -237,121 +210,6 @@ class Upload {
   }
 
 
-  /** 设置 mime
-   * setMime function.
-   *
-   * @access public
-   * @param mixed $mime
-   * @param array $value (default: array())
-   * @return void
-   */
-  public function setMime($mime, $value = array()) {
-    if (is_array($mime)) {
-      $this->mimeRows = array_replace_recursive($this->mimeRows, $mime);
-    } else {
-      $this->mimeRows[$mime] = $value;
-    }
-  }
-
-
-  // 兼容用
-  public function __call($method, $params) {
-    return $this->getInfo($method);
-  }
-
-
-  /** 获取信息
-   * size function.
-   *
-   * @access public
-   * @return 0 - 图像宽度, 1 - 图像高度
-   */
-  public function getInfo($name = '') {
-    $_mix_retrun = '';
-
-    if (Func::isEmpty($name)) {
-      $_mix_retrun = $this->fileInfo;
-    } else if (isset($this->fileInfo[$name])) {
-      $_mix_retrun = $this->fileInfo[$name];
-    }
-
-    return $_mix_retrun;
-  }
-
-
-  /** 获取文件的 mime 类型
-   * getMime function.
-   *
-   * @access public
-   * @param string $path 路径
-   * @param bool $strict (default: false) 严格获取 mime, true 严格, 字符串 直接报告, false 以路径为准
-   * @return mime 类型
-   */
-  public function getMime($path, $strict = false) {
-    if ($strict === true || $strict === 'true') {
-      $_obj_finfo = new \finfo();
-
-      $_str_mime  = $_obj_finfo->file($path, FILEINFO_MIME_TYPE);
-    } else if (Func::notEmpty($strict) && is_string($strict)) {
-      $_str_mime = $strict;
-    } else {
-      $_str_ext = $this->getExt($path); //取得扩展名
-
-      if (isset($this->mimeRows[$_str_ext])) {
-        $_str_mime = $this->mimeRows[$_str_ext][0];
-      }
-    }
-
-    return $_str_mime;
-  }
-
-
-  /** 获取扩展名
-   * getExt function.
-   *
-   * @access public
-   * @param string $path 路径
-   * @param mixed $mime (default: false) mime 类型
-   * @return 扩展名
-   */
-  public function getExt($path, $mime = false) {
-    $_str_ext = strtolower(pathinfo($path, PATHINFO_EXTENSION)); //取得扩展名
-
-    if ($mime) {
-      // 扩展名与 mime 不符的情况下, 反向查找, 如果存在, 则更改扩展名
-      if (!isset($this->mimeRows[$_str_ext]) || !in_array($mime, $this->mimeRows[$_str_ext])) {
-        foreach ($this->mimeRows as $_key_allow=>$_value_allow) {
-          if (in_array($mime, $_value_allow)) {
-            return $_key_allow;
-          }
-        }
-      }
-    }
-
-    return $_str_ext;
-  }
-
-
-  // 获取错误
-  public function getError() {
-    return $this->error;
-  }
-
-
-  /** 设置生成文件名规则 (函数名)
-   * rule function.
-   *
-   * @access public
-   * @param mixed $rule
-   * @return 当前实例
-   */
-  public function rule($rule) {
-    $this->rule = $rule;
-
-    return $this;
-  }
-
-
   /** 错误处理
    * errorProcess function.
    *
@@ -388,87 +246,6 @@ class Upload {
       default:
         $this->errRecord('Upload::errorProcess(), Unknown upload error');
       break;
-    }
-  }
-
-
-
-  /** 验证是否为允许的文件
-   * verifyFile function.
-   *
-   * @access protected
-   * @param mixed $ext
-   * @param mixed $mime
-   * @return 验证结果 (bool)
-   */
-  private function verifyFile($ext, $mime) {
-    if (Func::notEmpty($this->mimeRows)) {
-      if (!isset($this->mimeRows[$ext])) { //该扩展名的 mime 数组是否存在
-        $this->errRecord('Upload::verifyFile(), MIME check failed: ' . $ext);
-
-        return false;
-      }
-
-      if (!in_array($mime, $this->mimeRows[$ext])) { //是否允许
-        $this->errRecord('Upload::verifyFile(), MIME not allowed: ' . $mime);
-
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-
-  /** 生成文件名
-   * genFilename function.
-   *
-   * @access protected
-   * @param mixed $name (default: true) 文件名
-   * @return 文件名
-   */
-  private function genFilename($name = true) {
-    if ($name === true) { // 参数为 true 时, 按规则生成文件名
-      if (is_callable($this->rule)) {
-        $_str_type = $this->rule;
-      } else {
-        $_str_type = 'md5';
-      }
-
-      if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
-        $_tm_time = $_SERVER['REQUEST_TIME_FLOAT'];
-      } else {
-        $_tm_time = GK_NOW;
-      }
-
-      $name = call_user_func($_str_type, $_tm_time) . '.' . $this->fileInfo['ext'];
-    } else if ($name === false) { // 参数为 false 时, 使用原始文件名
-      $name = $this->fileInfo['name'];
-    }
-
-    // 指定为字符串时, 直接使用
-
-    return $name;
-  }
-
-
-  private function errRecord($msg) {  // since 0.2.4
-    $this->error      = $msg;
-    $_bool_debugDump  = false;
-    $_mix_configDebug = Config::get('debug'); // 取得调试配置
-
-    if (is_array($_mix_configDebug)) {
-      if ($_mix_configDebug['dump'] === true || $_mix_configDebug['dump'] === 'true' || $_mix_configDebug['dump'] === 'trace') { // 假如配置为输出
-        $_bool_debugDump = true;
-      }
-    } else if (is_scalar($_mix_configDebug)) {
-      if ($_mix_configDebug === true || $_mix_configDebug === 'true' || $_mix_configDebug === 'trace') { // 假如配置为输出
-        $_bool_debugDump = true;
-      }
-    }
-
-    if ($_bool_debugDump) {
-      Log::record('type: ginkgo\Upload, msg: ' . $msg, 'log');
     }
   }
 }

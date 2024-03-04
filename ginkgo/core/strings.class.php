@@ -47,21 +47,10 @@ class Strings {
   }
 
 
-  /** 强化版 strtotime, 可以自动过滤转义过的符号
-   * strtotime function.
-   *
-   * @access public
-   * @static
-   * @param string $time 日期时间字符串
-   * @return 时间戳
-   */
+  /** 强化版 strtotime 向下兼容 */
   public static function toTime($time) {
-    $_arr_src   = array('&#45;', '&#58;');
-    $_arr_dst   = array('-', ':');
-    $time       = str_replace($_arr_src, $_arr_dst, $time);
-    $_tm_return = strtotime($time);
 
-    return $_tm_return;
+    return Datetime::toTime($time);
   }
 
 

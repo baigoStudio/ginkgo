@@ -413,7 +413,7 @@ class Validate {
   }
 
 
-  /** 魔术静态调用
+  /** 魔术调用
    * __callStatic function.
    *
    * @access public
@@ -422,7 +422,7 @@ class Validate {
    * @param mixed $params 参数
    * @return void
    */
-  public static function __callStatic($method, $params) {
+  public function __call($method, $params) {
     if (method_exists($this->obj_rule, $method)) {
       return call_user_func_array(array($this->obj_rule, Strings::toHump($method, '_', true)), $params);
     } else {

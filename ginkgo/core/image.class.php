@@ -6,22 +6,21 @@
 
 namespace ginkgo;
 
+use ginkgo\common\File_Sys;
+
 // 不能非法包含或直接执行
 if (!defined('IN_GINKGO')) {
   return 'Access denied';
 }
 
 // 图片处理类
-class Image {
+class Image extends File_Sys {
 
-  public $error; // 错误
-  public $rule       = 'md5'; // 生成文件名规则 (函数名)
   public $quality    = 90; // 图片质量
-  public $imageMimes = array(); // 设定哪些 mime 属于图片
   public $thumbs     = array(); // 缩略图
-  public $infoDst    = array(); // 目标图片信息
+  public $fileInfoDst    = array(); // 目标图片信息
 
-  public $infoSrc = array(
+  public $fileInfo = array(
     'width'    => 0,
     'height'   => 0,
     'name'     => '',
@@ -33,7 +32,7 @@ class Image {
   protected static $instance; // 当前实例
 
   // 设定哪些 mime 属于图片
-  private $imageMimesThis = array(
+  private $mimeRowsThis = array(
     'gif' => array(
       'image/gif',
     ),
@@ -70,21 +69,7 @@ class Image {
 
   private $res_imgSrc; // 源图片资源
   private $res_imgDst; // 目的图片资源
-  private $obj_file; // 文件对象
   private $imageExts; // 设定哪些扩展名属于图片
-
-  /** 构造函数
-   * __construct function.
-   *
-   * @access protected
-   * @return void
-   */
-  protected function __construct($imageMimes = array()) {
-    $this->obj_file = File::instance();
-    $this->config($imageMimes);
-  }
-
-  protected function __clone() { }
 
   /** 初始化实例
    * instance function.
@@ -101,13 +86,28 @@ class Image {
     return self::$instance;
   }
 
+  protected function __clone() { }
 
   // 配置 since 0.2.0
-  public function config($imageMimes = array()) {
-    $_arr_imageMimes    = Config::get('image'); // 取得图片配置
-    $_arr_imageMimesDo  = array_replace_recursive($this->imageMimesThis, $this->imageMimes, $imageMimes); // 合并配置
-    $this->imageMimes   = $_arr_imageMimesDo;
-    $this->imageExts    = array_keys($_arr_imageMimesDo);
+  public function config($mimeRows = array()) {
+    $_arr_mimeRowsDo = $this->mimeRowsThis;
+
+    $_arr_mimeRows   = Config::get('image'); // 取得图片配置
+
+    if (is_array($_arr_mimeRows) && Func::notEmpty($_arr_mimeRows)) {
+      $_arr_mimeRowsDo = array_replace_recursive($_arr_mimeRowsDo, $_arr_mimeRows);
+    }
+
+    if (is_array($this->mimeRows) && Func::notEmpty($this->mimeRows)) {
+      $_arr_mimeRowsDo = array_replace_recursive($_arr_mimeRowsDo, $this->mimeRows);
+    }
+
+    if (is_array($mimeRows) && Func::notEmpty($mimeRows)) {
+      $_arr_mimeRowsDo = array_replace_recursive($_arr_mimeRowsDo, $mimeRows);
+    }
+
+    $this->mimeRows   = $_arr_mimeRowsDo;
+    $this->imageExts  = array_keys($_arr_mimeRowsDo);
   }
 
 
@@ -125,13 +125,13 @@ class Image {
       return false;
     }
 
-    $this->infoSrc['path'] = $path;
+    $this->fileInfo['path'] = $path;
     $this->res_imgSrc      = $_mix_imgSrc['resource'];
 
     unset($_mix_imgSrc['resource']);
 
-    $_arr_fileInfoDo = array_replace_recursive($this->infoSrc, $_mix_imgSrc);
-    $this->infoSrc   = $_arr_fileInfoDo;
+    $_arr_fileInfoDo = array_replace_recursive($this->fileInfo, $_mix_imgSrc);
+    $this->fileInfo   = $_arr_fileInfoDo;
 
     return $_arr_fileInfoDo;
   }
@@ -250,11 +250,11 @@ class Image {
     }
 
     if (!$width_src) {
-      $width_src = $this->infoSrc['width']; // 源文件宽度 (如为 false, 则采用源宽度)
+      $width_src = $this->fileInfo['width']; // 源文件宽度 (如为 false, 则采用源宽度)
     }
 
     if (!$height_src) {
-      $height_src = $this->infoSrc['height']; // 源文件高度 (如为 false, 则采用源高度)
+      $height_src = $this->fileInfo['height']; // 源文件高度 (如为 false, 则采用源高度)
     }
 
     $_res_imgBg = $this->createImgBg($width, $height); // 创建背景
@@ -274,8 +274,8 @@ class Image {
 
     $this->res_imgDst = $_res_imgBg;
 
-    if (Func::isEmpty($this->infoDst)) {
-      $this->infoDst = $this->dstProcess($this->infoSrc['path'], $width, $height, 'crop'); // 路径处理
+    if (Func::isEmpty($this->fileInfoDst)) {
+      $this->fileInfoDst = $this->dstProcess($this->fileInfo['path'], $width, $height, 'crop'); // 路径处理
     }
 
     return $this;
@@ -296,8 +296,8 @@ class Image {
 
     //print_r($_arr_thumbSize);
 
-    if (Func::isEmpty($this->infoDst)) {
-      $this->infoDst = $this->dstProcess($this->infoSrc['path'], $width, $height, $type); // 路径处理
+    if (Func::isEmpty($this->fileInfoDst)) {
+      $this->fileInfoDst = $this->dstProcess($this->fileInfo['path'], $width, $height, $type); // 路径处理
     }
 
     /*switch ($type) {
@@ -327,8 +327,8 @@ class Image {
       return false;
     }
 
-    if ($mime === false && isset($this->infoSrc['mime']) && Func::notEmpty($this->infoSrc['mime'])) {
-      $mime = $this->infoSrc['mime'];
+    if ($mime === false && isset($this->fileInfo['mime']) && Func::notEmpty($this->fileInfo['mime'])) {
+      $mime = $this->fileInfo['mime'];
     }
 
     if (Func::isEmpty($mime)) {
@@ -429,11 +429,9 @@ class Image {
    * @return void
    */
   public function save($dir = false, $name = false, $quality = false, $interlace = 1) {
-    $_str_ext = false;
-
     if ($dir === false || Func::isEmpty($dir)) {
-      if (isset($this->infoDst['path_dir'])) {
-        $dir = $this->infoDst['path_dir']; // 采用当前图片目录
+      if (isset($this->fileInfoDst['path_dir'])) {
+        $dir = $this->fileInfoDst['path_dir']; // 采用当前图片目录
       } else {
         $this->errRecord('Image::save(), Missing destination path');
 
@@ -454,8 +452,8 @@ class Image {
     }
 
     if ($name === false || Func::isEmpty($name)) {
-      if (isset($this->infoDst['name'])) {
-        $name = $this->infoDst['name']; // 采用当前图片名称
+      if (isset($this->fileInfoDst['name'])) {
+        $name = $this->fileInfoDst['name']; // 采用当前图片名称
       } else {
         $name = $this->genFilename($name);
       }
@@ -480,7 +478,7 @@ class Image {
       return false;
     }
 
-    $this->infoDst = array();
+    $this->fileInfoDst = array();
 
     return $_str_path;
   }
@@ -506,11 +504,7 @@ class Image {
           $_value['thumb_height'] = 100; // 默认高度
         }
 
-        if (isset($_value['thumb_type_value'])) {
-          $_value['thumb_type'] = $_value['thumb_type_value'];
-        } else if (isset($_value['thumb_type'])) {
-          $_value['thumb_type'] = $_value['thumb_type'];
-        } else {
+        if (!isset($_value['thumb_type'])) {
           $_value['thumb_type'] = 'ratio'; // 默认类型
         }
 
@@ -529,7 +523,7 @@ class Image {
 
       if (!$_return) {
         foreach ($thumbRows as $_key=>$_value) {
-          $_path_dst = $this->dstProcess($this->infoSrc['path'], $_value['thumb_width'], $_value['thumb_height'], $_value['thumb_type']);
+          $_path_dst = $this->dstProcess($this->fileInfo['path'], $_value['thumb_width'], $_value['thumb_height'], $_value['thumb_type']);
 
           $this->obj_file->fileDelete($_path_dst['path']);
         }
@@ -571,73 +565,14 @@ class Image {
     } else {
       $_str_ext = $this->getExt($path);
 
-      if (isset($this->imageMimes[$_str_ext])) {
-        $_str_mime = $this->imageMimes[$_str_ext][0];
+      if (isset($this->mimeRows[$_str_ext])) {
+        $_str_mime = $this->mimeRows[$_str_ext][0];
 
         $_return = $_str_mime;
       }
     }
 
     return $_return;
-  }
-
-
-  /** 获取扩展名
-   * getExt function.
-   *
-   * @access public
-   * @param string $path 路径
-   * @param mixed $mime (default: false) mime 类型
-   * @return 扩展名
-   */
-  public function getExt($path, $mime = false) {
-    $_str_ext = strtolower(pathinfo($path, PATHINFO_EXTENSION)); //取得扩展名
-
-    if ($mime) {
-      // 扩展名与 mime 不符的情况下, 反向查找, 如果存在, 则更改扩展名
-      if (!isset($this->imageMimes[$_str_ext]) || !in_array($mime, $this->imageMimes[$_str_ext])) {
-        foreach ($this->imageMimes as $_key_allow=>$_value_allow) {
-          if (in_array($mime, $_value_allow)) {
-            return $_key_allow;
-          }
-        }
-      }
-    }
-
-    return $_str_ext;
-  }
-
-
-  // 获取信息
-  public function getInfo($name = '') {
-    $_mix_retrun = '';
-
-    if (Func::isEmpty($name)) {
-      $_mix_retrun = $this->infoSrc;
-    } else if (isset($this->infoSrc[$name])) {
-      $_mix_retrun = $this->infoSrc[$name];
-    }
-
-    return $_mix_retrun;
-  }
-
-  // 获取错误
-  public function getError() {
-    return $this->error;
-  }
-
-
-  /** 设置生成文件名规则 (函数名)
-   * rule function.
-   *
-   * @access public
-   * @param mixed $rule
-   * @return 当前实例
-   */
-  public function rule($rule) {
-    $this->rule = $rule;
-
-    return $this;
   }
 
 
@@ -700,8 +635,8 @@ class Image {
       return false;
     }
 
-    if ($mime === false && isset($this->infoSrc['mime']) && Func::notEmpty($this->infoSrc['mime'])) {
-      $mime = $this->infoSrc['mime'];
+    if ($mime === false && isset($this->fileInfo['mime']) && Func::notEmpty($this->fileInfo['mime'])) {
+      $mime = $this->fileInfo['mime'];
     }
 
     switch ($mime) { // 创建图片对象
@@ -777,22 +712,22 @@ class Image {
    * @param string $mime (default: '') mime
    * @return bool
    */
-  private function verifyFile($ext, $mime = '') {
-    if (Func::isEmpty($mime)) { // 如指定 mime 参数, 则直接验证扩展名
+  protected function verifyFile($ext, $mime = '') {
+    if (Func::isEmpty($mime)) { // 未指定 mime 参数, 则直接验证扩展名
       if (!in_array($ext, $this->imageExts)) {
         $this->errRecord('Image::verifyFile(), Not an image: ' . $ext);
 
         return false;
       }
     } else { // 严格检验
-      if (Func::notEmpty($this->imageMimes)) {
-        if (!isset($this->imageMimes[$ext])) { // 该扩展名的 mime 数组是否存在
+      if (Func::notEmpty($this->mimeRows)) {
+        if (!isset($this->mimeRows[$ext])) { // 该扩展名的 mime 数组是否存在
           $this->errRecord('Image::verifyFile(), MIME check failed: ' . $ext);
 
           return false;
         }
 
-        if (!in_array($mime, $this->imageMimes[$ext])) { // 是否允许
+        if (!in_array($mime, $this->mimeRows[$ext])) { // 是否允许
           $this->errRecord('Image::verifyFile(), Not an image: ' . $mime);
 
           return false;
@@ -1070,31 +1005,6 @@ class Image {
     return $_arr_color;
   }
 
-  // 生成文件名
-  private function genFilename($name = true) {
-    if ($name === true) { // 参数为 true 时, 按规则生成文件名
-      if (is_callable($this->rule)) {
-        $_str_type = $this->rule;
-      } else {
-        $_str_type = 'md5';
-      }
-
-      if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
-        $_tm_time = $_SERVER['REQUEST_TIME_FLOAT'];
-      } else {
-        $_tm_time = GK_NOW;
-      }
-
-      $name = call_user_func($_str_type, $_tm_time) . '.' . $this->infoSrc['ext'];
-    } else if ($name === false) { // 参数为 false 时, 使用源文件名
-      $name = $this->infoSrc['name'];
-    }
-
-    // 指定为字符串时, 直接使用
-
-    return $name;
-  }
-
 
   /** 目的处理
    * dstProcess function.
@@ -1127,7 +1037,7 @@ class Image {
       $_str_name .= '_' . $type;
     }
 
-    $_str_name .= '.' . $this->infoSrc['ext'];
+    $_str_name .= '.' . $this->fileInfo['ext'];
 
     return array(
       'path_dir'  => $_str_pathDir,
@@ -1152,8 +1062,8 @@ class Image {
   private function thumbSizeCalc($width_dst = 0, $height_dst = 0, $type = 'ratio') {
     $width_dst   = (int)$width_dst; // 目的宽度
     $height_dst  = (int)$height_dst; // 目的高度
-    $_width_src  = (int)$this->infoSrc['width']; // 源图宽度
-    $_height_src = (int)$this->infoSrc['height']; // 源图高度
+    $_width_src  = (int)$this->fileInfo['width']; // 源图宽度
+    $_height_src = (int)$this->fileInfo['height']; // 源图高度
 
     switch ($type) {
       case 'ratio': // 按比例缩小
@@ -1301,25 +1211,5 @@ class Image {
 
   public function __destruct() {
     empty($this->res_imgSrc) || imagedestroy($this->res_imgSrc) || empty($this->res_imgDst) || imagedestroy($this->res_imgDst);
-  }
-
-  private function errRecord($msg) {  // since 0.2.4
-    $this->error      = $msg;
-    $_bool_debugDump  = false;
-    $_mix_configDebug = Config::get('debug'); // 取得调试配置
-
-    if (is_array($_mix_configDebug)) {
-      if ($_mix_configDebug['dump'] === true || $_mix_configDebug['dump'] === 'true' || $_mix_configDebug['dump'] === 'trace') { // 假如配置为输出
-        $_bool_debugDump = true;
-      }
-    } else if (is_scalar($_mix_configDebug)) {
-      if ($_mix_configDebug === true || $_mix_configDebug === 'true' || $_mix_configDebug === 'trace') { // 假如配置为输出
-        $_bool_debugDump = true;
-      }
-    }
-
-    if ($_bool_debugDump) {
-      Log::record('type: ginkgo\Image, msg: ' . $msg, 'log');
-    }
   }
 }

@@ -20,13 +20,14 @@ class Session {
 
   // 默认配置
   private static $configThis = array(
-    'autostart'     => false, //自动开始
-    'name'          => '', //Session ID 名称
-    'type'          => 'file', //类型 (可选 db,file)
-    'path'          => '', //保存路径 (默认为 /runtime/session)
-    'prefix'        => 'ginkgo_', //前缀
-    'cookie_domain' => '', //cookie 域名
-    'life_time'     => 1200, // session 生存时间
+    'autostart'       => false, //自动开始
+    'name'            => '', //Session ID 名称
+    'type'            => 'file', //类型 (可选 db,file)
+    'path'            => '', //保存路径 (默认为 /runtime/session)
+    'prefix'          => 'ginkgo_', //前缀
+    'cookie_domain'   => '', //cookie 域名
+    'cookie_httponly' => true, // httponly 设置
+    'life_time'       => 1200, // session 生存时间
   );
 
   private static $init; // 是否初始化标志
@@ -72,11 +73,15 @@ class Session {
 
       File::instance()->dirMk($_str_sessionPath);
 
-      session_save_path($_str_sessionPath);
+      session_save_path(realpath($_str_sessionPath));
     }
 
     if (Func::notEmpty(self::$config['cookie_domain'])) {
       ini_set('session.cookie_domain', self::$config['cookie_domain']);
+    }
+
+    if (Func::notEmpty(self::$config['cookie_httponly'])) { //设为 httponly
+      ini_set('session.cookie_httponly', 1);
     }
 
     if (isset(self::$config['name']) && Func::notEmpty(self::$config['name'])) {

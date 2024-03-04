@@ -30,9 +30,9 @@ class Mysql extends Connector {
   public function insertId() {
     $_num_id        = 0;
 
-    //print_r('test');
+    $this->master(); // 强制主库
 
-    $_obj_result    = $this->query('SELECT LAST_INSERT_ID()'); // 尝试使用 sql 语句
+    $this->obj_result    = $this->query('SELECT LAST_INSERT_ID()'); // 尝试使用 sql 语句
 
     $_inserResult   = $this->getRow(); // 取得行内容
 
@@ -217,6 +217,10 @@ class Mysql extends Connector {
    * @return 读取结果
    */
   public function find($field = '') {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoRead;
+    }
+
     $this->limit(1);
 
     $_arr_result = $this->select($field, false); // 执行 select 查询
@@ -234,6 +238,10 @@ class Mysql extends Connector {
    * @return 查询结果
    */
   public function select($field = '', $all = true) {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoRead;
+    }
+
     $_arr_return    = array();
     $_arr_pageRow   = array();
     $_str_realSql   = ''; // 真实 sql 语句
@@ -289,6 +297,10 @@ class Mysql extends Connector {
    * @return void
    */
   public function insert($field, $value = '', $param = '', $type = '') {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoWrite;
+    }
+
     $_arr_sql        = $this->buildInsert($field, $value, $param , $type); // 构建 insert 语句
     $_str_realSql    = ''; // 真实 sql 语句
 
@@ -326,6 +338,10 @@ class Mysql extends Connector {
    * @return void
    */
   public function update($field, $value = '', $param = '', $type = '') {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoWrite;
+    }
+
     $_arr_sql        = $this->buildUpdate($field, $value, $param , $type); // 构建 update 语句
     $_str_realSql    = ''; // 真实 sql 语句
 
@@ -360,6 +376,10 @@ class Mysql extends Connector {
    * @return void
    */
   public function delete() {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoWrite;
+    }
+
     $_str_sql        = $this->buildDelete(); // 构建 delete 语句
     $_str_realSql    = ''; // 真实 sql 语句
 
@@ -395,6 +415,10 @@ class Mysql extends Connector {
    * @return void
    */
   public function duplicate($field = array(), $table = '') {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoWrite;
+    }
+
     $_str_sql        = $this->buildDuplicate($field, $table); // 构建 duplicate 语句
     $_str_realSql    = ''; // 真实 sql 语句
 
@@ -580,6 +604,8 @@ class Mysql extends Connector {
 
     $_str_sql    .= ' FROM ' . $_str_table;
 
+    $this->master(); // 强制主库
+
     $_query       = $this->query($_str_sql);
 
     $_arr_results = $this->getResult(true, $_result);
@@ -627,10 +653,18 @@ class Mysql extends Connector {
     $_str_sql      = 'SHOW TABLES FROM ';
 
     if (Func::isEmpty($dbName)) {
-      $_str_sql .= $this->obj_builder->addChar($this->config['name']);
+      if (is_array($this->_config['dbname'])) {
+        $_str_dbname = $this->_config['dbname'][$this->_masterNo];
+      } else {
+        $_str_dbname = $this->_config['dbname'];
+      }
+
+      $_str_sql .= $this->obj_builder->addChar($_str_dbname);
     } else {
       $_str_sql .= $this->obj_builder->addChar($dbName);
     }
+
+    $this->master(); // 强制主库
 
     $_query        = $this->query($_str_sql);
 
@@ -667,6 +701,10 @@ class Mysql extends Connector {
    * @return void
    */
   private function aggProcess($type, $field, $reset = true) {
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoRead;
+    }
+
     $_str_sql       = $this->buildAgg($type, $field); // 构建聚合语句
     $_str_realSql   = ''; // 真实 sql 语句
 

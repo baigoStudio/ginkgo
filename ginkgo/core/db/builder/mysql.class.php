@@ -923,11 +923,39 @@ class Mysql extends Builder {
    * @return void
    */
   private function paramChar($param, $is_sql = true, $from = '') {
+    if (strpos($param, '(') !== false) {
+
+      preg_match('/\((.+)\)/i', $param, $_arr_matches);
+
+      if (isset($_arr_matches[1]) && Func::notEmpty($_arr_matches[1])) {
+        $param = $_arr_matches[1];
+
+        if (strpos($_arr_matches[1], '`') !== false) {
+          preg_match('/\`(.+)\`/i', $_arr_matches[1], $_arr_subs);
+
+          if (isset($_arr_subs[1]) && Func::notEmpty($_arr_subs[1])) {
+            $param = $_arr_subs[1];
+          }
+        }
+      }
+
+    } else if (strpos($param, '`') !== false) {
+
+      preg_match('/\`(.+)\`/i', $param, $_arr_subs);
+
+      if (isset($_arr_subs[1]) && Func::notEmpty($_arr_subs[1])) {
+        $param = $_arr_subs[1];
+      }
+
+    }
+
     if ($is_sql) { // 如果不是 sql, 而是参数, 则加上前缀
       $param = ':' . $param;
     }
 
     $param .= '_' . $from . '__';
+
+    $param = str_replace(' ', '', $param);
 
     return $param;
   }

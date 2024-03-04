@@ -120,9 +120,6 @@ class Route {
       self::init();
     }
 
-    $_str_error     = '';
-    $_str_detail    = '';
-
     self::pathInfoProcess(); // 解析 pathInfo
     self::ruleProcess(); // 解析规则
     self::routeProcess(); // 解析路由

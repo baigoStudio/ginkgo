@@ -146,7 +146,7 @@ class Captcha {
     // 对比验证码
     if ($this->authcode(strtolower($code)) == $_arr_secode['verify_code']) {
       if ($this->config['reset'] && $del) { // 根据参数删除会话中的验证码
-          Session::delete($_key);
+        Session::delete($_key);
       }
       return true;
     }
@@ -157,12 +157,13 @@ class Captcha {
 
   // 生成验证码
   private function createCode() {
-    $_len         = strlen($this->chars) - 1; // 取得字符池长度
+    $_arr_char    = str_split($this->chars); // 转数组
+    $_num_count   = count($_arr_char) - 1; // 取长度
     $_arr_captcha = array(); // 验证码数组
     $_str_captcha = ''; // 验证码字符串
 
     for ($_iii = 0; $_iii < $this->config['length']; ++$_iii) { // 根据长度循环
-      $_code          = $this->chars[mt_rand(0, $_len)]; // 随机取字符
+      $_code          = $_arr_char[mt_rand(0, $_num_count)]; // 随机取字符
       $_arr_captcha[] = $_code; // 拼接验证码数组
       $_str_captcha  .= $_code; // 拼接验证码字符串
     }

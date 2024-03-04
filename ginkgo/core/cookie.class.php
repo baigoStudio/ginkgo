@@ -33,10 +33,6 @@ class Cookie {
   public static function init($config = array()) {
     self::config($config);
 
-    if (Func::notEmpty(self::$config['httponly'])) { //设为 httponly
-      ini_set('session.cookie_httponly', 1);
-    }
-
     self::$init = true; // 标识为已初始化
   }
 

@@ -20,9 +20,9 @@ class App {
   public static $header = array(); // http 头 since 0.2.3
 
   private static $configThis = array( // 默认配置
-    'timezone'         => 'Asia/Shanghai', //默认时区
-    'return_type'      => 'html', //默认 返回类型
-    'return_type_ajax' => 'json', //默认 ajax 返回类型
+    'timezone'         => 'Asia/Shanghai', // 默认时区
+    'return_type'      => 'html', // 默认 返回类型
+    'return_type_ajax' => 'json', // 默认 ajax 返回类型
   );
 
   private static $obj_request; // 请求实例

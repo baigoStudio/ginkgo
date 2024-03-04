@@ -26,12 +26,16 @@ abstract class Connector {
   public $obj_pdo; // PDO 实例
   public $obj_result; // SQL 语句结果集实例
 
-  protected static $instance; // 当前实例
+  protected static $instance = array(); // 当前实例
   protected $isConnect; // 是否连接标记
   protected $mid; // 模型 ID
-
   protected $optDebugDump = false; // 调试配置
+  protected $obj_pdoWrite; // 写 PDO
+  protected $obj_pdoRead; // 只读 PDO
+  protected $rwSeparate   = false; // 是否开启读写分离
 
+  protected $_config      = array(); // 转换后 config
+  protected $_masterNo    = 0; // 主库序号
   protected $_table       = array(); // 数据表名
   protected $_tableTemp   = array(); // 临时数据表名, 切换操作的数据表, 对多表进行操作
   protected $_pk; // 主键
@@ -47,24 +51,14 @@ abstract class Connector {
   protected $_limit       = ''; // limit 语句
   protected $_bind        = array(); // 绑定参数数组
   protected $_fetchSql    = false; // 是否获取 sql 语句
+  protected $_master      = false; // 强制主数据库
+
 
   // 默认参数类型
   protected $paramType = array(
     'bool'  => PDO::PARAM_BOOL,
     'int'   => PDO::PARAM_INT,
     'str'   => PDO::PARAM_STR,
-  );
-
-  private $configThis = array(
-    'type'      => 'mysql',
-    'host'      => '',
-    'name'      => '',
-    'user'      => '',
-    'pass'      => '',
-    'charset'   => 'utf8',
-    'prefix'    => 'ginkgo_',
-    'debug'     => false,
-    'port'      => 3306,
   );
 
 
@@ -76,7 +70,7 @@ abstract class Connector {
    * @return void
    */
   protected function __construct($config = array()) {
-    $this->config($config); // 配置处理
+    $this->init($config); // 配置处理
   }
 
   protected function __clone() { }
@@ -89,11 +83,16 @@ abstract class Connector {
    * @param array $config (default: array())
    * @return 当前类的实例
    */
-  public static function instance($config = array()) {
-    if (Func::isEmpty(self::$instance)) {
-      self::$instance = new static($config);
+  public static function instance($config = array(), $name = false) {
+    if ($name === false) {
+      $name = md5(serialize($config));
     }
-    return self::$instance;
+
+    if (Func::notEmpty($name) && !isset(self::$instance[$name])) {
+      self::$instance[$name] = new static($config);
+    }
+
+    return self::$instance[$name];
   }
 
   /** 配置处理并实例化 sql 语句构造器
@@ -103,17 +102,19 @@ abstract class Connector {
    * @param array $config (default: array()) 配置
    * @return void
    */
-  public function config($config = array()) {
-    $this->config = array_replace_recursive($this->configThis, $this->config, $config); // 合并配置
-
-    if (Func::isEmpty($this->config['type'])) { // 未指定类型, 默认 mysql
-      $this->config['type'] = $this->configThis['type'];
+  public function init($config = array()) {
+    if (Func::isEmpty($config['type'])) { // 未指定类型, 默认 mysql
+      $config['type'] = 'mysql';
     }
 
-    $_class = 'ginkgo\\db\\builder\\' . Strings::ucwords($this->config['type'], '_'); // 补全构造器命名空间
+    $this->config = $config;
+
+    $this->configProcess();
+
+    $_class = 'ginkgo\\db\\builder\\' . Strings::ucwords($config['type'], '_'); // 补全构造器命名空间
 
     if (class_exists($_class)) {
-      $this->obj_builder = $_class::instance($this->config); // 实例化 sql 语句构造器
+      $this->obj_builder = $_class::instance($config); // 实例化 sql 语句构造器
     } else {
       $_obj_excpt = new Db_Except('SQL Builder not found', 500);
 
@@ -132,13 +133,18 @@ abstract class Connector {
    */
   public function connect() {
     try {
-      if (Func::isEmpty($this->config['type'])) { // 未指定类型, 默认 mysql
-        $this->config['type'] = 'mysql';
+      $_arr_dsn = $this->dsnProcess(); // dsn 处理
+
+      if ($this->rwSeparate === true) {
+        $this->obj_pdoWrite = new PDO($_arr_dsn['write']['dsn'], $_arr_dsn['write']['user'], $_arr_dsn['write']['pass']); // 实例化 写 PDO
+
+        $this->obj_pdoRead = new PDO($_arr_dsn['read']['dsn'], $_arr_dsn['read']['user'], $_arr_dsn['read']['pass']); // 实例化 只读 PDO
+        $this->obj_pdoWrite->exec('SET NAMES ' . $_arr_dsn['write']['charset']); // 设置字符编码
+        $this->obj_pdoRead->exec('SET NAMES ' . $_arr_dsn['read']['charset']); // 设置字符编码
+      } else {
+        $this->obj_pdo = new PDO($_arr_dsn['dsn'], $_arr_dsn['user'], $_arr_dsn['pass']); // 实例化 pdo
+        $this->obj_pdo->exec('SET NAMES ' . $_arr_dsn['charset']); // 设置字符编码
       }
-
-      $_str_dsn = $this->dsnProcess(); // dsn 处理
-
-      $this->obj_pdo = new PDO($_str_dsn, $this->config['user'], $this->config['pass']); // 实例化 pdo
     } catch (\PDOException $excpt) { // 报错
       $_obj_excpt = new Db_Except('Can not connect to database', 500);
       if ($this->config['debug'] === true || $this->config['debug'] === 'true') {
@@ -147,8 +153,6 @@ abstract class Connector {
 
       throw $_obj_excpt;
     }
-
-    $this->obj_pdo->exec('SET NAMES ' . $this->config['charset']); // 设置字符编码
 
     $_mix_configDebug  = Config::get('debug'); // 取得调试配置
 
@@ -178,6 +182,10 @@ abstract class Connector {
       $this->connect();
     }
 
+    if ($this->rwSeparate === true) {
+      $this->obj_pdo = $this->obj_pdoWrite;
+    }
+
     if ($this->optDebugDump === 'trace') {
       Log::record($sql, 'sql'); // 记录日志
     }
@@ -198,13 +206,21 @@ abstract class Connector {
       $this->connect();
     }
 
+    if ($this->rwSeparate === true) {
+      if ($this->_master === true) {
+        $this->obj_pdo = $this->obj_pdoWrite;
+      } else {
+        $this->obj_pdo = $this->obj_pdoRead;
+      }
+    }
+
     if ($this->optDebugDump === 'trace') {
       Log::record($sql, 'sql'); // 记录日志
     }
 
-    $_obj_result = $this->obj_pdo->query($sql); // 执行
+    $this->obj_result = $this->obj_pdo->query($sql); // 执行
 
-    if ($_obj_result === false) {
+    if ($this->obj_result === false) {
       $_obj_excpt = new Db_Except('PDO::query error', 500);
 
       $_arr_error = $this->obj_pdo->errorInfo();
@@ -216,9 +232,7 @@ abstract class Connector {
       throw $_obj_excpt;
     }
 
-    $this->obj_result = $_obj_result;
-
-    return $_obj_result;
+    return $this->obj_result;
   }
 
 
@@ -248,15 +262,13 @@ abstract class Connector {
       $this->connect(); // 连接数据库
     }
 
-    $_obj_result = $this->obj_pdo->prepare($sql); // 预处理
-
-    $this->obj_result = $_obj_result;
+    $this->obj_result = $this->obj_pdo->prepare($sql); // 预处理
 
     if (Func::notEmpty($bind)) {
       $this->bind($bind, $value, $type); // 绑定处理
     }
 
-    return $_obj_result;
+    return $this->obj_result;
   }
 
 
@@ -328,6 +340,19 @@ abstract class Connector {
    */
   public function fetchSql($bool = true) {
     $this->_fetchSql = $bool;
+
+    return $this;
+  }
+
+  /** 强制主数据库
+   * master function.
+   *
+   * @access public
+   * @param bool $bool (default: true)
+   * @return 当前实例
+   */
+  public function master($bool = true) {
+    $this->_master = $bool;
 
     return $this;
   }
@@ -703,6 +728,45 @@ abstract class Connector {
   }
 
 
+  /** config 处理
+   * configProcess function.
+   *
+   * @access private
+   * @return config
+   */
+  private function configProcess() {
+    $_arr_config = $this->config;
+
+    if (strpos($_arr_config['host'], ',')) {
+      $_arr_config['host'] = explode(',', $_arr_config['host']);
+    }
+
+    if (isset($_arr_config['port']) && Func::notEmpty($_arr_config['port']) && strpos($_arr_config['port'], ',')) {
+      $_arr_config['port'] = explode(',', $_arr_config['port']);
+    }
+
+    if (strpos($_arr_config['dbname'], ',')) {
+      $_arr_config['dbname'] = explode(',', $_arr_config['dbname']);
+    }
+
+    if (strpos($_arr_config['user'], ',')) {
+      $_arr_config['user'] = explode(',', $_arr_config['user']);
+    }
+
+    if (strpos($_arr_config['pass'], ',')) {
+      $_arr_config['pass'] = explode(',', $_arr_config['pass']);
+    }
+
+    if (strpos($_arr_config['charset'], ',')) {
+      $_arr_config['charset'] = explode(',', $_arr_config['charset']);
+    }
+
+    $this->_config = $_arr_config;
+
+    return $_arr_config;
+  }
+
+
   /** dsn 处理
    * dsnProcess function.
    *
@@ -710,21 +774,108 @@ abstract class Connector {
    * @return dsn 字符串
    */
   private function dsnProcess() {
-    $_str_dsn = $this->config['type'] . ':host=' . $this->config['host'];
+    $_arr_config = $this->_config;
+    $_num_rand   = 0;
+    $_arr_return = array();
 
-    if (isset($this->config['port']) && Func::notEmpty($this->config['port'])) {
-      $_str_dsn .= ';port=' . $this->config['port'];
+    if (is_array($_arr_config['host']) && isset($_arr_config['rw_separate']) && ($_arr_config['rw_separate'] === true || $_arr_config['rw_separate'] === 'true')) {
+      $_num_slave  = 0;
+
+      if (isset($_arr_config['master_count']) && $_arr_config['master_count'] > 0) {
+        $_num_rand = floor(mt_rand(0, $_arr_config['master_count'] - 1));
+      }
+
+      if (isset($_arr_config['slave_no']) && $_arr_config['slave_no'] > 0) {
+        $_num_slave = $_arr_config['slave_no'];
+      } else {
+        if (isset($_arr_config['master_count']) && $_arr_config['master_count'] > 0) {
+          $_num_except = $_arr_config['master_count'];
+        } else {
+          $_num_except = 1;
+        }
+
+        $_num_slave = floor(mt_rand($_num_except, count($_arr_config['host']) - 1));
+      }
+
+      $this->rwSeparate = true;
+
+      $_arr_return = array(
+        'write' => $this->paramProcess($_num_rand),
+        'read'  => $this->paramProcess($_num_slave),
+      );
+    } else {
+      if (is_array($_arr_config['host'])) {
+        $_num_rand = array_rand($_arr_config['host']);
+      }
+
+      $_arr_return = $this->paramProcess($_num_rand);
     }
 
-    $_str_dsn .= ';dbname=' . $this->config['name'];
+    $this->_masterNo = $_num_rand;
 
-    return $_str_dsn;
+    return $_arr_return;
+  }
+
+
+  private function paramProcess($param_no = 0) {
+    $_arr_config = $this->_config;
+
+    $_str_dsn    = $_arr_config['type'];
+
+    if (is_array($_arr_config['host'])) {
+      $_str_host = $_arr_config['host'][$param_no];
+    } else {
+      $_str_host = $_arr_config['host'];
+    }
+
+    $_str_dsn .= ':host=' . $_str_host;
+
+    if (isset($_arr_config['port']) && Func::notEmpty($_arr_config['port'])) {
+      if (is_array($_arr_config['port'])) {
+        $_str_port = $_arr_config['port'][$param_no];
+      } else {
+        $_str_port = $_arr_config['port'];
+      }
+
+      $_str_dsn .= ';port=' . $_str_port;
+    }
+
+    if (is_array($_arr_config['dbname'])) {
+      $_str_dbname = $_arr_config['dbname'][$param_no];
+    } else {
+      $_str_dbname = $_arr_config['dbname'];
+    }
+
+    $_str_dsn .= ';dbname=' . $_str_dbname;
+
+    if (is_array($_arr_config['user'])) {
+      $_str_user = $_arr_config['user'][$param_no];
+    } else {
+      $_str_user = $_arr_config['user'];
+    }
+
+    if (is_array($_arr_config['pass'])) {
+      $_str_pass = $_arr_config['pass'][$param_no];
+    } else {
+      $_str_pass = $_arr_config['pass'];
+    }
+
+    if (is_array($_arr_config['charset'])) {
+      $_str_charset = $_arr_config['charset'][$param_no];
+    } else {
+      $_str_charset = $_arr_config['charset'];
+    }
+
+    return array(
+      'dsn'     => $_str_dsn,
+      'user'    => $_str_user,
+      'pass'    => $_str_pass,
+      'charset' => $_str_charset,
+    );
   }
 
   public function __destruct() {
-    if ($this->obj_pdo) {
-      //$this->closeDb();
-      //unset($this->obj_pdo);
-    }
+    $this->obj_pdo    = null;
+    $this->obj_result = null;
   }
 }

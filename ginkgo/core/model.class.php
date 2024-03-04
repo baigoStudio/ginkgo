@@ -26,7 +26,7 @@ abstract class Model {
   private $configThis = array(
     'type'      => 'mysql',
     'host'      => '',
-    'name'      => '',
+    'dbname'    => '',
     'user'      => '',
     'pass'      => '',
     'charset'   => 'utf8',
@@ -56,6 +56,10 @@ abstract class Model {
     $this->m_init();
   }
 
+  public function getDbConfig() {
+    return $this->obj_db->config;
+  }
+
 
   /** 魔术调用
    * __call function.
@@ -75,11 +79,13 @@ abstract class Model {
 
       $this->obj_db->setTable($this->table); // 设置表名
 
-      if (Func::isEmpty($this->pk)) {
+      if (Func::isEmpty($this->pk) && $this->pk !== false) {
         $this->pk = $this->obj_db->getTableInfo('pk');
       }
 
-      $this->obj_db->setPk($this->pk); // 设置主键
+      if (is_scalar($this->pk)) {
+        $this->obj_db->setPk($this->pk); // 设置主键
+      }
 
       return call_user_func_array(array($this->obj_db, $method), $params); // 调用数据库驱动方法
     } else {
@@ -103,23 +109,9 @@ abstract class Model {
    * @return void
    */
   protected function config($config = array()) {
-    $_arr_config   = Config::get('dbconfig');
+    $_arr_config = Config::get('dbconfig'); // 获取数据库配置
 
-    $_arr_configDo = $this->configThis;
-
-    if (is_array($_arr_config) && Func::notEmpty($_arr_config)) {
-      $_arr_configDo = array_replace_recursive($_arr_configDo, $_arr_config); // 合并配置
-    }
-
-    if (is_array($this->config) && Func::notEmpty($this->config)) {
-      $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
-    }
-
-    if (is_array($config) && Func::notEmpty($config)) {
-      $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
-    }
-
-    $this->config  = $_arr_configDo;
+    $this->config  = $this->configProcess($_arr_config, $config);
   }
 
 
@@ -193,5 +185,23 @@ abstract class Model {
     $this->className = $_class;
 
     return strtolower($_realClass);
+  }
+
+  private function configProcess($config = array(), $configParam = array()) {
+    $_arr_configDo = $this->configThis;
+
+    if (is_array($this->config) && Func::notEmpty($this->config)) {
+      $_arr_configDo = array_replace_recursive($_arr_configDo, $this->config); // 合并配置
+    }
+
+    if (is_array($config) && Func::notEmpty($config)) {
+      $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
+    }
+
+    if (is_array($configParam) && Func::notEmpty($configParam)) {
+      $_arr_configDo = array_replace_recursive($_arr_configDo, $configParam); // 合并配置
+    }
+
+    return $_arr_configDo;
   }
 }

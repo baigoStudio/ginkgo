@@ -105,7 +105,11 @@ class Debug {
           $_str_type = self::$obj_request->type();
         }
 
-        if ($_str_type != 'html' && $_str_type != 'xml') { // 如果不是 html 和 xml, 则不做处理
+        if (Func::notEmpty(self::$error) && is_array($_mix_return)) {
+          $_mix_return['error'] = self::$error;
+        }
+
+        if (is_array($_mix_return) || ($_str_type != 'html' && $_str_type != 'xml')) { // 如果不是 html 和 xml, 则不做处理
           return $_mix_return;
         }
 

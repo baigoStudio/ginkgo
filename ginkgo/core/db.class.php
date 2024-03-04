@@ -17,14 +17,10 @@ if (!defined('IN_GINKGO')) {
 class Db {
 
   public static $config = array();
-
-  protected static $instance; // 当前实例
-
-  private static $init; // 是否已初始化标志
   private static $configThis = array(
     'type'      => 'mysql',
     'host'      => '',
-    'name'      => '',
+    'dbname'    => '',
     'user'      => '',
     'pass'      => '',
     'charset'   => 'utf8',
@@ -42,34 +38,24 @@ class Db {
    * @param array $config (default: array()) 数据库配置
    * @return 数据库实例
    */
-  public static function connect($config = array()) {
-    if (Func::isEmpty(self::$instance)) {
-      if (Func::isEmpty(self::$init)) {
-        self::config($config); // 数据库配置
-      }
+  public static function connect($config = array(), $name = false) {
+    $_arr_configDo = self::config($config); // 数据库配置
 
-      if (Func::isEmpty(self::$config['type'])) {
-        self::$config['type'] = Strings::ucwords(self::$configThis['type']);
-      }
-
-      if (strpos(self::$config['type'], '\\')) {
-        $_class = self::$config['type'];
-      } else {
-        $_class = 'ginkgo\\db\\connector\\' . Strings::ucwords(self::$config['type'], '_');
-      }
-
-      if (class_exists($_class)) {
-          self::$instance = $_class::instance(self::$config); // 实例化数据库驱动
-      } else {
-        $_obj_excpt = new Db_Except('Unsupported database type', 500);
-
-        $_obj_excpt->setData('err_detail', $_class);
-
-        throw $_obj_excpt;
-      }
+    if (strpos($_arr_configDo['type'], '\\')) {
+      $_class = $_arr_configDo['type'];
+    } else {
+      $_class = 'ginkgo\\db\\connector\\' . Strings::ucwords($_arr_configDo['type'], '_');
     }
 
-    return self::$instance;
+    if (class_exists($_class)) {
+      return $_class::instance($_arr_configDo); // 实例化数据库驱动
+    } else {
+      $_obj_excpt = new Db_Except('Unsupported database type', 500);
+
+      $_obj_excpt->setData('err_detail', $_class);
+
+      throw $_obj_excpt;
+    }
   }
 
 
@@ -98,9 +84,18 @@ class Db {
       $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
     }
 
-    self::$config  = $_arr_configDo;
+    if (Func::isEmpty($_arr_configDo['type'])) {
+      $_arr_configDo['type'] = Strings::ucwords(self::$configThis['type']);
+    }
 
-    self::$init    = true; // 标识为已初始化
+    // 兼容用
+    if (Func::isEmpty($_arr_configDo['dbname'])) {
+      if (isset($_arr_configDo['name']) && Func::notEmpty($_arr_configDo['name'])) {
+        $_arr_configDo['dbname'] = $_arr_configDo['name'];
+      }
+    }
+
+    return $_arr_configDo;
   }
 
 

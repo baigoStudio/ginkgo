@@ -95,7 +95,7 @@ class Func {
    * @return bool
    */
   public static function isEven($num) {
-    return !self::isOdd($num);;
+    return !self::isOdd($num);
   }
 
   /** 处理目录分隔符, 将多余的分隔符去除并在最后补全分隔符
@@ -373,7 +373,7 @@ class Func {
 
   /** 强化版 strtotime 向下兼容 */
   public static function strtotime($time) {
-    return Strings::toTime($time);
+    return Datetime::toTime($time);
   }
 
   /** 将字符串中每个单词的首字母转换为大写 向下兼容 */

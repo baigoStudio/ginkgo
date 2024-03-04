@@ -20,25 +20,6 @@ abstract class Builder {
 
   protected static $instance; // 当前实例
 
-  /** 配置参数
-   * configThis
-   *
-   * @var mixed
-   * @access private
-   */
-  private $configThis = array(
-    'type'      => 'mysql',
-    'host'      => '',
-    'name'      => '',
-    'user'      => '',
-    'pass'      => '',
-    'charset'   => 'utf8',
-    'prefix'    => 'ginkgo_',
-    'debug'     => false,
-    'port'      => 3306,
-  );
-
-
   /** 构造函数
    * __construct function.
    *
@@ -76,7 +57,7 @@ abstract class Builder {
    * @return void
    */
   public function config($config = array()) {
-    $this->config = array_replace_recursive($this->configThis, $this->config, $config); // 合并配置
+    $this->config = $config;
   }
 
 

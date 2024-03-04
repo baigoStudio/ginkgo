@@ -173,6 +173,6 @@ class Cache {
    * @return 删除结果 (bool)
    */
   public function delete($name) {
-    return $this->obj_driver->delete();
+    return $this->obj_driver->delete($name);
   }
 }

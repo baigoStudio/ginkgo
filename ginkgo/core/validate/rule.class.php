@@ -69,7 +69,7 @@ abstract class Rule {
       return true;
     }
 
-    if (!is_int($rule)) {
+    if (!is_numeric($rule)) {
       $rule = filter_id($rule);
     }
 
@@ -91,12 +91,9 @@ abstract class Rule {
 
     $_arr_rule = explode(',', $rule);
 
-    $_min = $_arr_rule[0];
-    $_max = $_arr_rule[1];
-
-    if ($_min > 0 && strlen($value) < $_min) {
+    if ($_arr_rule[0] > 0 && strlen($value) < $_arr_rule[0]) {
       $_status = false;
-    } else if ($_max > 0 && strlen($value) > $_max) {
+    } else if ($_arr_rule[1] > 0 && strlen($value) > $_arr_rule[1]) {
       $_status = false;
     }
 
@@ -186,15 +183,15 @@ abstract class Rule {
     $_end   = $_arr_rule[1];
 
     if (!is_numeric($_begin)) {
-      $_begin = Strings::toTime($_begin);
+      $_begin = Datetime::toTime($_begin);
     }
 
     if (!is_numeric($_end)) {
-      $_end = Strings::toTime($_end);
+      $_end = Datetime::toTime($_end);
     }
 
     if (!is_numeric($value)) {
-      $value = Strings::toTime($value);
+      $value = Datetime::toTime($value);
     }
 
     return $value >= $_begin && $value <= $_end;
@@ -216,11 +213,11 @@ abstract class Rule {
     }
 
     if (!is_numeric($value)) {
-      $value = Strings::toTime($value);
+      $value = Datetime::toTime($value);
     }
 
     if (!is_numeric($rule)) {
-      $rule = Strings::toTime($rule);
+      $rule = Datetime::toTime($rule);
     }
 
     return $value >= $rule;
@@ -269,7 +266,7 @@ abstract class Rule {
    * @return void
    */
   public function notIn($value, $rule) {
-    return !$this->in($value, $_arr_rule);
+    return !$this->in($value, $rule);
   }
 
 
@@ -289,10 +286,7 @@ abstract class Rule {
 
     $_arr_rule = explode(',', $rule);
 
-    $_min = $_arr_rule[0];
-    $_max = $_arr_rule[1];
-
-    return $value >= $_min && $value <= $_max;
+    return $value >= $_arr_rule[0] && $value <= $_arr_rule[1];
   }
 
 
