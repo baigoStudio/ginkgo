@@ -11,7 +11,7 @@
 ``` php
 Db::table('user')
   ->where('id', '>', 1)
-  ->whereOr('name', '=', 'baigo')
+  ->whereOr('name', '=', 'ginkgo')
   ->select();
 ```
 ----------
@@ -27,7 +27,7 @@ Db::table('user')->where($map)->select();
 
 $map = array(
   array('id', '>', 1),
-  array('mail', 'like', '%baigo@qq.com%'),
+  array('mail', 'like', '%ginkgo@ginkgo%'),
 );
 
 Db::table('user')->where($map)->select();
@@ -54,7 +54,7 @@ SELECT * FROM `user` WHERE `type`=1 AND `status`=1
 ``` php
 $bind = array(
   array('id', 1, 'int'),
-  array('name', 'baigo'),
+  array('name', 'ginkgo'),
 );
 Db::table('user')->where('`id`=:id AND `username`=:name')->bind($bind)->select();
 ```

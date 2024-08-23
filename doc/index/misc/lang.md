@@ -144,7 +144,7 @@ class Index extends Ctrl {
   public function index() {
     $replace = array(
       'name'  => 'Ginkgo',
-      'email' => 'ginkgo@qq.com',
+      'email' => 'ginkgo@ginkgo',
     );
 
     echo $this->obj_lang->get('Hello {:name}', '', $replace);
@@ -166,12 +166,12 @@ return array(
 此时，上述例子获取的语言变量为：
 
 > * 欢迎使用 Ginkgo
-> * Email: ginkgo@qq.com 未找到
+> * Email: ginkgo@ginkgo 未找到
 
 语言包未定义的情况下，上述例子获取的语言变量为：
 
 > * Hello Ginkgo
-> * Email: ginkgo@qq.com not found
+> * Email: ginkgo@ginkgo not found
 
 ----------
 

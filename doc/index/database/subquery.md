@@ -46,8 +46,8 @@ SELECT * FROM `user` WHERE `id` NOT IN (SELECT `id` FROM `user` WHERE `id` > 10)
 
 ``` php
 $where = array(
-  array('name', 'LIKE', '%baigo', 'key', 'str'),
-  array('title', 'LIKE', '%baigo', 'key', 'str'),
+  array('name', 'LIKE', '%ginkgo', 'key', 'str'),
+  array('title', 'LIKE', '%ginkgo', 'key', 'str'),
 );
 
 $subQuery = Db::where($where)->buildSql();
@@ -56,7 +56,7 @@ $subQuery = Db::where($where)->buildSql();
 生成的 subQuery 结果为：
 
 ``` php
-`name` LIKE '%baigo' AND `title` LIKE '%baigo'
+`name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo'
 ```
 
 使用上述方法获得 subQuery 语句以后，可以进行如下操作
@@ -74,5 +74,5 @@ Db::table('user')
 生成的SQL语句为：
 
 ``` php
-SELECT `id`,`name` FROM `user` WHERE `id` > 10 AND (`name` LIKE '%baigo' AND `title` LIKE '%baigo') ORDER BY `id` DESC
+SELECT `id`,`name` FROM `user` WHERE `id` > 10 AND (`name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo') ORDER BY `id` DESC
 ```

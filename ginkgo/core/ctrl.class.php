@@ -130,7 +130,7 @@ abstract class Ctrl {
 
   // 清空变量
   protected function reset() {
-      $this->obj_view->reset();
+    $this->obj_view->reset();
   }
 
   // 向模板映射对象

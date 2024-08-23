@@ -16,9 +16,9 @@ if (!defined('IN_GINKGO')) {
 // 图片处理类
 class Image extends File_Sys {
 
-  public $quality    = 90; // 图片质量
-  public $thumbs     = array(); // 缩略图
-  public $fileInfoDst    = array(); // 目标图片信息
+  public $quality     = 90; // 图片质量
+  public $thumbs      = array(); // 缩略图
+  public $fileInfoDst = array(); // 目标图片信息
 
   public $fileInfo = array(
     'width'    => 0,

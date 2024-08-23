@@ -113,10 +113,10 @@ where('id', '<=', 100);
 例如：
 
 ``` php
-where('name', 'LIKE', 'baigo%');
+where('name', 'LIKE', 'ginkgo%');
 ```
 
-查询条件就变成 name LIKE 'baigo%'
+查询条件就变成 name LIKE 'ginkgo%'
 
 ----------
 

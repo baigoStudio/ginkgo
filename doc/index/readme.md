@@ -1,4 +1,4 @@
-# ginkgo 开发文档
+# ginkgo 快速开发指南
 
 ----------
 
@@ -75,6 +75,7 @@
 数据库
 
 * [连接数据库](./database/index.md)
+* [分布式数据库](./database/distributed.md)
 * [基本使用](./database/basic.md)
 * [参数绑定](./database/bind.md)
 * [CURD](./database/curd.md)
@@ -108,17 +109,18 @@
 
 ----------
 
-错误和日志
+错误和调试
 
-* [异常处理](./err_log/index.md)
-* [日志处理](./err_log/log.md)
+* [异常处理](./err_debug/index.md)
+* [调试信息](./err_debug/debu.md)
+* [Trace 调试](./err_debug/trace.md)
+* [404 及 500 页面](./err_debug/404.md)
 
 ----------
 
-调试
+日志
 
-* [概况](./debug/index.md)
-* [Trace 调试](./debug/trace.md)
+* [日志处理](./log/index.md)
 
 ----------
 
@@ -141,7 +143,7 @@
 * [控制器验证](./validate/ctrl.md)
 * [模型验证](./validate/model.md)
 * [内置规则](./validate/builtin.md)
-* [静态调用](./validate/static.md)
+* [直接验证](./validate/static.md)
 * [表单令牌](./validate/token.md)
 * [验证码](./validate/captcha.md)
 

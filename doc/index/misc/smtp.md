@@ -69,8 +69,8 @@ $smtp->connect();
 $smtp = Smtp::instance($config);
 
 $smtp->connect();
-$smtp->addRcpt('baigo@baigo.net'); // 支持多个收件人
-$smtp->addRcpt('fone@baigo.net', 'fone'); // 支持定义收件人名
+$smtp->addRcpt('ginkgo@ginkgo'); // 支持多个收件人
+$smtp->addRcpt('info@ginkgo', 'info'); // 支持定义收件人名
 $smtp->setSubject('这是一封邮件');
 $smtp->setContent('<div>这是邮件内容</div>'); // 支持 HTML
 $smtp->send();
@@ -85,21 +85,21 @@ $smtp->send();
   ``` php
   $smtp = Smtp::instance();
 
-  $smtp->addRcpt('baigo@baigo.net'); // 支持多个收件人
-  $smtp->addRcpt('fone@baigo.net', 'fone'); // 支持定义收件人名
+  $smtp->addRcpt('ginkgo@ginkgo'); // 支持多个收件人
+  $smtp->addRcpt('info@ginkgo', 'info'); // 支持定义收件人名
   ```
 
 * 添加回复人
 
   ``` php
-  $smtp->addReply('baigo@baigo.net'); // 支持多个回复人
-  $smtp->addReply('fone@baigo.net', 'fone'); // 支持定义回复人名
+  $smtp->addReply('ginkgo@ginkgo'); // 支持多个回复人
+  $smtp->addReply('info@ginkgo', 'info'); // 支持定义回复人名
   ```
 
 * 设置发件人
 
   ``` php
-  $smtp->setFrom('fone@baigo.net', 'fone'); // 支持定义发件人名
+  $smtp->setFrom('info@ginkgo', 'info'); // 支持定义发件人名
   ```
 
 * 设置邮件主题

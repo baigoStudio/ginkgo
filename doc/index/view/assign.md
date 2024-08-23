@@ -13,12 +13,12 @@ class Index extends ginkgo\Ctrl {
 
   public function index() {
     // 模板变量赋值
-    $this->assign('name', 'baigo');
-    $this->assign('email', 'baigo@qq.com');
+    $this->assign('name', 'ginkgo');
+    $this->assign('email', 'ginkgo@ginkgo');
 
     $data = array(
-      'name'  => 'baigo',
-      'email' => 'baigo@qq.com'
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@ginkgo'
     );
     // 或者批量赋值
     $this->assign($data);
@@ -42,26 +42,26 @@ namespace app\ctrl\index;
 class Index extends ginkgo\Ctrl {
 
   public function name() {
-    return $this->fetch('name', 'name', 'baigo');
+    return $this->fetch('name', 'name', 'ginkgo');
   }
 
   public function email() {
     $data = array(
-      'name'  => 'baigo',
-      'email' => 'baigo@qq.com'
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@ginkgo'
     );
 
     return $this->fetch('email', $data);
   }
 
   public function test() {
-    return $this->display('test', 'name', 'baigo');
+    return $this->display('test', 'name', 'ginkgo');
   }
 
   public function abc() {
     $data = array(
-      'name'  => 'baigo',
-      'email' => 'baigo@qq.com'
+      'name'  => 'ginkgo',
+      'email' => 'ginkgo@ginkgo'
     );
 
     return $this->display('abc', $data);

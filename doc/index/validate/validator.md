@@ -29,8 +29,8 @@ class User extends Validate {
 
 ``` php
 $data = array(
-  'name'  => 'baigo',
-  'email' => 'baigo@qq.com'
+  'name'  => 'ginkgo',
+  'email' => 'ginkgo@ginkgo'
 );
 
 $validate = Loader::validate('User');

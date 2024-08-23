@@ -37,13 +37,13 @@ echo 'root with domain: ' . $request->root(true) . '<br>';
 
 输出结果为：
 
-  domain: http://baigo.net
+  domain: http://ginkgo
   file: /index.php
   url: /index/index/hello.html?name=ginkgo
-  url with domain: http://baigo.net/index/index/hello.html?name=ginkgo
+  url with domain: http://ginkgo/index/index/hello.html?name=ginkgo
   url without query: /index/index/hello.html
   root: /
-  root with domain: http://baigo.net
+  root with domain: http://ginkgo
 
 ----------
 

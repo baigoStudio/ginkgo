@@ -4,8 +4,8 @@
 
 ``` php
 $data = array(
-  'name'  => 'baigo',
-  'email' => 'baigo@qq.com',
+  'name'  => 'ginkgo',
+  'email' => 'ginkgo@ginkgo',
 );
 
 $rule = array(

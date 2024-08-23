@@ -15,13 +15,13 @@ HTTP 请求功能由 `ginkgo\Http` 类完成。
 
   $http = Http::instance();
 
-  $http->request('https://www.baigo.net', $data, 'post'); // POST 方法发送数据 $date
+  $http->request('https://ginkgo', $data, 'post'); // POST 方法发送数据 $date
   ```
 
 * 设置头信息
 
   ``` php
-  $http->setHeader('Referer', 'https://www.baigo.net');
+  $http->setHeader('Referer', 'https://ginkgo');
   $http->setHeader('User-Agent', 'Mozilla/5.0');
   ```
 
@@ -70,7 +70,7 @@ HTTP 请求功能由 `ginkgo\Http` 类完成。
 * 抓取远程地址
 
   ``` php
-  $http->getRemote('https://www.baigo.net/test.txt', '', 'get'); // GET 方法抓取
+  $http->getRemote('https://ginkgo/test.txt', '', 'get'); // GET 方法抓取
   ```
 
 * 将抓取到的远程文件保存至指定位置

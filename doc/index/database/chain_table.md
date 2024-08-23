@@ -22,6 +22,6 @@ Db::table('db_name.user')->where('status', '>', 1)->select();
 如果设置了数据表前缀参数，`table()` 方法会自动加上前缀，如果要阻止系统添加前缀，可以用 <kbd>&#96;</kbd> 符号包裹完整的表名，如：
 
 ``` php
-Db::table('`baigo_user`')->where('status', '>', 1)->select();
-Db::table('`db_name`.`baigo_user`')->where('status', '>', 1)->select();
+Db::table('`ginkgo_user`')->where('status', '>', 1)->select();
+Db::table('`db_name`.`ginkgo_user`')->where('status', '>', 1)->select();
 ```

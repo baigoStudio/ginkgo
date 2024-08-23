@@ -29,7 +29,7 @@ class App {
   public static init( [ array $config ] )
   public static run( [ array $config ] ) : object
   public static config( array $config )
-  public header( mixed $header [, string $value ] )
+  public static header( mixed $header [, string $value ] )
   public static setTimezone( string $timezone )
 
   private static configProcess()

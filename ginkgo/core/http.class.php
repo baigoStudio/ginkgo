@@ -23,8 +23,8 @@ class Http extends File_Sys {
 
   // 默认 http 头, 模仿表单提交
   public $httpHeader = array(
-    'Content-Type'  => 'application/x-www-form-urlencoded; Charset=UTF-8',
-    'Accept'        => 'application/json',
+    'Content-Type' => 'application/x-www-form-urlencoded; Charset=UTF-8',
+    'Accept'       => 'application/json',
   );
 
   public $curlOpt = array(); // since 0.3.0
@@ -55,7 +55,7 @@ class Http extends File_Sys {
    */
   protected function __construct($config = array()) {
     parent::__construct($config);
-    $this->res_curl  = curl_init(); // curl 初始化
+    $this->res_curl = curl_init(); // curl 初始化
   }
 
   /** 初始化实例
@@ -85,7 +85,7 @@ class Http extends File_Sys {
       $_arr_configDo = array_replace_recursive($_arr_configDo, $config); // 合并配置
     }
 
-    $this->config  = $_arr_configDo;
+    $this->config = $_arr_configDo;
   }
 
 
@@ -117,8 +117,15 @@ class Http extends File_Sys {
     switch ($method) {
       case 'post': // post 方法
         $_arr_opt = array(
-          CURLOPT_POST        => true, // 设置 post 方法为 true
-          CURLOPT_POSTFIELDS  => $_str_data, // 设置发送的数据
+          CURLOPT_POST       => true, // 设置 post 方法为 true
+          CURLOPT_POSTFIELDS => $_str_data, // 设置发送的数据
+        );
+      break;
+
+      case 'put':
+        $_arr_opt = array(
+          CURLOPT_CUSTOMREQUEST => 'PUT', // 设置 定制 方法为 put
+          CURLOPT_POSTFIELDS    => $_str_data, // 设置发送的数据
         );
       break;
 
@@ -191,7 +198,7 @@ class Http extends File_Sys {
    * @param string $value (default: '') 值
    * @return void
    */
-   public function setOpt($opt, $value = '') {
+  public function setOpt($opt, $value = '') {
     if (is_array($opt)) {
       $this->curlOpt = array_replace_recursive($this->curlOpt, $opt);
     } else {
@@ -257,7 +264,7 @@ class Http extends File_Sys {
    * @return 临时文件信息
    */
   public function getRemote($url, $data = array(), $method = 'get') {
-    $_result    = $this->request($url, $data, $method); // 用 request 方法取得结果
+    $_result = $this->request($url, $data, $method); // 用 request 方法取得结果
 
     /*print_r($url . ' -> ' . $this->statusCode);
     print_r(PHP_EOL);*/
@@ -266,39 +273,39 @@ class Http extends File_Sys {
       return false;
     }
 
-    $_tmp_path  = GK_PATH_TEMP . md5($url); // 生成临时文件名
-    $_num_size  = 0;
+    $_tmp_path = GK_PATH_TEMP . md5($url); // 生成临时文件名
+    $_num_size = 0;
 
-    $_num_size  = $this->obj_file->fileWrite($_tmp_path, $this->result); // 写入临时文件
+    $_num_size = $this->obj_file->fileWrite($_tmp_path, $this->result); // 写入临时文件
 
     if (!$_num_size) { // 写入失败
       return false;
     }
 
-    $_str_mime  = $this->getMime($_tmp_path, true); // 取得 mime 类型
+    $_str_mime = $this->getMime($_tmp_path, true); // 取得 mime 类型
 
     //print_r($_str_mime);
 
-    $_str_ext   = $this->getExt($url, $_str_mime); // 取得扩展名
+    $_str_ext = $this->getExt($url, $_str_mime); // 取得扩展名
 
     if (!$this->verifyFile($_str_ext, $_str_mime)) { // 验证是否为允许的类型
       $this->obj_file->fileDelete($_tmp_path);
       return false;
     }
 
-    $_str_name  = basename($url);
+    $_str_name = basename($url);
 
     $_arr_fileInfo = array(
-      'name'      => Func::safe($_str_name),
-      'tmp_name'  => $_tmp_path,
-      'ext'       => $_str_ext,
-      'mime'      => $_str_mime,
-      'size'      => $_num_size,
+      'name'     => Func::safe($_str_name),
+      'tmp_name' => $_tmp_path,
+      'ext'      => $_str_ext,
+      'mime'     => $_str_mime,
+      'size'     => $_num_size,
     );
 
     $_arr_fileInfoDo = array_replace_recursive($this->fileInfo, $_arr_fileInfo);
 
-    $this->fileInfo  = $_arr_fileInfoDo;
+    $this->fileInfo = $_arr_fileInfoDo;
 
     return $_arr_fileInfoDo;
   }
@@ -339,11 +346,11 @@ class Http extends File_Sys {
 
   private function optProcess($opts) {
     $_arr_optDo = array(
-      CURLOPT_CONNECTTIMEOUT  => $this->config['timeout'], // 超时
-      CURLOPT_RETURNTRANSFER  => $this->config['return_transfer'], // 是否转换返回, true 返回原生的（Raw）输出
-      CURLOPT_SSL_VERIFYPEER  => $this->config['verify_peer'], // 验证对等证书
-      CURLOPT_SSL_VERIFYHOST  => $this->config['verify_host'], // 验证主机
-      CURLOPT_HEADER          => $this->config['curlopt_header'],  // 将头文件的信息作为数据流输出
+      CURLOPT_CONNECTTIMEOUT => $this->config['timeout'], // 超时
+      CURLOPT_RETURNTRANSFER => $this->config['return_transfer'], // 是否转换返回, true 返回原生的（Raw）输出
+      CURLOPT_SSL_VERIFYPEER => $this->config['verify_peer'], // 验证对等证书
+      CURLOPT_SSL_VERIFYHOST => $this->config['verify_host'], // 验证主机
+      CURLOPT_HEADER         => $this->config['curlopt_header'],  // 将头文件的信息作为数据流输出
     );
 
     $_arr_opt = array_replace_recursive($this->curlOpt, $opts, $_arr_optDo);
@@ -359,7 +366,7 @@ class Http extends File_Sys {
     }
 
     if (Func::notEmpty($this->config['port'])) {
-      $_arr_opt[CURLOPT_PORT]= $this->config['port']; // 设置端口
+      $_arr_opt[CURLOPT_PORT] = $this->config['port']; // 设置端口
     }
 
     curl_setopt_array($this->res_curl, $_arr_opt);
@@ -428,7 +435,7 @@ class Http extends File_Sys {
       $_str_fragment = '';
     }
 
-    $this->hostUrl  = $_str_scheme . '://' . $_arr_urlParsed['host'];
+    $this->hostUrl = $_str_scheme . '://' . $_arr_urlParsed['host'];
 
     if (Func::notEmpty($_str_port)) {
       $this->hostUrl .= ':' . $_str_port;
@@ -457,11 +464,11 @@ class Http extends File_Sys {
    * @param array $data 附带数据
    * @return 拼合后的数据字符串
    */
-  private function dataProcess($data) {
+  private function dataProcess($data, $method = false) {
     if (Func::notEmpty($data) && is_array($data)) { // 拼接数据
-      $_str_data  = http_build_query($data);
+      $_str_data = http_build_query($data);
     } else {
-      $_str_data  = '';
+      $_str_data = $data;
     }
 
     return $_str_data;
@@ -478,7 +485,7 @@ class Http extends File_Sys {
 
     if (Func::notEmpty($this->httpHeader)) {
       // 发送头部信息
-      foreach ($this->httpHeader as $_key=>$_value) {
+      foreach ($this->httpHeader as $_key => $_value) {
         if (Func::isEmpty($_value)) {
           $_arr_httpHeaderDo[] = $_key;
         } else {

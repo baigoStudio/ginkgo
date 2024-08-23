@@ -48,7 +48,7 @@ abstract class File_Sys {
 
   // 兼容用
   public function __call($method, $params) {
-    return $this->getInfo($params);
+    return $this->getInfo($method);
   }
 
   public function config($config = array()) {

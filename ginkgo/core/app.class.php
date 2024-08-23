@@ -115,7 +115,7 @@ class App {
 
 
   // 设置头 since 0.2.3
-  public function header($header, $value = '') {
+  public static function header($header, $value = '') {
     if (is_array($header)) {
       self::$header = array_replace_recursive(self::$header, $header);
     } else {

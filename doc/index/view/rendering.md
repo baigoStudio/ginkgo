@@ -187,7 +187,7 @@ class Index extends Ctrl {
     $content = '\<?php echo $name; ?\> - \<?php echo $email; ?\>';
     $data = array(
       'name'  => 'ginkgo',
-      'email' => 'ginkgo@qq.com'
+      'email' => 'ginkgo@ginkgo'
     );
     return $this->display($content, $data);
   }

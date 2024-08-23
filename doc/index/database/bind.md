@@ -6,7 +6,7 @@ ginkgo 支持占位符绑定，可以使用 `bind()` 方法绑定参数，例如
 
 ``` php
 Db::prepare('insert into user (name) values (:name)');
-Db::bind('name', 'baigo', 'str');
+Db::bind('name', 'ginkgo', 'str');
 Db::execute();
 ```
 
@@ -49,7 +49,7 @@ function bind( $bind [, $value = '' [, $type = '' ]] )
 $bind = array(
   // array('名称', '值', '类型'),
   array('id', 8),
-  array('name', 'baigo'),
+  array('name', 'ginkgo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)');
@@ -66,7 +66,7 @@ Db::execute();
 ``` php
 $bind = array(
   array('id', 8),
-  array('name', 'baigo'),
+  array('name', 'ginkgo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)');
@@ -77,13 +77,13 @@ Db::execute($bind);
 
 ``` php
 // 单个绑定
-Db::prepare('insert into user (name) values (:name)', 'name', 'baigo', 'str');
+Db::prepare('insert into user (name) values (:name)', 'name', 'ginkgo', 'str');
 Db::execute();
 
 // 批量绑定
 $bind = array(
   array('id', 8),
-  array('name', 'baigo'),
+  array('name', 'ginkgo'),
 );
 
 Db::prepare('insert into user (id, name) values (:id, :name)', $bind);

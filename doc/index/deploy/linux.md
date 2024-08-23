@@ -40,22 +40,24 @@ php.ini 文件通常是在 `/usr/local/php/etc` 目录中，当然了这取决�
 
 Apache 需要修改 `httpd.conf` 或者同目录下的 `vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LAMP 一键安装包配置，那么多半就是直接修改 `域名.conf` 文件
 
-  apache
-  +-- vhost
-  |   +-- www.baigo.net.conf
-  |   +--  ...
-  +-- httpd.conf
+```
+apache
++-- vhost
+|   +-- ginkgo.conf
+|   +--  ...
++-- httpd.conf
+```
 
 打开 `域名.conf` 文件，搜索 `open_basedir`,把
 
 ``` clike
-php_admin_value open_basedir "/home/wwwroot/www.baigo.net/public/:/tmp/:/var/tmp/:/proc/"
+php_admin_value open_basedir "/home/wwwroot/ginkgo/public/:/tmp/:/var/tmp/:/proc/"
 ```
 
 修改为
 
 ``` clike
-php_admin_value open_basedir "/home/wwwroot/www.baigo.net/:/tmp/:/var/tmp/:/proc/"
+php_admin_value open_basedir "/home/wwwroot/ginkgo/:/tmp/:/var/tmp/:/proc/"
 ```
 
 然后重新启动 apache 即可生效
@@ -68,24 +70,26 @@ php_admin_value open_basedir "/home/wwwroot/www.baigo.net/:/tmp/:/var/tmp/:/proc
 
 Nginx 需要修改 `nginx.conf` 或者 `conf/vhost` 目录下 `域名.conf` 文件，如果你的生产环境是 LNMP / LTMP 一键安装包配置那么多半就是直接修改 `域名.conf` 文件
 
-  nginx
-  +-- conf
-  |   +-- vhost
-  |   |   +-- www.baigo.net.conf
-  |   +-- nginx.conf
-  |   +--  ...
-  +-- nginx.conf
+```
+nginx
++-- conf
+|   +-- vhost
+|   |   +-- ginkgo.conf
+|   +-- nginx.conf
+|   +--  ...
++-- nginx.conf
+```
 
 打开 `域名.conf` 文件，搜索 `open_basedir`，把
 
 ``` clike
-fastcgi_param  PHP_VALUE  "open_basedir=/home/wwwroot/www.baigo.net/public/:/tmp/:/proc/";
+fastcgi_param  PHP_VALUE  "open_basedir=/home/wwwroot/ginkgo/public/:/tmp/:/proc/";
 ```
 
 修改为
 
 ``` clike
-fastcgi_param  PHP_VALUE  "open_basedir=/home/wwwroot/www.baigo.net/:/tmp/:/proc/";
+fastcgi_param  PHP_VALUE  "open_basedir=/home/wwwroot/ginkgo/:/tmp/:/proc/";
 ```
 
 然后重新启动 Nginx 即可生效
@@ -99,13 +103,13 @@ fastcgi_param  PHP_VALUE  "open_basedir=/home/wwwroot/www.baigo.net/:/tmp/:/proc
 打开项目根目录下找到 `user.ini` 文件，搜索 `open_basedir`，把
 
 ``` clike
-open_basedir=/home/wwwroot/www.baigo.net/public/:/tmp/:/proc/
+open_basedir=/home/wwwroot/ginkgo/public/:/tmp/:/proc/
 ```
 
 修改为
 
 ``` clike
-open_basedir=/home/wwwroot/www.baigo.net/:/tmp/:/proc/
+open_basedir=/home/wwwroot/ginkgo/:/tmp/:/proc/
 ```
 
 然后重新启动 Web 服务器，即可生效

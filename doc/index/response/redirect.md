@@ -10,7 +10,7 @@ use ginkgo\Ctrl;
 class Index extends Ctrl {
 
   public function hello() {
-    return $this->redirect('https://www.baigo.net');
+    return $this->redirect('https://ginkgo');
   }
 
 }
@@ -23,14 +23,14 @@ class Index extends Ctrl {
 如果是站内重定向，可以支持 URL 组装，有两种方式组装 URL，第一种是直接使用完整地址
 
 ``` php
-$this->redirect('/index/index/hello/name/baigo');
+$this->redirect('/index/index/hello/name/ginkgo');
 ```
 
 这种方式会保持原来地址不做任何转换，第二种方式是使用 `params()` 方法配合，例如：
 
 ``` php
 $param = array(
-  'name' => 'baigo'
+  'name' => 'ginkgo'
 );
 $this->redirect('/index/index/hello')->param($param);
 ```

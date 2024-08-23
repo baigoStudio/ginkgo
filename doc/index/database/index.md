@@ -14,8 +14,9 @@ return array(
   'type'    => 'mysql',
   // 服务器地址
   'host'    => '127.0.0.1',
-  // 数据库名
-  'name'    => 'baigo',
+  // 数据库名 自 v0.3.0 改为 dbname
+  'name'    => 'ginkgo',
+  'dbname'  => 'ginkgo',
   // 数据库用户名
   'user'    => 'root',
   // 数据库密码
@@ -25,7 +26,7 @@ return array(
   // 数据库编码默认采用 utf8
   'charset' => 'utf8',
   // 数据库表前缀
-  'prefix'  => 'baigo_',
+  'prefix'  => 'ginkgo_',
   // 数据库调试模式
   'debug'   => false,
 );
@@ -50,8 +51,9 @@ $config = array(
   'type'    => 'mysql',
   // 服务器地址
   'host'    => '127.0.0.1',
-  // 数据库名
-  'name'    => 'baigo',
+  // 数据库名 自 v0.3.0 改为 dbname
+  'name'    => 'ginkgo',
+  'dbname'  => 'ginkgo',
   // 数据库用户名
   'user'    => 'root',
   // 数据库密码
@@ -61,7 +63,7 @@ $config = array(
   // 数据库编码默认采用 utf8
   'charset' => 'utf8',
   // 数据库表前缀
-  'prefix'  => 'baigo_',
+  'prefix'  => 'ginkgo_',
   // 数据库调试模式
   'debug'   => false,
 );
@@ -91,8 +93,9 @@ class User extends Model {
     'type'    => 'mysql',
     // 服务器地址
     'host'    => '127.0.0.1',
-    // 数据库名
-    'name'    => 'baigo',
+    // 数据库名 自 v0.3.0 改为 dbname
+    'name'    => 'ginkgo',
+    'dbname'  => 'ginkgo',
     // 数据库用户名
     'user'    => 'root',
     // 数据库密码
@@ -102,7 +105,7 @@ class User extends Model {
     // 数据库编码默认采用 utf8
     'charset' => 'utf8',
     // 数据库表前缀
-    'prefix'  => 'baigo_',
+    'prefix'  => 'ginkgo_',
     // 数据库调试模式
     'debug'   => false,
   );

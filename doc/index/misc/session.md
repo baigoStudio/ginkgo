@@ -23,7 +23,7 @@ Session 会在第一次调用 `Session` 类的时候按照配置参数自动初�
 如果使用上述配置参数，无需任何操作就可以直接调用 `Session` 类的相关方法，例如：
 
 ``` php
-Session::set('name', 'baigo');
+Session::set('name', 'ginkgo');
 Session::get('name');
 ```
 
@@ -119,7 +119,7 @@ Session::config($config);
 
 ``` php
 // 赋值（当前作用域）
-Session::set('name','baigo.item');
+Session::set('name','ginkgo.item');
 // 取值（当前作用域）
 Session::get('name', 'item');
 // 删除（当前作用域）

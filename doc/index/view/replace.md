@@ -15,12 +15,12 @@ class Index extends Ctrl {
 
     // 单个设置
     $view->setReplace('name', 'ginkgo');
-    $view->setReplace('email', 'ginkgo@qq.com');
+    $view->setReplace('email', 'ginkgo@ginkgo');
 
     // 批量设置
     $replace = array(
       'name'  => 'ginkgo',
-      'email' => 'ginkgo@qq.com',
+      'email' => 'ginkgo@ginkgo',
     );
 
     $view->setReplace($replace);

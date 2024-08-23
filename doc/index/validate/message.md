@@ -38,7 +38,7 @@ class User extends Validate {
 $data = array(
   'name'  => 'ginkgo',
   'age'   => 121,
-  'email' => 'ginkgo@qq.com',
+  'email' => 'ginkgo@ginkgo',
 );
 
 $validate = Loader::validate('User');
@@ -195,7 +195,7 @@ class User extends Validate {
 $data = array(
   'name'  => 'ginkgo',
   'age'   => 111,
-  'email' => 'ginkgo#qq.com',
+  'email' => 'ginkgo#ginkgo',
 );
 
 $validate = Loader::validate('User');

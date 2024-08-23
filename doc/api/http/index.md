@@ -66,6 +66,7 @@ class Http extends File_Sys {
   public move( string $dir [, $name = true [, $replace = true ]] ) : bool
   public setHeader( mixed $header [, string $value ] )
   public setAccept( string $type )
+  public setOpt( mixed $opt [, string $value ] )
   public contentType( string $contentType [, string $charset ] )
   public port( [ int $port ] )
   public getResult() : mixed
@@ -210,7 +211,7 @@ public function request( string $url [, array $data [, string $method = 'get' ]]
 
 * `url` 请求 URL
 * `data` 准备发送的数据，可以为数组或字符串
-* `method` 请求方法，get 或 post
+* `method` 请求方法，get、post 或 put
 
 返回
 

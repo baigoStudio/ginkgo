@@ -19,7 +19,6 @@ class Crypt {
 
   private static $init; // 是否初始化标志
   private static $keyPub; // 公钥
-  private static $algoLists; // 算法列表
 
   public static function init() {
     $_str_pathKey = GK_PATH_DATA . 'key_pub' . GK_EXT_INC;

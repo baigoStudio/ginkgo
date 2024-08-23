@@ -19,8 +19,8 @@ $rule = array(
 $validate->rule($rule);
 
 $data = [
-  'name'  => 'baigo',
-  'email' => 'baigo@qq.com'
+  'name'  => 'ginkgo',
+  'email' => 'ginkgo@ginkgo'
 ];
 if (!$validate->verify($data)) {
   print_r($validate->getMessage());

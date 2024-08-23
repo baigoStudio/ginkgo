@@ -93,8 +93,8 @@ function fillUrl( $url, $baseUrl )
 * 完整的 URL，如：
 
   URL 为 ./image/logo.png，
-  基本 URL 为 https://www.baigo.net，
-  补充完整后为 https://www.baigo.net/image/logo.png
+  基本 URL 为 https://ginkgo，
+  补充完整后为 https://ginkgo/image/logo.png
 
 ----------
 

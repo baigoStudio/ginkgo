@@ -22,7 +22,7 @@ Db::query('select * from user where status=1');
 使用示例：
 
 ``` php
-$count = Db::exec('update user set name=\'baigo\' where status=1');
+$count = Db::exec('update user set name=\'ginkgo\' where status=1');
 ```
 
 ----------
@@ -69,6 +69,6 @@ function getResult( [ $all = true [, $fetch_style = PDO::FETCH_ASSOC ]] )
 用于获取最后插入行的ID或序列值。
 
 ``` php
-Db::exec('insert user set name=\'baigo\'');
+Db::exec('insert user set name=\'ginkgo\'');
 $id = Db::lastInsertId();
 ```

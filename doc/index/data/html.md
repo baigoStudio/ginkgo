@@ -70,8 +70,8 @@ function fillImg( $content, $baseUrl )
 * 图片具备完整的 URL 的 HTML 内容，如：
 
   HTML 为 &lt;div&gt;&lt;img src=&quot;./image/logo.png&quot;&gt;&lt;/div&gt;
-  基本 URL 为 https://www.baigo.net，
-  补充完整后为 &lt;div&gt;&lt;img src=&quot;https://www.baigo.net/image/logo.png&quot;&gt;&lt;/div&gt;
+  基本 URL 为 https://ginkgo，
+  补充完整后为 &lt;div&gt;&lt;img src=&quot;https://ginkgo/image/logo.png&quot;&gt;&lt;/div&gt;
 
 ----------
 

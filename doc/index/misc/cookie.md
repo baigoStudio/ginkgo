@@ -38,7 +38,7 @@ $config = array(
 // cookie初始化
 Cookie::init($config);
 // 指定当前前缀
-Cookie::prefix('baigo_');
+Cookie::prefix('ginkgo_');
 ```
 
 ----------
@@ -63,7 +63,7 @@ Cookie::prefix('baigo_');
   ``` php
   Cookie::get('name');
   // 获取指定前缀的cookie值
-  Cookie::get('name', 'baigo_');
+  Cookie::get('name', 'ginkgo_');
   ```
 
   如果 name 值不存在，则默认返回空。
@@ -73,7 +73,7 @@ Cookie::prefix('baigo_');
   ``` php
   Cookie::delete('name');
   // 删除指定前缀的 cookie
-  Cookie::delete('name', 'baigo_');
+  Cookie::delete('name', 'ginkgo_');
   ```
 
 * 前缀

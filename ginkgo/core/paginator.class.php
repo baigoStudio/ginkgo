@@ -244,9 +244,9 @@ class Paginator {
       $_num_final = $_num_total; // 显示尾页按钮
     }
 
-    if ($_num_current > $_num_total) { // 如果当前页码大于总页数, 则总页数为当前页码
+    /*if ($_num_current > $_num_total) { // 如果当前页码大于总页数, 则总页数为当前页码
       $_num_current = $_num_total;
-    }
+    }*/
 
     $_arr_totalRow = array(
       'first' => $_num_first,

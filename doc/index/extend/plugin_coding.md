@@ -42,7 +42,7 @@ if (!class_exists('extend\plugin\hello\Hello')) { // 防止类重复
     function sayHello($param) {
       //echo '<div>test</div>';
 
-      $param = str_ireplace('__baigo__', 'BAIGO', $param);
+      $param = str_ireplace('__ginkgo__', 'BAIGO', $param);
 
       return $param;
     }
@@ -128,10 +128,10 @@ class Hello {
   "name": "Hello",
   "class": "Hello",
   "version": "1.0",
-  "author": "Baigo",
-  "plugin_url": "https://www.baigo.net/cms/plugin/hello",
+  "author": "Ginkgo",
+  "plugin_url": "https://ginkgo/cms/plugin/hello",
   "detail": "本插件为一个开发示例",
-  "author_url": "https://www.baigo.net"
+  "author_url": "https://ginkgo"
 }
 ```
 

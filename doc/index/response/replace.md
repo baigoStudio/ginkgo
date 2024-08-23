@@ -14,12 +14,12 @@ class Index extends Ctrl {
 
     // 单个设置
     $json->setReplace('name', 'ginkgo');
-    $json->setReplace('email', 'ginkgo@qq.com');
+    $json->setReplace('email', 'ginkgo@ginkgo');
 
     // 批量设置
     $replace = array(
       'name'  => 'ginkgo',
-      'email' => 'ginkgo@qq.com',
+      'email' => 'ginkgo@ginkgo',
     );
 
     $json->setReplace($replace);
@@ -30,4 +30,4 @@ class Index extends Ctrl {
 }
 ```
 
-所有输出数据中的 name、email 都会被替换为 ginkgo 和 ginkgo@qq.com
+所有输出数据中的 name、email 都会被替换为 ginkgo 和 ginkgo@ginkgo

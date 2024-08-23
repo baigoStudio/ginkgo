@@ -41,7 +41,10 @@ class Arrays {
     }
 
     if (is_array($array) && Func::notEmpty($array)) {
-      $array     = self::map($array, $encode);
+      if ($encode !== false && $encode !== 'false') {
+        $array = self::map($array, $encode);
+      }
+
       $_str_json = json_encode($array, $option); //json编码
 
       self::backtrace();
@@ -65,9 +68,11 @@ class Arrays {
     $string    = (string)$string;
 
     if (Func::notEmpty($string)) {
-      //$string    = Html::decode($string, 'json');
       $_arr_json = json_decode($string, $assoc); //json解码
-      $_arr_json = self::map($_arr_json, $decode); //json解码
+
+      if ($decode !== false && $decode !== 'false') {
+        $_arr_json = self::map($_arr_json, $decode); //json解码
+      }
 
       self::backtrace();
     }
@@ -103,7 +108,9 @@ class Arrays {
         if (is_array($_value) && Func::notEmpty($_value)) {
           $arr[$_key] = self::map($_value, $func, $left, $right, $hide);
         } else if (is_scalar($_value) && Func::notEmpty($_value)) {
-          $_value = Func::safe($_value, true);
+          if ($func !== false && $func !== 'false') {
+            $_value = Func::safe($_value, true);
+          }
 
           switch ($func) {
             case 'json_safe':

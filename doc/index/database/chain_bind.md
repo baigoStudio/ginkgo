@@ -16,13 +16,13 @@ Db::table('user')
 // 用于写入
 $bind = array(
   array('id', 10, 'int'),
-  array('name', 'baigo'),
-  array('email', 'baigo@qq.com'),
+  array('name', 'ginkgo'),
+  array('email', 'ginkgo@ginkgo'),
 );
 
 $update = array(
-  'name'  => 'baigo',
-  'email' => 'baigo@qq.com',
+  'name'  => 'ginkgo',
+  'email' => 'ginkgo@ginkgo',
 );
 
 Db::table('user')

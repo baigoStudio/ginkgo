@@ -1,3 +1,35 @@
+##### v0.3.2
+
+* 优化 `ginkgo\Http` 类，并支持 put 方法
+* 为 `ginkgo\Sign` 类支持输入数组、指定哈希方法
+* 为 `ginkgo\File` 日志信息
+* 调整 `ginkgo\Paginator` 分页逻辑，页码大于页数时，不再显示记录
+* 修复 `ginkgo\App` header 方法的类型错误
+* 修复 `ginkgo\common\File_Sys` 类的 __call 兼容方法
+* 修复 `ginkgo\Upload` 类的 __call 方法错误
+
+----------
+
+##### v0.3.1
+
+* 为 `ginkgo\Html` 类增加修复标签未闭合功能
+* 优化分布式数据库的读写分离功能
+* 优化验证码类
+* 修复 `ginkgo\Debug` 类中，无法输出数组类的 debug 信息的问题
+* 修复 dubug = trace 模式下，json 或数组报错内容无法输出的 bug
+
+----------
+
+##### v0.3.0
+
+* 增加分布式数据库的支持
+* 修复 `ginkgo\session\driver\Db` 类的一个变量未定义错误
+* 修复 `ginkgo\Image` 类中批量生成缩略图时的一个逻辑错误
+* 增加 `ginkgo\Datetime` 类，负责处理日期时间，将 `ginkgo\Strings` 类中的 `toTime()` 方法迁移到本类
+* 取消 `ginkgo\Validate` 类中静态调用的方法，改为直接验证
+
+----------
+
 ##### v0.2.4
 
 * `ginkgo\Arrays` 类的 `filter()` 方法更改为 `unique()`

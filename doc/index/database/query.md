@@ -5,8 +5,8 @@
 可以使用 `where()` 方法进行条件查询，链式操作中，`where()` 方法只能调用一次：
 
 ``` php
-Db::table('user')->where('name', 'LIKE', '%baigo', 'name', 'str')->find();
-Db::table('user')->where(array('name', 'LIKE', '%baigo', 'name', 'str'))->find();
+Db::table('user')->where('name', 'LIKE', '%ginkgo', 'name', 'str')->find();
+Db::table('user')->where(array('name', 'LIKE', '%ginkgo', 'name', 'str'))->find();
 ```
 
 生成的 SQL 语句类似于下面，系统会自动绑定占位符，执行查询并返回结果：
@@ -15,7 +15,7 @@ Db::table('user')->where(array('name', 'LIKE', '%baigo', 'name', 'str'))->find()
 SELECT * FROM `user` WHERE `name` LIKE :name
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo'
 ```
 
 `where()` 方法说明
@@ -64,16 +64,16 @@ function where( $where [, $exp , $value [, $param = '' [, $type = '' ]]] )
 
 ``` php
 $where = array(
-  array('name', '=', 'baigo'),
-  array('title', 'LIKE', '%baigo'),
+  array('name', '=', 'ginkgo'),
+  array('title', 'LIKE', '%ginkgo'),
 );
 
 Db::table('user')->where($where)->find();
 
 $where = array(
   // array('字段名', '表达式', '条件值', '参数名', '数据类型', '运算符 (为空则为 AND)'),
-  array('name', 'LIKE', '%baigo', 'key', 'str'),
-  array('title', 'LIKE', '%baigo', 'key', 'str', 'OR'),
+  array('name', 'LIKE', '%ginkgo', 'key', 'str'),
+  array('title', 'LIKE', '%ginkgo', 'key', 'str', 'OR'),
 );
 
 Db::table('user')->where($where)->find();
@@ -86,15 +86,15 @@ SELECT * FROM `user` WHERE `name` = :name AND `title` LIKE :title
 SELECT * FROM `user` WHERE `name` LIKE :key OR `title` LIKE :key
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` = 'baigo' AND `title` LIKE '%baigo'
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' OR `title` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` = 'ginkgo' AND `title` LIKE '%ginkgo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' OR `title` LIKE '%ginkgo'
 ```
 
 多字段相同条件的查询可以简化为如下方式：
 
 ``` php
-Db::table('user|title')->where('name', 'LIKE', '%baigo', 'key')->find();
-Db::table('user&title')->where('name', 'LIKE', '%baigo', 'key')->find();
+Db::table('user|title')->where('name', 'LIKE', '%ginkgo', 'key')->find();
+Db::table('user&title')->where('name', 'LIKE', '%ginkgo', 'key')->find();
 ```
 
 生成的 SQL 语句类似于下面：
@@ -104,8 +104,8 @@ SELECT * FROM `user` WHERE `name` LIKE :key OR `title` LIKE :key
 SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' OR `title` LIKE '%baigo'
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' OR `title` LIKE '%ginkgo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo'
 ```
 
 ----------
@@ -117,8 +117,8 @@ SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
 ``` php
 $where = array(
   // array('字段名', '表达式', '条件值', '参数名', '数据类型', '运算符 (为空则为 AND)'),
-  array('name', 'LIKE', '%baigo', 'key', 'str'),
-  array('title', 'LIKE', '%baigo', 'key', 'str'),
+  array('name', 'LIKE', '%ginkgo', 'key', 'str'),
+  array('title', 'LIKE', '%ginkgo', 'key', 'str'),
 );
 
 $whereOr_1 = array(
@@ -146,7 +146,7 @@ SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
   OR (`is_hide` > :is_hide AND `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo'
   OR (`is_pub` < 1 AND `time_pub` <= '2019-05-06 10:13:01')
   OR (`is_hide` > 1 AND `time_hide` >= '2019-05-06 10:13:01')
 ```
@@ -160,8 +160,8 @@ SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
 ``` php
 $where = array(
   // array('字段名', '表达式', '条件值', '参数名', '数据类型', '运算符 (为空则为 AND)'),
-  array('name', 'LIKE', '%baigo', 'key', 'str'),
-  array('title', 'LIKE', '%baigo', 'key', 'str'),
+  array('name', 'LIKE', '%ginkgo', 'key', 'str'),
+  array('title', 'LIKE', '%ginkgo', 'key', 'str'),
 );
 
 $whereAnd_1 = array(
@@ -189,7 +189,7 @@ SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
   AND (`is_hide` > :is_hide OR `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo'
   AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01')
   AND (`is_hide` > 1 OR `time_hide` >= '2019-05-06 10:13:01')
 ```
@@ -201,8 +201,8 @@ SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
 ``` php
 $where = array(
   // array('字段名', '表达式', '条件值', '参数名', '数据类型', '运算符 (为空则为 AND)'),
-  array('name', 'LIKE', '%baigo', 'key', 'str'),
-  array('title', 'LIKE', '%baigo', 'key', 'str'),
+  array('name', 'LIKE', '%ginkgo', 'key', 'str'),
+  array('title', 'LIKE', '%ginkgo', 'key', 'str'),
 );
 
 $whereAnd = array(
@@ -230,7 +230,7 @@ SELECT * FROM `user` WHERE `name` LIKE :key AND `title` LIKE :key
   OR (`is_hide` > :is_hide AND `time_hide` >= :date)
 
 // 真正执行的 SQL 语句
-SELECT * FROM `user` WHERE `name` LIKE '%baigo' AND `title` LIKE '%baigo'
+SELECT * FROM `user` WHERE `name` LIKE '%ginkgo' AND `title` LIKE '%ginkgo'
   AND (`is_pub` < 1 OR `time_pub` <= '2019-05-06 10:13:01')
   OR (`is_hide` > 1 AND `time_hide` >= '2019-05-06 10:13:01')
 ```

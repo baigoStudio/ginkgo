@@ -7,7 +7,7 @@ namespace app\ctrl\index;
 
 class Index {
 
-  public function hello($name = 'baigo') {
+  public function hello($name = 'ginkgo') {
     return 'Hello, ' . $name . '!';
   }
 
@@ -51,7 +51,7 @@ class Index extends Ctrl {
 
   public function hello() {
     $data = array(
-      'name'      => 'baigo',
+      'name'      => 'ginkgo',
       'status'    => '1'
     );
 
@@ -71,7 +71,7 @@ namespace app\ctrl\index;
 class Index {
 
   public function hello() {
-    return 'Hello, baigo!';
+    return 'Hello, ginkgo!';
   }
 
 }

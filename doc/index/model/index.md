@@ -39,8 +39,9 @@ class User extends ginkgo\Model {
     'type'    => 'mysql',
     // 服务器地址
     'host'    => '127.0.0.1',
-    // 数据库名
-    'name'    => 'baigo',
+    // 数据库名 自 v0.3.0 改为 dbname
+    'name'    => 'ginkgo',
+    'dbname'  => 'ginkgo',
     // 数据库用户名
     'user'    => 'root',
     // 数据库密码
@@ -50,7 +51,7 @@ class User extends ginkgo\Model {
     // 数据库编码默认采用 utf8
     'charset' => 'utf8',
     // 数据库表前缀
-    'prefix'  => 'baigo_',
+    'prefix'  => 'ginkgo_',
     // 数据库调试模式
     'debug'   => false,
   );
@@ -67,12 +68,12 @@ class User extends ginkgo\Model {
 
 模型会自动对应数据表，模型类的命名规则是：除去前缀的数据表名称，采用驼峰法和下划线（首字母大写）。以下是一个例子：
 
-假设前缀是 `baigo_`
+假设前缀是 `ginkgo_`
 
 | 模型名 | 约定对应数据表 |
 | - | - |
-| User | baigo_user |
-| User_Type | baigo_user_type |
+| User | ginkgo_user |
+| User_Type | ginkgo_user_type |
 
 如果模型名与数据表无法对应，那就需要设置数据表名称属性。
 

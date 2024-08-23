@@ -104,7 +104,9 @@ class Index {
 
 ##### 特别注意
 
-根据 [概况 -> 开发规范](../index/spec.md) 的要求，因此 ginkgo 采用了如下两种自动转换的策略：
+`0.1.1` 新增
+
+根据 [概况 -> 开发规范](../index/spec.md) 的要求，ginkgo 采用了如下两种自动转换的策略：
 
 * 文件夹和文件的命名使用使用小写和下划线，当路由中的模块与控制器为小写字母和横杠时，系统会将横杠 <kbd>-</kbd> 转换为下划线 <kbd>_</kbd>。
 
@@ -112,7 +114,7 @@ class Index {
 
 如果当前访问的地址是
 
-> http://server/index.php/mod-index/ctrl-index/hello-world `0.1.1` 新增
+> http://server/index.php/mod-index/ctrl-index/hello-world
 
 或
 

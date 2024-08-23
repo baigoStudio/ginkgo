@@ -64,7 +64,7 @@ $validate->rule($rule);
 
 $data = array(
   'name'  => 'ginkgo',
-  'email' => 'ginkgo@qq.com'
+  'email' => 'ginkgo@ginkgo'
 );
 
 if (!$validate->verify($data)) {

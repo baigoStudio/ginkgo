@@ -367,7 +367,7 @@ class File {
     }
 
     if ($_bool_debugDump) {
-      Log::record('type: ginkgo\Ftp, msg: ' . $msg, 'log');
+      Log::record('type: ginkgo\File, msg: ' . $msg, 'log');
     }
   }
 }

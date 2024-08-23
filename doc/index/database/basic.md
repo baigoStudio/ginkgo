@@ -1,10 +1,10 @@
 ## 基本使用
 
-配置了数据库连接信息后，就可以直接使用数据库运行原生 SQL 了，支持 query（查询）和 exec（写入）方法，并且支持参数绑定。
+配置了数据库连接信息后，就可以直接使用数据库运行原生 SQL 了，支持 `query()`（查询）和 `exec()`（写入）方法，并且支持参数绑定。
 
 ``` php
 Db::query('select * from user where id=8');
-Db::exec('insert into user (id, name) values (8, \'baigo\')');
+Db::exec('insert into user (id, name) values (8, \'ginkgo\')');
 ```
 
 ----------
@@ -16,12 +16,12 @@ Db::exec('insert into user (id, name) values (8, \'baigo\')');
 ``` php
 // 参数绑定
 Db::prepare('insert into user (name) values (?)');
-Db::bind(1, 'baigo');
+Db::bind(1, 'ginkgo');
 Db::execute();
 
 // 占位符绑定
 Db::prepare('insert into user (name) values (:name)');
-Db::bind('name', 'baigo');
+Db::bind('name', 'ginkgo');
 Db::execute();
 ```
 
@@ -37,7 +37,7 @@ Db::prepare('insert into user (id, name) values (?, ?)');
 
 $bind = array(
   array(1, 8),
-  array(2, 'baigo'),
+  array(2, 'ginkgo'),
 );
 
 Db::bind($bind);
@@ -48,7 +48,7 @@ Db::prepare('insert into user (id, name) values (:id, :name)');
 
 $bind = array(
   array('id', 8),
-  array('name', 'baigo'),
+  array('name', 'ginkgo'),
 );
 
 Db::bind($bind);

@@ -71,7 +71,7 @@ class Error {
 | - | - | - | - |
 | 属性 | - | - | - |
 | [`$config`](#$config) | public | array static | 调试配置 |
-| [`$configThis`](#$configThis) | private | array static | 默认配置（`0.2.0` 新增） |
+| [`$configThis`](#$config) | private | array static | 默认配置（`0.2.0` 新增） |
 | [`$errType`](#$errType) | private | array static | 错误类型 |
 | [`$errFatal`](#$errFatal) | private | array static | 致命错误类型 |
 | `$optDebugDump` | private | bool static | 调试配置 |
